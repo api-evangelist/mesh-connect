@@ -1,27 +1,704 @@
 aid: mesh-connect
 name: Mesh Connect
-description: 'Mesh Connect is a company surfaced as a portfolio company of paradigm and added to the API
-  Evangelist network as a stub for enrichment. Sector: crypto-infrastructure. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: >-
+  Mesh (formerly Mesh Connect) is a global crypto payments network that lets
+  businesses accept crypto payments from 300+ wallets and exchanges and settle
+  in stablecoins or local currency through a single integration. The Mesh
+  Integration API and embeddable Link SDK handle account connection, credential
+  validation, MFA, portfolio and balance aggregation, and managed crypto
+  transfers across exchanges and self-custody wallets. Mesh is backed by
+  Paradigm and operates in the crypto-infrastructure sector.
 url: https://raw.githubusercontent.com/api-evangelist/mesh-connect/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - paradigm
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: enriched-from-live-api-surface
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
+image: https://cdn.prod.website-files.com/656cc624086b77872a31a084/68d80ffccc987492d4bd2e0a_Untitled%20design%20(81).png
 tags:
 - Company
 - Crypto Infrastructure
-apis: []
+- Crypto Payments
+- Digital Assets
+- Wallets
+- Exchanges
+- Embedded Finance
+- Stablecoins
+- Payments
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: mesh-connect:mesh-connect-assets-api
+  name: Mesh Connect Assets API
+  description: The Assets API from Mesh Connect — 2 operation(s) for assets.
+  humanURL: https://docs.meshconnect.com/overview
+  baseURL: https://integration-api.meshconnect.com
+  tags:
+  - Assets
+  properties:
+  - type: OpenAPI
+    url: openapi/mesh-connect-assets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.meshconnect.com/
+  - type: Authentication
+    url: authentication/mesh-connect-authentication.yml
+- aid: mesh-connect:mesh-connect-auth-token-api
+  name: Mesh Connect Auth token API
+  description: The Auth token API from Mesh Connect — 1 operation(s) for auth token.
+  humanURL: https://docs.meshconnect.com/overview
+  baseURL: https://integration-api.meshconnect.com
+  tags:
+  - Auth token
+  properties:
+  - type: OpenAPI
+    url: openapi/mesh-connect-auth-token-api-openapi.yml
+  - type: Documentation
+    url: https://docs.meshconnect.com/
+  - type: Authentication
+    url: authentication/mesh-connect-authentication.yml
+- aid: mesh-connect:mesh-connect-balance-api
+  name: Mesh Connect Balance API
+  description: >-
+    ### Supported integrations:
+
+    ```Robinhood```
+
+    ```ETrade```
+
+    ```Alpaca```
+
+    ```WeBull```
+
+    ```Stash```
+
+    ```InteractiveBrokers```
+
+    ```Public```
+
+    ```Coinbase```
+
+    ```Kraken```
+
+    ```CoinbasePro```
+
+    ```CryptoCom```
+
+    ```Binance```
+
+    ```Gemini```
+
+    ```OkCoin```
+
+    ```KuCoin```
+
+    ```Etoro```
+
+    ```CexIo```
+
+    ```BinanceInternational```
+
+    ```Bitstamp```
+
+    ```GateIo```
+
+    ```Acorns```
+
+    ```Okx```
+
+    ```BitFlyer```
+
+    ```Coinlist```
+
+    ```Huobi```
+
+    ```Bitfinex```
+
+    ```KrakenDirect```
+
+    ```Vanguard```
+
+    ```BinanceInternationalDirect```
+
+    ```BitfinexDirect```
+
+    ```Bybit```
+
+    ```Paxos```
+
+    ```CoinbasePrime```
+  humanURL: https://docs.meshconnect.com/overview
+  baseURL: https://integration-api.meshconnect.com
+  tags:
+  - Balance
+  properties:
+  - type: OpenAPI
+    url: openapi/mesh-connect-balance-api-openapi.yml
+  - type: Documentation
+    url: https://docs.meshconnect.com/
+  - type: Authentication
+    url: authentication/mesh-connect-authentication.yml
+- aid: mesh-connect:mesh-connect-brokeraccountdetail-api
+  name: Mesh Connect BrokerAccountDetail API
+  description: The BrokerAccountDetail API from Mesh Connect — 1 operation(s) for brokeraccountdetail.
+  humanURL: https://docs.meshconnect.com/overview
+  baseURL: https://integration-api.meshconnect.com
+  tags:
+  - BrokerAccountDetail
+  properties:
+  - type: OpenAPI
+    url: openapi/mesh-connect-brokeraccountdetail-api-openapi.yml
+  - type: Documentation
+    url: https://docs.meshconnect.com/
+  - type: Authentication
+    url: authentication/mesh-connect-authentication.yml
+- aid: mesh-connect:mesh-connect-main-clients-api
+  name: Mesh Connect Main Clients API
+  description: The Main Clients API from Mesh Connect — 1 operation(s) for main clients.
+  humanURL: https://docs.meshconnect.com/overview
+  baseURL: https://integration-api.meshconnect.com
+  tags:
+  - Main Clients
+  properties:
+  - type: OpenAPI
+    url: openapi/mesh-connect-main-clients-api-openapi.yml
+  - type: Documentation
+    url: https://docs.meshconnect.com/
+  - type: Authentication
+    url: authentication/mesh-connect-authentication.yml
+- aid: mesh-connect:mesh-connect-managed-account-authentication-api
+  name: Mesh Connect Managed Account Authentication API
+  description: >-
+    The recommended approach for account authentication. Front manages multiple authentication flows and
+    handles all authentication steps such as MFA codes and OAuth redirect through our web and mobile SDKs.
+  humanURL: https://docs.meshconnect.com/overview
+  baseURL: https://integration-api.meshconnect.com
+  tags:
+  - Managed Account Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/mesh-connect-managed-account-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://docs.meshconnect.com/
+  - type: Authentication
+    url: authentication/mesh-connect-authentication.yml
+- aid: mesh-connect:mesh-connect-managed-transfers-api
+  name: Mesh Connect Managed Transfers API
+  description: The Managed Transfers API from Mesh Connect — 10 operation(s) for managed transfers.
+  humanURL: https://docs.meshconnect.com/overview
+  baseURL: https://integration-api.meshconnect.com
+  tags:
+  - Managed Transfers
+  properties:
+  - type: OpenAPI
+    url: openapi/mesh-connect-managed-transfers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.meshconnect.com/
+  - type: Authentication
+    url: authentication/mesh-connect-authentication.yml
+- aid: mesh-connect:mesh-connect-portfolio-api
+  name: Mesh Connect Portfolio API
+  description: >-
+    ### Supported integrations:
+
+    ```Robinhood```
+
+    ```ETrade```
+
+    ```Alpaca```
+
+    ```WeBull```
+
+    ```Stash```
+
+    ```InteractiveBrokers```
+
+    ```Public```
+
+    ```Coinbase```
+
+    ```Kraken```
+
+    ```CoinbasePro```
+
+    ```CryptoCom```
+
+    ```OpenSea```
+
+    ```Binance```
+
+    ```Gemini```
+
+    ```OkCoin```
+
+    ```KuCoin```
+
+    ```Etoro```
+
+    ```CexIo```
+
+    ```BinanceInternational```
+
+    ```Bitstamp```
+
+    ```GateIo```
+
+    ```Acorns```
+
+    ```Okx```
+
+    ```BitFlyer```
+
+    ```Coinlist```
+
+    ```Huobi```
+
+    ```Bitfinex```
+
+    ```KrakenDirect```
+
+    ```Vanguard```
+
+    ```BinanceInternationalDirect```
+
+    ```BitfinexDirect```
+
+    ```Bybit```
+
+    ```Paxos```
+
+    ```CoinbasePrime```
+
+    ```DeFiWallet```
+  humanURL: https://docs.meshconnect.com/overview
+  baseURL: https://integration-api.meshconnect.com
+  tags:
+  - Portfolio
+  properties:
+  - type: OpenAPI
+    url: openapi/mesh-connect-portfolio-api-openapi.yml
+  - type: Documentation
+    url: https://docs.meshconnect.com/
+  - type: Authentication
+    url: authentication/mesh-connect-authentication.yml
+- aid: mesh-connect:mesh-connect-registered-clients-api
+  name: Mesh Connect Registered Clients API
+  description: The Registered Clients API from Mesh Connect — 3 operation(s) for registered clients.
+  humanURL: https://docs.meshconnect.com/overview
+  baseURL: https://integration-api.meshconnect.com
+  tags:
+  - Registered Clients
+  properties:
+  - type: OpenAPI
+    url: openapi/mesh-connect-registered-clients-api-openapi.yml
+  - type: Documentation
+    url: https://docs.meshconnect.com/
+  - type: Authentication
+    url: authentication/mesh-connect-authentication.yml
+- aid: mesh-connect:mesh-connect-self-managed-account-authentication-api
+  name: Mesh Connect Self Managed Account Authentication API
+  description: >-
+    Not recommended approach. Using this approach, the API client is responsible for handling multiple
+    authentication flows and supporting future updates and changes.
+  humanURL: https://docs.meshconnect.com/overview
+  baseURL: https://integration-api.meshconnect.com
+  tags:
+  - Self Managed Account Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/mesh-connect-self-managed-account-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://docs.meshconnect.com/
+  - type: Authentication
+    url: authentication/mesh-connect-authentication.yml
+- aid: mesh-connect:mesh-connect-transactions-api
+  name: Mesh Connect Transactions API
+  description: >-
+    ### Supported integrations:
+
+    ```Robinhood```
+
+    ```ETrade```
+
+    ```Alpaca```
+
+    ```WeBull```
+
+    ```Stash```
+
+    ```InteractiveBrokers```
+
+    ```Public```
+
+    ```Coinbase```
+
+    ```Kraken```
+
+    ```CoinbasePro```
+
+    ```CryptoCom```
+
+    ```Binance```
+
+    ```Gemini```
+
+    ```OkCoin```
+
+    ```KuCoin```
+
+    ```Etoro```
+
+    ```CexIo```
+
+    ```BinanceInternational```
+
+    ```Bitstamp```
+
+    ```GateIo```
+
+    ```Okx```
+
+    ```BitFlyer```
+
+    ```Coinlist```
+
+    ```Huobi```
+
+    ```Bitfinex```
+
+    ```KrakenDirect```
+
+    ```Vanguard```
+
+    ```BinanceInternationalDirect```
+
+    ```Bybit```
+
+    ```CoinbasePrime```
+
+
+
+    ### Integration-specific notes:
+
+
+
+    #### Binance:
+
+
+
+    Because of limitations of Binance API, initial loading of transaction history in Binance can take
+    long time
+
+
+    depending on the size of the portfolio.
+
+
+
+    #### OkCoin:
+
+
+
+    Getting transactions history from OkCoin is not currently supported.
+  humanURL: https://docs.meshconnect.com/overview
+  baseURL: https://integration-api.meshconnect.com
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/mesh-connect-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.meshconnect.com/
+  - type: Authentication
+    url: authentication/mesh-connect-authentication.yml
+- aid: mesh-connect:mesh-connect-transfers-api
+  name: Mesh Connect Transfers API
+  description: >-
+    ### Supported integrations:
+
+    ```Robinhood```
+
+    ```Coinbase```
+
+    ```Kraken```
+
+    ```CoinbasePro```
+
+    ```CryptoCom```
+
+    ```Binance```
+
+    ```Gemini```
+
+    ```OkCoin```
+
+    ```KuCoin```
+
+    ```BinanceInternational```
+
+    ```Bitstamp```
+
+    ```GateIo```
+
+    ```Okx```
+
+    ```Huobi```
+
+    ```Bitfinex```
+
+    ```KrakenDirect```
+
+    ```BinanceInternationalDirect```
+
+    ```Bybit```
+
+    ```Paxos```
+
+    ```CoinbasePrime```
+
+    ```DeFiWallet```
+
+
+
+    ### Integration-specific notes:
+
+
+
+    #### Robinhood:
+
+
+
+    Cryptocurrency transfers should be enabled in Robinhood settings. Transfers are disabled by default,
+    enabling them for end users requires a review from Robinhood.
+
+
+    Please note:
+     * `MfaCode` parameter is required to initiate a transaction in Robinhood.
+     * The user's security settings should be configured to use an authenticator application.
+     * Robinhood doesn't allow initiation of transactions if the authenticator application is not configured.
+
+
+    #### Coinbase:
+
+
+
+    `MfaCode` parameter should be used to initiate transactions in Coinbase.
+     * If the end user's Coinbase account is configured to use text messages (SMS) for two factor authentication,
+    the API will return `MfaRequired` status, and a text code will then be sent by Coinbase. The code
+    is expected to be provided in the subsequent call using the `MfaCode` request field
+     * If the account is configured to use an authenticator application, the API is expecting to get the
+    code in the `MfaCode` request field.
+
+
+    #### Kraken:
+
+
+
+    Kraken requires the explicit chain name to be provided (e.g. `Dogecoin` or `Ethereum (ERC20)`). The
+    list of possible chains can be obtained by calling `symbol/details` endpoint.
+
+
+    To initiate a transaction, a Kraken Address Key name should be provided in `TargetAddress` field.
+    Target address should be added using Kraken UI, then its name should be used.
+
+
+
+    #### CoinbasePro:
+     * CoinbasePro does not provide multiple chains per a symbol, so default chains are used for getting
+    Deposit addresses.
+
+
+    #### Binance:
+
+
+
+    `Enable Withdrawals` permission should be given to the user's API key to initiate transfers with Binance
+    Us.
+
+
+    Binance requires adding the IP address to the list of trusted IPs to be able to create API keys with
+    transfer permission.
+     * Please reach out to Front to get the static IP address. This address should be provided to the
+    end user, and the user should be instructed to add it to the list of trusted IP addresses.
+     * By default, the permission to enable withdrawals is turned off. If the end user's API key does
+    not have the permission, asset transfers will not be available.
+
+
+    #### KuCoin:
+
+
+
+    KuCoin requires adding the IP address to the list of trusted IPs to be able to create API keys with
+    transfer permission.
+
+
+    `Fee` parameter should be used to initiate a transaction in KuCoin.
+
+
+    Please note:
+     * Please reach out to Front to get the static IP address. This address should be provided to the
+    end user, and the user should be instructed to add it to the list of trusted IP addresses.
+     * All currencies have their minimum `fee` and `amount` requirements. Please use `symbol/details`
+    endpoint to get this data for a particular symbol.
+     * KuCoin requires chain name to be provided for getting deposit address or initiating a cryptocurrency
+    transfer. Some cryptocurrencies are supported over multiple chains. It's recommended to use `symbol/details`
+    endpoint to get the list of supported chains and show it to the end user to select a target one.
+
+
+    #### BinanceInternational:
+
+
+
+    `Enable Withdrawals` permission should be given to the user's API key to initiate transfers with Binance
+    International.
+
+
+    Binance requires adding the IP address to the list of trusted IPs to be able to create API keys with
+    transfer permission.
+     * Please reach out to Front to get the static IP address. This address should be provided to the
+    end user, and the user should be instructed to add it to the list of trusted IP addresses.
+     * By default, the permission to enable withdrawals is turned off. If the end user's API key does
+    not have the permission, asset transfers will not be available.
+
+
+    #### GateIo:
+
+
+
+    Gate.io requires adding IP address to the list of trusted IP addresses to be able to initiate a cryptocurrency
+    transfers.
+
+
+    Withdrawal address should be already verified or added on the Gate.io UI (in mobile application or
+    on the web site).
+     * Please reach out to Front to get the static IP address for withdrawals. This address should be
+    provided to the end user, and the user should be instructed to add it to the list of trusted IP addresses.
+     * Only verified withdrawal blockchain addresses are allowed for withdrawal with Gate.io API.
+     * Gate.io requires chain name to be provided for getting deposit address or initiating a cryptocurrency
+    transfer. Some cryptocurrencies are supported over multiple chains. It's recommended to use `symbol/details`
+    endpoint to get the list of supported chains and show it to the end user to select a target one.
+
+
+    #### Huobi:
+
+
+
+    Warning: Huobi does not refund executed deposits that are below the `Minimum Deposit Amount`
+     * Please check the MinimumDepositAmount in Get Deposit Address response in order to avoid making
+    a deposit below the minimum amount
+     * Huobi does not allow withdrawals to addresses that are not white-listed, please add the address
+    that you would like to withdraw to the white list of addresses through the UI so that a withrawal
+    can be processed
+
+
+    #### Bitfinex:
+     * The hash of transfer is not available when making a transfer in Bitfinex. To get the hash please
+    re-query the transfer using the transaction id.
+     * Bitfinex does not separate sub-accounts when returning the list of transfers.Therefore the same
+    list of transfers is returned for all Bitfinex sub-accounts.
+
+
+    #### KrakenDirect:
+
+
+
+    Kraken requires the explicit chain name to be provided (e.g. `Dogecoin` or `Ethereum (ERC20)`). The
+    list of possible chains can be obtained by calling `symbol/details` endpoint.
+
+
+    To initiate a transaction, a Kraken Address Key name should be provided in `TargetAddress` field.
+    Target address should be added using Kraken UI, then its name should be used.
+  humanURL: https://docs.meshconnect.com/overview
+  baseURL: https://integration-api.meshconnect.com
+  tags:
+  - Transfers
+  properties:
+  - type: OpenAPI
+    url: openapi/mesh-connect-transfers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.meshconnect.com/
+  - type: Authentication
+    url: authentication/mesh-connect-authentication.yml
 common:
+- type: AgenticAccess
+  url: agentic-access/mesh-connect-agentic-access.yml
 - type: Website
-  url: https://www.meshconnect.com
+  url: https://www.meshpay.com
+- type: DeveloperPortal
+  url: https://docs.meshconnect.com/overview
+- type: Documentation
+  url: https://docs.meshconnect.com/
+- type: APIReference
+  url: https://docs.meshconnect.com/api-reference
+- type: GettingStarted
+  url: https://docs.meshconnect.com/build/15min-quickstart
+- type: Blog
+  url: https://www.meshpay.com/blog
+- type: GitHubOrganization
+  url: https://github.com/FrontFin
+- type: StatusPage
+  url: https://status.meshconnect.com/
+- type: Login
+  url: https://dashboard.meshconnect.com/login
+- type: TermsOfService
+  url: https://www.meshpay.com/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.meshpay.com/privacy-policy
+- type: Compliance
+  url: https://www.meshpay.com/security
+- type: TrustCenter
+  url: security/mesh-connect-trust-center.yml
+- type: DomainSecurity
+  url: security/mesh-connect-domain-security.yml
+- type: Authentication
+  url: authentication/mesh-connect-authentication.yml
+- type: Packages
+  url: packages/mesh-connect-packages.yml
+- type: SDKs
+  url: packages/mesh-connect-packages.yml
+- type: LLMsTxt
+  url: llms/mesh-connect-llms.txt
+- type: MCPServer
+  url: mcp/mesh-connect-mcp.yml
+- type: Sandbox
+  url: sandbox/mesh-connect-sandbox.yml
+- type: ChangeLog
+  url: changelog/mesh-connect-changelog.yml
+- type: Lifecycle
+  url: lifecycle/mesh-connect-lifecycle.yml
+- type: Conventions
+  url: conventions/mesh-connect-conventions.yml
+- type: Conformance
+  url: conformance/mesh-connect-conformance.yml
+- type: ErrorCatalog
+  url: errors/mesh-connect-problem-types.yml
+- type: DataModel
+  url: data-model/mesh-connect-data-model.yml
+- type: Components
+  url: components/mesh-connect-components.yml
+- type: Webhooks
+  url: asyncapi/mesh-connect-transfers-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 25
+  pass: local-v1
