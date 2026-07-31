@@ -1,0 +1,31 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/mesh-connect-admin-openapi-original.json, openapi/mesh-connect-openapi-original.json
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: Bearer
+  type: http
+  scheme: bearer
+  description: 'Authorization header using the Bearer scheme. Example: "Authorization: Bearer
+    {Value}"'
+  sources:
+  - openapi/mesh-connect-admin-openapi-original.json
+- name: Client-Secret
+  type: apiKey
+  in: header
+  parameter: X-Client-Secret
+  description: Contact Mesh to get client Secret
+  sources:
+  - openapi/mesh-connect-openapi-original.json
+- name: Client-Id
+  type: apiKey
+  in: header
+  parameter: X-Client-Id
+  description: Contact Mesh to get client Id
+  sources:
+  - openapi/mesh-connect-openapi-original.json

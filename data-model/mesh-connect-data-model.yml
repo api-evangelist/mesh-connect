@@ -1,0 +1,106 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/mesh-connect-openapi-original.json (paths + components.schemas)
+note: >-
+  Entity graph derived from the Integration API paths (/api/v1/*) and the 212
+  component schemas. Responses are wrapped in *ApiResult envelopes; entities
+  below are the underlying domain models.
+entities:
+  - name: MainClient
+    description: Top-level Mesh account (holds allowed Link callback URLs and API keys).
+    operations:
+      - GET /api/v1/main-clients callback urls
+  - name: RegisteredClient
+    description: Sub-client created under a MainClient, with its own config and logo.
+    operations:
+      - POST /api/v1/registered-clients (add)
+      - GET /api/v1/registered-clients (list/get)
+      - PUT /api/v1/registered-clients (update)
+      - DELETE /api/v1/registered-clients
+  - name: Integration
+    description: A supported financial institution / exchange / wallet provider.
+    operations:
+      - GET /api/v1/integrations
+      - GET /api/v1/status (health)
+  - name: Connection
+    description: A user's authenticated link to an Integration (managed or self-managed).
+    operations:
+      - POST /api/v1/linktoken
+      - POST /api/v1/token/refresh
+      - DELETE /api/v1/account
+  - name: Portfolio
+    description: Aggregated holdings and market values across a user's connections.
+    operations:
+      - GET /api/v1/holdings/portfolio
+      - POST /api/v1/holdings/get
+      - POST /api/v1/holdings/value
+  - name: Balance
+    description: Real-time and aggregated fiat balances.
+    operations:
+      - POST /api/v1/balance/get
+      - GET /api/v1/balance/portfolio
+  - name: Transaction
+    description: Trade/order activity on a connected brokerage account.
+    operations:
+      - POST /api/v1/transactions/list
+      - POST /api/v1/transactions/details
+      - POST /api/v1/transactions/{side}
+  - name: Transfer
+    description: Crypto transfer initiated by Mesh (managed or self-managed).
+    operations:
+      - POST /api/v1/transfers
+      - POST /api/v1/transfers/managed/execute
+      - POST /api/v1/transfers/managed/preview
+      - POST /api/v1/transfers/managed/quote
+      - GET /api/v1/transfers/managed/mesh
+  - name: Network
+    description: Supported blockchain network for transfers.
+    operations:
+      - GET /api/v1/transfers/managed/networks
+  - name: Token
+    description: Supported token/asset for transfers, keyed by symbol.
+    operations:
+      - GET /api/v1/transfers/managed/tokens
+      - GET /api/v1/assets/{assetType}
+  - name: DepositAddress
+    description: Crypto deposit address generated for a transfer target.
+    operations:
+      - POST /api/v1/transfers/address/get
+      - POST /api/v1/transfers/managed/address/get
+relationships:
+  - from: RegisteredClient
+    to: MainClient
+    type: belongs_to
+    via: main client
+  - from: Connection
+    to: Integration
+    type: belongs_to
+    via: integration
+  - from: Portfolio
+    to: Connection
+    type: has_many
+    via: connections
+  - from: Balance
+    to: Connection
+    type: belongs_to
+    via: connection
+  - from: Transaction
+    to: Connection
+    type: belongs_to
+    via: brokerage account
+  - from: Transfer
+    to: Network
+    type: belongs_to
+    via: chain
+  - from: Transfer
+    to: Token
+    type: belongs_to
+    via: token
+  - from: Transfer
+    to: DepositAddress
+    type: has_one
+    via: destination address
+  - from: Token
+    to: Network
+    type: has_many
+    via: supported networks

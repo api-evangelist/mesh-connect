@@ -1,0 +1,29 @@
+generated: '2026-07-20'
+method: derived
+source: >-
+  openapi/mesh-connect-openapi-original.json,
+  https://docs.meshconnect.com/resources/webhooks.md,
+  https://www.meshpay.com/security
+standards:
+  - id: oauth2
+    conforms: false
+    evidence: API uses apiKey header auth (X-Client-Id / X-Client-Secret), not OAuth2 client credentials.
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Error responses are application/json, not application/problem+json.
+  - id: hmac-webhook-signing
+    conforms: true
+    evidence: >-
+      Transfer status webhooks are signed with HMAC-SHA256 over the raw request
+      body, Base64-encoded in the X-Mesh-Signature-256 header.
+  - id: semver
+    conforms: true
+    evidence: SDKs follow semantic versioning (MAJOR.MINOR.PATCH) per SDK release notes.
+  - id: soc2
+    conforms: true
+    evidence: SOC 2 posture published on https://www.meshpay.com/security (see trust-center).
+  - id: rest-json
+    conforms: true
+    evidence: JSON over HTTPS REST API under /api/v1 with apiKey header auth.

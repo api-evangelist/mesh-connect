@@ -1,0 +1,36 @@
+{
+  "provider": "mesh-connect",
+  "sources": [
+    "mesh-connect-assets-api-openapi.yml",
+    "mesh-connect-auth-token-api-openapi.yml",
+    "mesh-connect-balance-api-openapi.yml",
+    "mesh-connect-brokeraccountdetail-api-openapi.yml",
+    "mesh-connect-main-clients-api-openapi.yml",
+    "mesh-connect-managed-account-authentication-api-openapi.yml",
+    "mesh-connect-managed-transfers-api-openapi.yml",
+    "mesh-connect-portfolio-api-openapi.yml",
+    "mesh-connect-registered-clients-api-openapi.yml",
+    "mesh-connect-self-managed-account-authentication-api-openapi.yml",
+    "mesh-connect-transactions-api-openapi.yml",
+    "mesh-connect-transfers-api-openapi.yml"
+  ],
+  "outputs": [
+    "mesh-connect-assets-api-openapi.yml",
+    "mesh-connect-auth-token-api-openapi.yml",
+    "mesh-connect-balance-api-openapi.yml",
+    "mesh-connect-brokeraccountdetail-api-openapi.yml",
+    "mesh-connect-main-clients-api-openapi.yml",
+    "mesh-connect-managed-account-authentication-api-openapi.yml",
+    "mesh-connect-managed-transfers-api-openapi.yml",
+    "mesh-connect-portfolio-api-openapi.yml",
+    "mesh-connect-registered-clients-api-openapi.yml",
+    "mesh-connect-self-managed-account-authentication-api-openapi.yml",
+    "mesh-connect-transactions-api-openapi.yml",
+    "mesh-connect-transfers-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

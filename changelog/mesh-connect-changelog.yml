@@ -1,0 +1,46 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.meshconnect.com/resources/sdk-release-notes.md
+scheme: semver
+scope: SDK release notes (per-platform Mesh Link SDKs); MAJOR.MINOR.PATCH.
+notify: >-
+  Subscribe via GitHub Watch (Custom -> Releases) on the SDK repos, or configure
+  Dependabot with ecosystem-specific allow lists (npm, gradle, pub, Swift PM).
+semver_policy:
+  major: Breaking API changes requiring migration review.
+  minor: Safe, non-breaking features.
+  patch: Bug fixes and improvements (safe and recommended).
+entries:
+  - sdk: Web SDK
+    version: 3.10.5
+    date: '2026-07-20'
+    breaking: false
+    highlights:
+      - Security fix restricting the Comlink wallet bridge to the Mesh iframe (cross-window message validation).
+      - Drop-in upgrade with no breaking changes.
+  - sdk: React Native SDK
+    version: 2.4.4
+    date: '2026-07-16'
+    breaking: false
+    highlights:
+      - Resolves OAuth and onramp handoff reliability on iOS by opening flows in the external browser.
+  - sdk: Flutter SDK
+    version: 1.1.8
+    date: '2026-07-10'
+    breaking: false
+    highlights:
+      - Enhanced event reporting with additional optional fields from the Link event contract.
+      - Platform identifier now sends platform=flutter to the Link UI.
+      - Improved delivery of sparse-payload events.
+  - sdk: Android SDK
+    version: 3.4.4
+    date: '2026-07-06'
+    breaking: false
+    highlights:
+      - Removed hardcoded third-party origins from the WebView domain whitelist.
+  - sdk: iOS SDK
+    version: 3.3.2
+    date: '2026-07-06'
+    breaking: false
+    highlights:
+      - Stability improvements including removal of hardcoded connection origins.

@@ -1,0 +1,49 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.meshconnect.com/resources/sandbox-testnets.md
+sandbox:
+  base_url: https://sandbox-integration-api.meshconnect.com
+  production_base_url: https://integration-api.meshconnect.com
+  access: Requires a Mesh dashboard account with a sandbox API key (X-Client-Id + X-Client-Secret).
+  mode_separation: Separate sandbox API keys and base host; production uses integration-api.meshconnect.com.
+cex_test_accounts:
+  # Published verbatim in the Mesh sandbox docs — simulate a real exchange connection.
+  password: Pass123
+  mfa_otp: '123456'
+  usernames:
+    - Mesh
+    - Mesh2
+    - Mesh3
+    - Mesh4
+    - MeshBTC
+    - MeshUSDC
+    - MeshUSDT
+    - MeshETH
+    - MeshSOL
+  examples:
+    - integration: Coinbase
+      username: Mesh
+      password: Pass123
+      otp: '123456'
+    - integration: Binance
+      username: Mesh
+      password: Pass123
+      otp: '123456'
+testnets:
+  - wallet: MetaMask
+    networks: [Sepolia, Base Sepolia]
+  - wallet: Rainbow
+    networks: [Sepolia]
+  - wallet: Phantom
+    networks: [Solana Devnet]
+    note: Requires enabling testnet mode in Settings.
+testnet_native_tokens:
+  - network: Sepolia
+    token: SEPOLIAETH
+  - network: Base Sepolia
+    token: SEPOLIAETH
+  - network: Solana Devnet
+    token: DEVNETSOL
+testnet_tokens_faucet: >-
+  Two ways to obtain testnet tokens: from a public faucet listed for your
+  testnet, or by requesting tokens from a Mesh representative directly.

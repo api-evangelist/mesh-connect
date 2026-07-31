@@ -1,0 +1,23 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/mesh-connect-openapi-original.json, docs.meshconnect.com
+note: >-
+  Skills grounded in real Mesh Integration API paths. The spec declares no
+  operationIds, so steps reference operations by HTTP method + path.
+skills:
+  - file: mesh-connect-connect-and-read-portfolio.md
+    name: Connect an account and read its portfolio
+    api: openapi/mesh-connect-openapi-original.json
+    operations:
+      - "POST /api/v1/linktoken"
+      - "GET /api/v1/holdings/portfolio"
+      - "POST /api/v1/balance/get"
+  - file: mesh-connect-execute-managed-transfer.md
+    name: Quote, preview, and execute a managed crypto transfer
+    api: openapi/mesh-connect-openapi-original.json
+    operations:
+      - "GET /api/v1/transfers/managed/tokens"
+      - "GET /api/v1/transfers/managed/networks"
+      - "POST /api/v1/transfers/managed/quote"
+      - "POST /api/v1/transfers/managed/preview"
+      - "POST /api/v1/transfers/managed/execute"

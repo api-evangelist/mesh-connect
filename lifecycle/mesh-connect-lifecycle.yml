@@ -1,0 +1,24 @@
+generated: '2026-07-20'
+method: searched
+source: >-
+  https://docs.meshconnect.com/resources/sdk-release-notes.md,
+  https://status.meshconnect.com/, openapi/mesh-connect-openapi-original.json
+versioning:
+  scheme: uri-path
+  current: v1
+  base_path: /api/v1
+  docs: https://docs.meshconnect.com/overview
+  sdk_versioning:
+    scheme: semver
+    docs: https://docs.meshconnect.com/resources/sdk-release-notes.md
+status_page: https://status.meshconnect.com/
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No formal RFC 8594 Sunset/Deprecation header policy documented. SDK breaking
+    changes are signaled via semver MAJOR bumps in the SDK release notes.
+link_token_lifecycle:
+  ttl: 10 minutes, single-use
+  source: https://docs.meshconnect.com/resources/common-errors.md
+deprecated_operations: []

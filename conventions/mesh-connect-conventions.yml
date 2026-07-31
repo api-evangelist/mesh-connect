@@ -1,0 +1,42 @@
+generated: '2026-07-20'
+method: searched
+source: >-
+  openapi/mesh-connect-openapi-original.json,
+  https://docs.meshconnect.com/resources/webhooks.md,
+  https://docs.meshconnect.com/resources/common-errors.md
+base_url: https://integration-api.meshconnect.com
+version_path: /api/v1
+authentication:
+  style: apiKey headers
+  headers:
+    - X-Client-Id
+    - X-Client-Secret
+  session_tokens: >-
+    Short-lived auth tokens and one-time Link tokens are minted for client-side
+    SDK flows (POST /api/v1/linktoken). Link tokens are 10-minute single-use.
+  see: authentication/mesh-connect-authentication.yml
+idempotency:
+  request_idempotency: false
+  note: >-
+    No request-level Idempotency-Key header is documented in the API. Idempotency
+    exists on the WEBHOOK consumer side: each event carries a stable EventId and
+    delivery is at-least-once, so consumers must deduplicate on EventId.
+error_envelope:
+  schema: ApiResult / ApiResultStatus
+  content_type: application/json
+  see: errors/mesh-connect-problem-types.yml
+webhooks:
+  signing: HMAC-SHA256 over raw body, Base64, in X-Mesh-Signature-256 header.
+  delivery: at-least-once; dedupe on EventId.
+  see: asyncapi/mesh-connect-transfers-webhooks.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  see: lifecycle/mesh-connect-lifecycle.yml
+multi_language:
+  supported: true
+  see: https://docs.meshconnect.com/resources/multi-language.md
+notes: >-
+  Payloads are JSON over HTTPS. List endpoints (transactions/list, transfers/list)
+  accept POST bodies with filter parameters. No cursor/offset pagination header
+  convention is documented at the API level.

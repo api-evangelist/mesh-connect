@@ -1,0 +1,1053 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Admin API",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://admin-api.meshconnect.com"
+    }
+  ],
+  "paths": {
+    "/admin/api/v1/Token": {
+      "post": {
+        "tags": [
+          "Auth token"
+        ],
+        "summary": "Generate Auth token",
+        "description": "Get a short lived token for initializing request calls for Registered client API.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAdminTokenRequest"
+              },
+              "example": {"clientId":"<api-key>","clientSecret":"<api-key>"}
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAdminTokenRequest"
+              },
+              "example": {"clientId":"<api-key>","clientSecret":"<api-key>"}
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientAdminTokenRequest"
+              },
+              "example": {"clientId":"<api-key>","clientSecret":"<api-key>"}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuthTokenResponseApiResult"
+                },
+                "example": {"content":{"id_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30","expires_in":3600,"status":"succeeded"},"status":"ok","message":"","errorHash":"e47df370","teamCode":"P4","errorType":""}
+              }
+            }
+          },
+          "400": {
+            "description": "Token request is not correct",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"status":"badRequest","message":"Error message","displayMessage":"Optional display message","errorHash":"cd59bd31","teamCode":"P4","errorType":"missingField"}
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied: Client Id or Client Secret are not correct or missing",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"status":"permissionDenied","message":"Error message","displayMessage":"Optional display message","errorHash":"cd59bd31","teamCode":"P4","errorType":"missingField"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/api/v1/Client/callbackUrls": {
+      "get": {
+        "tags": [
+          "Main Clients"
+        ],
+        "summary": "Get Main Client callback urls",
+        "description": "Get information about Main Client Allowed Link URLs.",
+        "responses": {
+          "200": {
+            "description": "Get Main Client callback urls",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2BPortalClientCallbackUrlsResponseApiResult"
+                },
+                "example": {"content":{"callbackUrls":["https://mainclient-website1.com","https://mainclient-website2.com"]},"status":"ok","message":"","errorHash":"dce0f573","teamCode":"P4","errorType":""}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Auth token request is not valid",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"statusCode":401}
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied: Request is not allowed",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"status":"permissionDenied","message":"Error message","displayMessage":"Optional display message","errorHash":"cd59bd31","teamCode":"P4","errorType":"missingField"}
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Main Clients"
+        ],
+        "summary": "Update Main Client callback urls",
+        "description": "Update information about Main Client Allowed Link URLs. Allowed Link URLs of Main Client will only be used for those Registered clients,\r\nthat don't have any Allowed Link URLs specified.",
+        "requestBody": {
+          "description": "Update Main Client Callback URLs request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2BPortalClientCallbackUrlsUpdateRequest"
+              },
+              "example": {"callbackUrls":["https://mainclient-website1.com","https://mainclient-website2.com"]}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Main Client callback urls added/updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResult"
+                },
+                "example": {"status":"ok","message":"","errorHash":"5f9b2029","teamCode":"P4","errorType":""}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Auth token request is not valid",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"statusCode":401}
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied: Request is not allowed",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"status":"permissionDenied","message":"Error message","displayMessage":"Optional display message","errorHash":"cd59bd31","teamCode":"P4","errorType":"missingField"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/api/v1/SubClient": {
+      "get": {
+        "tags": [
+          "Registered Clients"
+        ],
+        "summary": "Get all Registered clients",
+        "description": "Get information about all Registered clients.",
+        "responses": {
+          "200": {
+            "description": "List registered clients",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2B2BRegisteredClientDataIReadOnlyCollectionApiResult"
+                },
+                "example": {"content":[{"id":"1e21681d-b581-4028-8823-aa0ad4264e22","logoUrl":"https://file-cdn.meshconnect.com/public/clients/logo/oauth/registered/116a43e7-ddc9-4c61-b819-08ddd687d1d5f2fc96ed-cf41-454f-80c7-66520f5d047d.png","businessLegalName":"Client 1 Business Legal Name","displayName":"Client 1 Display Name","callbackUrls":["https://your-website1.com","https://your-website2.com"],"catalogConfiguration":null},{"id":"abea2b40-9856-4848-b650-626e314ef8f7","logoUrl":"https://file-cdn.meshconnect.com/public/clients/logo/oauth/registered/116a43e7-ddc9-4c61-b819-08ddd687d1d5f2fc96ed-cf41-454f-80c7-66520f5d047d.png","businessLegalName":"Client 2 Business Legal Name","displayName":"Client 2 Display Name","callbackUrls":[],"catalogConfiguration":null}],"status":"ok","message":"","errorHash":"7217233b","teamCode":"P4","errorType":""}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Auth token request is not valid",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"statusCode":401}
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied: Request is not allowed",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"status":"permissionDenied","message":"Error message","displayMessage":"Optional display message","errorHash":"cd59bd31","teamCode":"P4","errorType":"missingField"}
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Registered Clients"
+        ],
+        "summary": "Add new Registered client",
+        "description": "Create new Registered client with specified data. Client will be created without Logo URL.\r\nIn order to specify a Logo URL, send separate Update Registered Logo request along with id of just created client.",
+        "requestBody": {
+          "description": "Create Registered client request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2B2BRegisteredClientInfo"
+              },
+              "example": {"businessLegalName":"Client 1 Business Legal Name","displayName":"Client 1 Display Name","callbackUrls":["https://your-website1.com","https://your-website2.com"],"catalogConfiguration":null}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registered client created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2B2BRegisteredClientDataApiResult"
+                },
+                "example": {"content":{"id":"ec6d96eb-efa9-4c32-9425-7b3405af31f3","logoUrl":"https://file-cdn.meshconnect.com/public/clients/logo/oauth/registered/116a43e7-ddc9-4c61-b819-08ddd687d1d5f2fc96ed-cf41-454f-80c7-66520f5d047d.png","businessLegalName":"Client 1 Business Legal Name","displayName":"Client 1 Display Name","callbackUrls":["https://your-website1.com","https://your-website2.com"],"catalogConfiguration":null},"status":"ok","message":"","errorHash":"51d01c67","teamCode":"P4","errorType":""}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Auth token request is not valid",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"statusCode":401}
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied: Request is not allowed",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"status":"permissionDenied","message":"Error message","displayMessage":"Optional display message","errorHash":"cd59bd31","teamCode":"P4","errorType":"missingField"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/api/v1/SubClient/{id}": {
+      "get": {
+        "tags": [
+          "Registered Clients"
+        ],
+        "summary": "Get Registered client",
+        "description": "Get information about the Registered client of specified identifier.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The identifier of the Registered client",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get registered client",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2B2BRegisteredClientDataApiResult"
+                },
+                "example": {"content":{"id":"2977d1cf-5d2e-4074-8751-516834b1fba6","logoUrl":"https://file-cdn.meshconnect.com/public/clients/logo/oauth/registered/116a43e7-ddc9-4c61-b819-08ddd687d1d5f2fc96ed-cf41-454f-80c7-66520f5d047d.png","businessLegalName":"Client 1 Business Legal Name","displayName":"Client 1 Display Name","callbackUrls":["https://your-website1.com","https://your-website2.com"],"catalogConfiguration":null},"status":"ok","message":"","errorHash":"51d01c67","teamCode":"P4","errorType":""}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Auth token request is not valid",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"statusCode":401}
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied: Request is not allowed",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"status":"permissionDenied","message":"Error message","displayMessage":"Optional display message","errorHash":"cd59bd31","teamCode":"P4","errorType":"missingField"}
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Registered Clients"
+        ],
+        "summary": "Update Registered client",
+        "description": "Update information about already Registered client by client id. This request does not support updating client Logo URL.\r\nIn order to update a Logo URL, send separate Update Registered Logo request along with id of the client.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The identifier of the Registered client to update",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update Registered client request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/B2B2BRegisteredClientInfo"
+              },
+              "example": {"businessLegalName":"Client 1 Business Legal Name","displayName":"Client 1 Display Name","callbackUrls":["https://your-website1.com","https://your-website2.com"],"catalogConfiguration":null}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registered client updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2B2BRegisteredClientDataApiResult"
+                },
+                "example": {"content":{"id":"c47c6104-79f2-4838-94b9-23221119a075","logoUrl":"https://file-cdn.meshconnect.com/public/clients/logo/oauth/registered/116a43e7-ddc9-4c61-b819-08ddd687d1d5f2fc96ed-cf41-454f-80c7-66520f5d047d.png","businessLegalName":"Client 1 Business Legal Name","displayName":"Client 1 Display Name","callbackUrls":["https://your-website1.com","https://your-website2.com"],"catalogConfiguration":null},"status":"ok","message":"","errorHash":"51d01c67","teamCode":"P4","errorType":""}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Auth token request is not valid",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"statusCode":401}
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied: Request is not allowed",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"status":"permissionDenied","message":"Error message","displayMessage":"Optional display message","errorHash":"cd59bd31","teamCode":"P4","errorType":"missingField"}
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Registered Clients"
+        ],
+        "summary": "Delete Registered client",
+        "description": "Delete Registered client by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The identifier of the Registered client to delete",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Registered client deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResult"
+                },
+                "example": {"status":"ok","message":"","errorHash":"5f9b2029","teamCode":"P4","errorType":""}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Auth token request is not valid",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"statusCode":401}
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied: Request is not allowed",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"status":"permissionDenied","message":"Error message","displayMessage":"Optional display message","errorHash":"cd59bd31","teamCode":"P4","errorType":"missingField"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/api/v1/SubClient/{id}/logo": {
+      "post": {
+        "tags": [
+          "Registered Clients"
+        ],
+        "summary": "Update Registered client Logo",
+        "description": "Adds or update a logo for Registered client.\r\nAllowed file extensions are \".png\", \".jpg\", \".jpeg\".\r\nAllowed file MIME types are \"image/png\", \"image/jpeg\", \"image/jpg\".\r\nMaximum file size is 5MB.\r\nUpload logo as form data with key 'logoFile'.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The identifier of the Registered client to update logo for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "logoFile"
+                ],
+                "type": "object",
+                "properties": {
+                  "logoFile": {
+                    "type": "string",
+                    "description": "Logo image file (.png, .jpg, .jpeg only, max 5MB)",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "logoFile": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registered client logo added/updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2B2BRegisteredClientLogoApiResult"
+                },
+                "example": {"content":{"logoUrl":"https://file-cdn.meshconnect.com/public/clients/logo/oauth/registered/116a43e7-ddc9-4c61-b819-08ddd687d1d5f2fc96ed-cf41-454f-80c7-66520f5d047d.png"},"status":"ok","message":"","errorHash":"30967b18","teamCode":"P4","errorType":""}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Auth token request is not valid",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"statusCode":401}
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied: Request is not allowed",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"status":"permissionDenied","message":"Error message","displayMessage":"Optional display message","errorHash":"cd59bd31","teamCode":"P4","errorType":"missingField"}
+              }
+            }
+          },
+          "415": {
+            "description": "Media type unsupported: Invalid logo file specified",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"statusCode":415}
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Registered Clients"
+        ],
+        "summary": "Remove Registered client Logo",
+        "description": "Remove logo of Registered client.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The identifier of the Registered client to remove logo for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Registered client logo removed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResult"
+                },
+                "example": {"status":"ok","message":"","errorHash":"5f9b2029","teamCode":"P4","errorType":""}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Auth token request is not valid",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"statusCode":401}
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied: Request is not allowed",
+            "content": {
+              "application/json": {
+                "schema": { },
+                "example": {"status":"permissionDenied","message":"Error message","displayMessage":"Optional display message","errorHash":"cd59bd31","teamCode":"P4","errorType":"missingField"}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ApiResultStatus"
+          },
+          "message": {
+            "type": "string",
+            "description": "A message generated by the API",
+            "nullable": true
+          },
+          "displayMessage": {
+            "type": "string",
+            "description": "User-friendly display message that can be presented to the end user",
+            "nullable": true
+          },
+          "errorHash": {
+            "type": "string",
+            "description": "An error grouping hash from string components and caller information. Used by bugsnag on FE for correct error grouping",
+            "nullable": true,
+            "readOnly": true
+          },
+          "teamCode": {
+            "type": "string",
+            "description": "Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.\r\nFormat: 2-character code (e.g., \"7K\", \"M2\"). Use for alerting/routing, not display.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "errorType": {
+            "type": "string",
+            "description": "Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.\r\nAll possible error types are available in the documentation.",
+            "nullable": true
+          },
+          "errorData": {
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiResultStatus": {
+        "enum": [
+          "ok",
+          "serverFailure",
+          "permissionDenied",
+          "badRequest",
+          "notFound",
+          "conflict",
+          "tooManyRequest",
+          "locked",
+          "unavailableForLegalReasons"
+        ],
+        "type": "string"
+      },
+      "AuthenticationStatus": {
+        "enum": [
+          "failed",
+          "succeeded",
+          "mfaRequired",
+          "available"
+        ],
+        "type": "string"
+      },
+      "B2B2BRegisteredClientData": {
+        "required": [
+          "businessLegalName",
+          "displayName",
+          "logoUrl"
+        ],
+        "type": "object",
+        "properties": {
+          "businessLegalName": {
+            "maxLength": 300,
+            "minLength": 0,
+            "type": "string",
+            "description": "Registered client Business Legal Name"
+          },
+          "displayName": {
+            "maxLength": 300,
+            "minLength": 0,
+            "type": "string",
+            "description": "Registered client Display Name"
+          },
+          "callbackUrls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Registered client Allowed Link URLs. If no Allowed Link URLs are specified, Allowed Link URLs from main client will be used.",
+            "nullable": true
+          },
+          "catalogConfiguration": {
+            "$ref": "#/components/schemas/CatalogConfiguration"
+          },
+          "id": {
+            "type": "string",
+            "description": "Registered client Id",
+            "format": "uuid"
+          },
+          "logoUrl": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "type": "string",
+            "description": "Registered client Logo URL address"
+          },
+          "fundingTokenWhitelist": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Funding token whitelist inherited from the parent (main) client. Read-only — sub-client level\r\nfunding token whitelisting is tracked under PRG-2682 / Lane C-3.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "B2B2BRegisteredClientDataApiResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ApiResultStatus"
+          },
+          "message": {
+            "type": "string",
+            "description": "A message generated by the API",
+            "nullable": true
+          },
+          "displayMessage": {
+            "type": "string",
+            "description": "User-friendly display message that can be presented to the end user",
+            "nullable": true
+          },
+          "errorHash": {
+            "type": "string",
+            "description": "An error grouping hash from string components and caller information. Used by bugsnag on FE for correct error grouping",
+            "nullable": true,
+            "readOnly": true
+          },
+          "teamCode": {
+            "type": "string",
+            "description": "Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.\r\nFormat: 2-character code (e.g., \"7K\", \"M2\"). Use for alerting/routing, not display.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "errorType": {
+            "type": "string",
+            "description": "Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.\r\nAll possible error types are available in the documentation.",
+            "nullable": true
+          },
+          "errorData": {
+            "nullable": true,
+            "readOnly": true
+          },
+          "content": {
+            "$ref": "#/components/schemas/B2B2BRegisteredClientData"
+          }
+        },
+        "additionalProperties": false
+      },
+      "B2B2BRegisteredClientDataIReadOnlyCollectionApiResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ApiResultStatus"
+          },
+          "message": {
+            "type": "string",
+            "description": "A message generated by the API",
+            "nullable": true
+          },
+          "displayMessage": {
+            "type": "string",
+            "description": "User-friendly display message that can be presented to the end user",
+            "nullable": true
+          },
+          "errorHash": {
+            "type": "string",
+            "description": "An error grouping hash from string components and caller information. Used by bugsnag on FE for correct error grouping",
+            "nullable": true,
+            "readOnly": true
+          },
+          "teamCode": {
+            "type": "string",
+            "description": "Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.\r\nFormat: 2-character code (e.g., \"7K\", \"M2\"). Use for alerting/routing, not display.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "errorType": {
+            "type": "string",
+            "description": "Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.\r\nAll possible error types are available in the documentation.",
+            "nullable": true
+          },
+          "errorData": {
+            "nullable": true,
+            "readOnly": true
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/B2B2BRegisteredClientData"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "B2B2BRegisteredClientInfo": {
+        "required": [
+          "businessLegalName",
+          "displayName"
+        ],
+        "type": "object",
+        "properties": {
+          "businessLegalName": {
+            "maxLength": 300,
+            "minLength": 0,
+            "type": "string",
+            "description": "Registered client Business Legal Name"
+          },
+          "displayName": {
+            "maxLength": 300,
+            "minLength": 0,
+            "type": "string",
+            "description": "Registered client Display Name"
+          },
+          "callbackUrls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Registered client Allowed Link URLs. If no Allowed Link URLs are specified, Allowed Link URLs from main client will be used.",
+            "nullable": true
+          },
+          "catalogConfiguration": {
+            "$ref": "#/components/schemas/CatalogConfiguration"
+          }
+        },
+        "additionalProperties": false
+      },
+      "B2B2BRegisteredClientLogo": {
+        "type": "object",
+        "properties": {
+          "logoUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "B2B2BRegisteredClientLogoApiResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ApiResultStatus"
+          },
+          "message": {
+            "type": "string",
+            "description": "A message generated by the API",
+            "nullable": true
+          },
+          "displayMessage": {
+            "type": "string",
+            "description": "User-friendly display message that can be presented to the end user",
+            "nullable": true
+          },
+          "errorHash": {
+            "type": "string",
+            "description": "An error grouping hash from string components and caller information. Used by bugsnag on FE for correct error grouping",
+            "nullable": true,
+            "readOnly": true
+          },
+          "teamCode": {
+            "type": "string",
+            "description": "Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.\r\nFormat: 2-character code (e.g., \"7K\", \"M2\"). Use for alerting/routing, not display.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "errorType": {
+            "type": "string",
+            "description": "Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.\r\nAll possible error types are available in the documentation.",
+            "nullable": true
+          },
+          "errorData": {
+            "nullable": true,
+            "readOnly": true
+          },
+          "content": {
+            "$ref": "#/components/schemas/B2B2BRegisteredClientLogo"
+          }
+        },
+        "additionalProperties": false
+      },
+      "B2BPortalClientCallbackUrlsResponse": {
+        "type": "object",
+        "properties": {
+          "callbackUrls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Client Allowed Link URLs.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "B2BPortalClientCallbackUrlsResponseApiResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ApiResultStatus"
+          },
+          "message": {
+            "type": "string",
+            "description": "A message generated by the API",
+            "nullable": true
+          },
+          "displayMessage": {
+            "type": "string",
+            "description": "User-friendly display message that can be presented to the end user",
+            "nullable": true
+          },
+          "errorHash": {
+            "type": "string",
+            "description": "An error grouping hash from string components and caller information. Used by bugsnag on FE for correct error grouping",
+            "nullable": true,
+            "readOnly": true
+          },
+          "teamCode": {
+            "type": "string",
+            "description": "Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.\r\nFormat: 2-character code (e.g., \"7K\", \"M2\"). Use for alerting/routing, not display.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "errorType": {
+            "type": "string",
+            "description": "Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.\r\nAll possible error types are available in the documentation.",
+            "nullable": true
+          },
+          "errorData": {
+            "nullable": true,
+            "readOnly": true
+          },
+          "content": {
+            "$ref": "#/components/schemas/B2BPortalClientCallbackUrlsResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "B2BPortalClientCallbackUrlsUpdateRequest": {
+        "required": [
+          "callbackUrls"
+        ],
+        "type": "object",
+        "properties": {
+          "callbackUrls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Client Allowed Link URLs."
+          }
+        },
+        "additionalProperties": false
+      },
+      "CatalogConfiguration": {
+        "type": "object",
+        "properties": {
+          "excludeIntegrationCategories": {
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Entire categories to hide. Allowed values: \"exchange\", \"wallet\". Cannot contain both.\r\nApplied at catalog-resolution time on top of any GUID-level Org.Front.Core.Contracts.Models.ClientConfigurations.CatalogConfiguration.ExcludeIntegrations\r\nfiltering (PRG-2793). Mutually exclusive with Org.Front.Core.Contracts.Models.ClientConfigurations.CatalogConfiguration.IntegrationWhiteList — the\r\nwhitelist mode and category exclusions cannot be combined; the validator rejects payloads\r\nthat try to set both.",
+            "nullable": true
+          },
+          "excludeIntegrations": {
+            "maxItems": 1000,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "A blacklist of integration identifiers to hide. Cannot be combined with integrationWhiteList.",
+            "nullable": true
+          },
+          "integrationWhiteList": {
+            "maxItems": 1000,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "An allow list of integration identifiers — only these show. Cannot be combined with\r\nexcludeIntegrationCategories or excludeIntegrations.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Catalog configuration for a profile. By default all integrations show; the fields below curate the catalog.\r\nintegrationWhiteList cannot be combined with excludeIntegrationCategories or excludeIntegrations."
+      },
+      "ClientAdminTokenRequest": {
+        "required": [
+          "clientId",
+          "clientSecret"
+        ],
+        "type": "object",
+        "properties": {
+          "clientId": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Contact Mesh to get client Id."
+          },
+          "clientSecret": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Contact Mesh to get Client Secret for Account Management API."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Generate Auth token."
+      },
+      "OAuthTokenResponse": {
+        "type": "object",
+        "properties": {
+          "id_token": {
+            "type": "string",
+            "description": "Authentication token.",
+            "nullable": true
+          },
+          "expires_in": {
+            "type": "integer",
+            "description": "Expiration time in seconds.",
+            "format": "int64",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/AuthenticationStatus"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OAuthTokenResponseApiResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ApiResultStatus"
+          },
+          "message": {
+            "type": "string",
+            "description": "A message generated by the API",
+            "nullable": true
+          },
+          "displayMessage": {
+            "type": "string",
+            "description": "User-friendly display message that can be presented to the end user",
+            "nullable": true
+          },
+          "errorHash": {
+            "type": "string",
+            "description": "An error grouping hash from string components and caller information. Used by bugsnag on FE for correct error grouping",
+            "nullable": true,
+            "readOnly": true
+          },
+          "teamCode": {
+            "type": "string",
+            "description": "Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.\r\nFormat: 2-character code (e.g., \"7K\", \"M2\"). Use for alerting/routing, not display.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "errorType": {
+            "type": "string",
+            "description": "Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.\r\nAll possible error types are available in the documentation.",
+            "nullable": true
+          },
+          "errorData": {
+            "nullable": true,
+            "readOnly": true
+          },
+          "content": {
+            "$ref": "#/components/schemas/OAuthTokenResponse"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {Value}\"",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}

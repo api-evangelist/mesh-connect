@@ -1,0 +1,63 @@
+generated: '2026-07-20'
+method: derived
+source: >-
+  openapi/mesh-connect-openapi-original.json (4xx/5xx responses),
+  https://docs.meshconnect.com/resources/common-errors.md
+format: json
+envelope:
+  schema: ApiResult
+  content_type: application/json
+  note: >-
+    Responses wrap results in an ApiResult envelope carrying an ApiResultStatus
+    (status/content). Not RFC 9457 application/problem+json.
+problems:
+  - status: 400
+    title: Bad Request
+    description: >-
+      Request details are not correct (validation failure, malformed body, or
+      invalid parameters).
+  - status: 401
+    title: Unauthorized
+    description: Client Id or Client Secret are missing or invalid.
+  - status: 403
+    title: Forbidden
+    description: >-
+      The API key used does not have the required read or write permission for
+      the operation.
+  - status: 404
+    title: Not Found
+    description: >-
+      Requested resource not found (e.g. API client not found, address/asset for
+      the required symbol not found).
+  - status: 500
+    title: Server Error
+    description: Unexpected internal server error.
+  - status: 503
+    title: Service Unavailable
+    description: Server temporarily unable to handle the request.
+integration_errors:
+  # Symptom/cause/fix scenarios from the Common Errors reference (not HTTP codes).
+  - name: SDK domain not authorized
+    symptom: Authorization or CORS error on load.
+    cause: Domain not in the Mesh allowlist.
+  - name: SDK iframe blocked by CSP
+    symptom: Blank grey box where the modal should appear.
+    cause: CSP frame-src rejects *.meshconnect.com.
+  - name: Tron transfers blocked by CSP
+    symptom: RPC calls to Tron endpoints refused.
+    cause: CSP connect-src missing Tron nodes.
+  - name: Link token expired or already used
+    symptom: Error on openLink().
+    cause: Link token is 10-minute single-use.
+  - name: Empty catalog / symbol mismatch
+    symptom: No assets shown or toAddresses error.
+    cause: Contract address passed instead of ticker symbol.
+  - name: Webhook signature validation fails
+    symptom: All signatures rejected.
+    cause: HMAC computed over re-serialized JSON, not raw bytes.
+  - name: Transfer stuck pending
+    symptom: Succeeded webhook never arrives.
+    cause: CEX delay (up to 24h), amount below minimum, or 2FA timeout.
+  - name: Duplicate webhook deliveries
+    symptom: Same event processed multiple times.
+    cause: At-least-once delivery; retries on non-2xx response. Deduplicate on EventId.

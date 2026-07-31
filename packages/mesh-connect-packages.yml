@@ -1,0 +1,72 @@
+generated: '2026-07-20'
+method: searched
+source: https://www.npmjs.com/org/meshconnect, https://github.com/orgs/FrontFin/repositories
+packages:
+  - language: javascript
+    registry: npm
+    name: "@meshconnect/web-link-sdk"
+    url: https://www.npmjs.com/package/@meshconnect/web-link-sdk
+    install: npm install @meshconnect/web-link-sdk
+    version: 3.10.5
+    repository: https://github.com/FrontFin/mesh-web-sdk
+    license: MIT
+    official: true
+    description: Client-side JS library for integrating the Mesh Link connection flow.
+  - language: javascript
+    registry: npm
+    name: "@meshconnect/node-api"
+    url: https://www.npmjs.com/package/@meshconnect/node-api
+    install: npm install @meshconnect/node-api
+    version: 2.0.28
+    license: MIT
+    official: true
+    description: Node.js server-side client library for the Mesh API.
+  - language: javascript
+    registry: npm
+    name: "@meshconnect/react-native-link-sdk"
+    url: https://www.npmjs.com/package/@meshconnect/react-native-link-sdk
+    install: npm install @meshconnect/react-native-link-sdk
+    version: 2.4.4
+    repository: https://github.com/FrontFin/mesh-react-native-sdk
+    official: true
+    description: Mesh Connect React Native SDK.
+  - language: dart
+    registry: pub.dev
+    name: mesh-flutter-sdk
+    url: https://github.com/FrontFin/mesh-flutter-sdk
+    official: true
+    description: Flutter SDK for Mesh crypto payments and deposits.
+  - language: swift
+    registry: swift-package-manager
+    name: mesh-ios-sdk
+    url: https://github.com/FrontFin/mesh-ios-sdk
+    official: true
+    description: Mesh iOS SDK.
+  - language: kotlin
+    registry: maven
+    name: mesh-android-sdk
+    url: https://github.com/FrontFin/mesh-android-sdk
+    official: true
+    description: Mesh Android SDK.
+  - language: javascript
+    registry: npm
+    name: "@meshconnect/uwc-core"
+    url: https://www.npmjs.com/package/@meshconnect/uwc-core
+    install: npm install @meshconnect/uwc-core
+    version: 1.6.0
+    official: true
+    description: Core functionality for the Universal Wallet Connector (UWC).
+  - language: javascript
+    registry: npm
+    name: "@meshconnect/uwc-react"
+    url: https://www.npmjs.com/package/@meshconnect/uwc-react
+    install: npm install @meshconnect/uwc-react
+    version: 0.11.11
+    official: true
+    description: React hooks and components for the Universal Wallet Connector.
+notes: >-
+  No PyPI package published (meshconnect / mesh-connect both 404). SDK family is
+  published under the @meshconnect npm org and the FrontFin GitHub org
+  (FrontFin is Mesh's legacy org name). Additional UWC connector packages exist
+  (uwc-injected-connector, uwc-wallet-connect-connector, uwc-ton-connector,
+  uwc-tron-connector, solana-web3.js) as part of the Universal Wallet Connector.

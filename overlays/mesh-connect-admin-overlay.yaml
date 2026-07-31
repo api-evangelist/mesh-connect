@@ -1,0 +1,13 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Mesh Admin API
+  version: 1.0.0
+extends: openapi/mesh-connect-admin-openapi-original.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-rating: 3
+      x-apievangelist-notes: >-
+        Admin API (registered-client / logo management). Bearer-auth. Small
+        surface (5 paths) complementing the Integration API.
+      x-apievangelist-authentication: HTTP Bearer

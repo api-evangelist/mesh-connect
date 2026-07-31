@@ -1,0 +1,40 @@
+generated: '2026-07-20'
+method: searched
+source: >-
+  https://docs.meshconnect.com/build/launch-sdk.md,
+  https://www.npmjs.com/org/meshconnect,
+  https://github.com/orgs/FrontFin/repositories
+families:
+  - family: Mesh Link
+    kind: embedded-connection-flow
+    description: >-
+      Client-side, drop-in modal/iframe that runs the end-user connection,
+      authentication (MFA/OAuth), transfer, and onramp flows. Launched with
+      openLink() from a short-lived Link token; emits callback events
+      (onIntegrationConnected, onTransferFinished, onExit, onEvent).
+    loaders:
+      - "@meshconnect/web-link-sdk"
+      - "@meshconnect/react-native-link-sdk"
+      - mesh-flutter-sdk
+      - mesh-ios-sdk
+      - mesh-android-sdk
+    events:
+      - onIntegrationConnected
+      - onTransferFinished
+      - onExit
+      - onEvent
+  - family: Universal Wallet Connector (UWC)
+    kind: embedded-wallet-connector
+    description: >-
+      Component library for connecting self-custody / injected / WalletConnect /
+      TON / Tron / Solana wallets inside the host application.
+    loaders:
+      - "@meshconnect/uwc-core"
+      - "@meshconnect/uwc-react"
+      - "@meshconnect/uwc-injected-connector"
+      - "@meshconnect/uwc-wallet-connect-connector"
+      - "@meshconnect/uwc-ton-connector"
+      - "@meshconnect/uwc-tron-connector"
+notes: >-
+  Distinct from the server-side node-api SDK in packages/. CSP allowlisting of
+  *.meshconnect.com (frame-src / connect-src) is required for the embedded modal.

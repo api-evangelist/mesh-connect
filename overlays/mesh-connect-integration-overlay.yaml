@@ -1,0 +1,21 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Mesh Connect Integration API
+  version: 1.0.0
+extends: openapi/mesh-connect-openapi-original.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-rating: 4
+      x-apievangelist-notes: >-
+        Rich 39-operation crypto payments/connectivity API. Gap surfaced for the
+        provider: operations declare no operationId (all null), which weakens
+        SDK/codegen and agent-tool naming. Recommend adding stable operationIds.
+      x-apievangelist-authentication: apiKey headers (X-Client-Id, X-Client-Secret)
+      x-apievangelist-webhooks: HMAC-SHA256 signed transfer-status webhooks (X-Mesh-Signature-256)
+  - target: $.servers
+    update:
+      - url: https://integration-api.meshconnect.com
+        description: Production
+      - url: https://sandbox-integration-api.meshconnect.com
+        description: Sandbox

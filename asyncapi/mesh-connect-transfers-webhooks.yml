@@ -1,0 +1,52 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.meshconnect.com/resources/webhooks.md
+spec_type: Webhooks
+surface: Transfer status webhooks (no published AsyncAPI document)
+transport: HTTPS POST to a customer-registered endpoint
+configuration:
+  register_at: Mesh dashboard > Account > API keys > Webhooks
+  static_source_ip: 20.22.113.37
+  note: Requests originate from a static IP that must be whitelisted; secret shown once at registration.
+signing:
+  algorithm: HMAC-SHA256
+  header: X-Mesh-Signature-256
+  scheme: >-
+    Compute HMAC-SHA256 over the RAW request body using the webhook secret,
+    Base64-encode, and compare to X-Mesh-Signature-256. Never parse/re-serialize
+    JSON before computing the HMAC.
+delivery:
+  guarantee: at-least-once
+  retries: Retries on any non-2xx response; deduplicate on EventId.
+event_types:
+  - name: Pending
+    description: Transfer has been initiated and is in progress.
+  - name: Succeeded
+    description: Transfer completed successfully.
+  - name: Failed
+    description: Transfer failed.
+  - name: RefundPending
+    description: A refund for the transfer is in progress.
+  - name: RefundSucceeded
+    description: A refund for the transfer completed.
+payload_fields:
+  webhook_envelope:
+    - EventId   # Guid, stable identifier for deduplication across retries
+    - Id        # Guid, unique per delivery attempt
+    - SentTimestamp  # long, unix timestamp of dispatch
+  transfer:
+    - TransferId
+    - Timestamp
+    - TransferStatus
+    - TransactionId
+    - TxHash
+    - UserId
+    - Token
+    - Chain
+    - SourceAmount
+    - DestinationAmount
+    - DestinationAddress
+    - SourceAddress
+    - RefundAddress
+    - RefundType
+    - TransferSteps   # ordered list of the onchain legs composing a multi-step transfer
