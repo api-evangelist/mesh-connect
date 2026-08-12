@@ -637,6 +637,8 @@ apis:
   - type: Authentication
     url: authentication/mesh-connect-authentication.yml
 common:
+- type: Overlay
+  url: overlays/mesh-connect-admin-overlay.yaml
 - type: AgenticAccess
   url: agentic-access/mesh-connect-agentic-access.yml
 - type: Website
