@@ -6,50 +6,54 @@ server:
   name: mesh-connect
   transport: http
   url: null
-note: >-
-  No official hosted/remote Mesh MCP server was found. Tool list is a candidate
-  derived from the Integration API operations. The spec declares no operationIds,
-  so tools are keyed by HTTP method + path.
+note: No official hosted/remote Mesh MCP server was found. Tool list is a candidate derived from the Integration
+  API operations. The spec declares no operationIds, so tools are keyed by HTTP method + path.
 tools:
-  - name: get_link_token
-    description: Get a short-lived, one-time Link token to initialize a client-side SDK session.
-    source_operation: "POST /api/v1/linktoken"
-  - name: list_integrations
-    description: Retrieve the list of all available integrations (institutions/exchanges/wallets).
-    source_operation: "GET /api/v1/integrations"
-  - name: get_integrations_health
-    description: Get supported institutions and their health statuses.
-    source_operation: "GET /api/v1/status"
-  - name: get_holdings
-    description: Obtain assets from a connected investment account (real-time).
-    source_operation: "POST /api/v1/holdings/get"
-  - name: get_portfolio
-    description: Get the aggregated portfolio with market values.
-    source_operation: "GET /api/v1/holdings/portfolio"
-  - name: get_balance
-    description: Get real-time account fiat balances.
-    source_operation: "POST /api/v1/balance/get"
-  - name: get_supported_tokens
-    description: List tokens supported for transfers with networks and integrations.
-    source_operation: "GET /api/v1/transfers/managed/tokens"
-  - name: get_networks
-    description: List supported blockchain networks for transfers.
-    source_operation: "GET /api/v1/transfers/managed/networks"
-  - name: preview_transfer
-    description: Preview a managed crypto transfer before executing.
-    source_operation: "POST /api/v1/transfers/managed/preview"
-  - name: quote_transfer
-    description: Get a quote for a managed transfer (fees, min/max amounts).
-    source_operation: "POST /api/v1/transfers/managed/quote"
-  - name: execute_transfer
-    description: Execute a managed crypto transfer.
-    source_operation: "POST /api/v1/transfers/managed/execute"
-  - name: get_deposit_address
-    description: Get or generate a crypto deposit address for a transfer target.
-    source_operation: "POST /api/v1/transfers/managed/address/get"
-  - name: list_transactions
-    description: List trade/order activity on a connected brokerage account.
-    source_operation: "POST /api/v1/transactions/list"
-  - name: verify_account
-    description: Return basic profile data of the user's exchange account.
-    source_operation: "POST /api/v1/account/verify"
+- name: get_link_token
+  description: Get a short-lived, one-time Link token to initialize a client-side SDK session.
+  source_operation: POST /api/v1/linktoken
+- name: list_integrations
+  description: Retrieve the list of all available integrations (institutions/exchanges/wallets).
+  source_operation: GET /api/v1/integrations
+- name: get_integrations_health
+  description: Get supported institutions and their health statuses.
+  source_operation: GET /api/v1/status
+- name: get_holdings
+  description: Obtain assets from a connected investment account (real-time).
+  source_operation: POST /api/v1/holdings/get
+- name: get_portfolio
+  description: Get the aggregated portfolio with market values.
+  source_operation: GET /api/v1/holdings/portfolio
+- name: get_balance
+  description: Get real-time account fiat balances.
+  source_operation: POST /api/v1/balance/get
+- name: get_supported_tokens
+  description: List tokens supported for transfers with networks and integrations.
+  source_operation: GET /api/v1/transfers/managed/tokens
+- name: get_networks
+  description: List supported blockchain networks for transfers.
+  source_operation: GET /api/v1/transfers/managed/networks
+- name: preview_transfer
+  description: Preview a managed crypto transfer before executing.
+  source_operation: POST /api/v1/transfers/managed/preview
+- name: quote_transfer
+  description: Get a quote for a managed transfer (fees, min/max amounts).
+  source_operation: POST /api/v1/transfers/managed/quote
+- name: execute_transfer
+  description: Execute a managed crypto transfer.
+  source_operation: POST /api/v1/transfers/managed/execute
+- name: get_deposit_address
+  description: Get or generate a crypto deposit address for a transfer target.
+  source_operation: POST /api/v1/transfers/managed/address/get
+- name: list_transactions
+  description: List trade/order activity on a connected brokerage account.
+  source_operation: POST /api/v1/transactions/list
+- name: verify_account
+  description: Return basic profile data of the user's exchange account.
+  source_operation: POST /api/v1/account/verify
+deployment:
+  mode: none
+  verified: derived
+  tools: 14
+  checked: '2026-08-12'
+  source: catalog MCP census

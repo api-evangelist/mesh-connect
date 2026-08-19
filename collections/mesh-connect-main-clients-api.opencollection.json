@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Admin Assets Main Clients API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Main Clients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Main Client callback urls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admin-api.meshconnect.com/admin/api/v1/Client/callbackUrls"
+          },
+          "docs": "Get information about Main Client Allowed Link URLs."
+        },
+        {
+          "info": {
+            "name": "Update Main Client callback urls",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://admin-api.meshconnect.com/admin/api/v1/Client/callbackUrls",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update information about Main Client Allowed Link URLs. Allowed Link URLs of Main Client will only be used for those Registered clients,\r\nthat don't have any Allowed Link URLs specified."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

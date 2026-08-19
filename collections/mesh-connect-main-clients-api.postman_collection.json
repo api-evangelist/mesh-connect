@@ -1,0 +1,438 @@
+{
+  "item": [
+    {
+      "id": "9dc0911d-20b5-4c8c-ac48-78da5c151641",
+      "name": "Main Clients",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "aa4f3e09-515d-4f1c-b9ce-0b1b94ecb0dd",
+          "name": "Get Main Client callback urls",
+          "request": {
+            "name": "Get Main Client callback urls",
+            "description": {
+              "content": "Get information about Main Client Allowed Link URLs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "api",
+                "v1",
+                "Client",
+                "callbackUrls"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bba308b3-45cb-4757-8489-c9361fd468c7",
+              "name": "Get Main Client callback urls",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "Client",
+                    "callbackUrls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"callbackUrls\": [\n      \"https://mainclient-website1.com\",\n      \"https://mainclient-website2.com\"\n    ]\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorHash\": \"dce0f573\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9d6412e-8999-4634-966f-0f7559cb7704",
+              "name": "Unauthorized: Auth token request is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "Client",
+                    "callbackUrls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fe66b2d-fc18-4a4a-b955-4f3f2e4ebb5d",
+              "name": "Permission denied: Request is not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "Client",
+                    "callbackUrls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorHash\": \"cd59bd31\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"missingField\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bb04da7e-27c5-4d5d-bb85-96a059d37734",
+          "name": "Update Main Client callback urls",
+          "request": {
+            "name": "Update Main Client callback urls",
+            "description": {
+              "content": "Update information about Main Client Allowed Link URLs. Allowed Link URLs of Main Client will only be used for those Registered clients,\r\nthat don't have any Allowed Link URLs specified.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "api",
+                "v1",
+                "Client",
+                "callbackUrls"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"callbackUrls\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e66c2141-368b-4c51-aa59-9874ebbc29ec",
+              "name": "Main Client callback urls added/updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "Client",
+                    "callbackUrls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callbackUrls\": [\n    \"https://mainclient-website1.com\",\n    \"https://mainclient-website2.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorHash\": \"5f9b2029\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f75fa049-a810-43ba-8ded-cda3aa4ddbd2",
+              "name": "Unauthorized: Auth token request is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "Client",
+                    "callbackUrls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callbackUrls\": [\n    \"https://mainclient-website1.com\",\n    \"https://mainclient-website2.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6661198b-26b8-4d15-9903-8b30106f8deb",
+              "name": "Permission denied: Request is not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "Client",
+                    "callbackUrls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callbackUrls\": [\n    \"https://mainclient-website1.com\",\n    \"https://mainclient-website2.com\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorHash\": \"cd59bd31\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"missingField\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://admin-api.meshconnect.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7271a611-b429-48d5-a7ef-1121c236c111",
+    "name": "Admin Assets Main Clients API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

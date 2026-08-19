@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Admin Assets Auth token API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth token",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate Auth token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://admin-api.meshconnect.com/admin/api/v1/Token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a short lived token for initializing request calls for Registered client API."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

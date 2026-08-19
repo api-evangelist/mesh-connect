@@ -1,0 +1,254 @@
+{
+  "item": [
+    {
+      "id": "3cf9347b-b1c1-4719-b4c6-0700a0a4b86d",
+      "name": "Auth token",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "74c2a753-7b5c-400a-9d4f-98fee69e51cc",
+          "name": "Generate Auth token",
+          "request": {
+            "name": "Generate Auth token",
+            "description": {
+              "content": "Get a short lived token for initializing request calls for Registered client API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "api",
+                "v1",
+                "Token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clientId\": \"<string>\",\n  \"clientSecret\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "365f226e-883e-4f1a-bb25-ca5d777eb749",
+              "name": "Token created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "Token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"<api-key>\",\n  \"clientSecret\": \"<api-key>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"id_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30\",\n    \"expires_in\": 3600,\n    \"status\": \"succeeded\"\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorHash\": \"e47df370\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ca8a17b-9911-47ec-a420-5da9ce8c2f8e",
+              "name": "Token request is not correct",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "Token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"<api-key>\",\n  \"clientSecret\": \"<api-key>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"badRequest\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorHash\": \"cd59bd31\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"missingField\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fc7c10b-42e3-426f-828d-7ca7b92ae9d4",
+              "name": "Permission denied: Client Id or Client Secret are not correct or missing",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "Token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"<api-key>\",\n  \"clientSecret\": \"<api-key>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorHash\": \"cd59bd31\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"missingField\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://admin-api.meshconnect.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bb7ac00f-43b7-495b-93bc-c6e0593a9b51",
+    "name": "Admin Assets Auth token API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

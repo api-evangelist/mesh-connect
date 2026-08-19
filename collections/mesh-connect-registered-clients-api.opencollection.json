@@ -1,0 +1,159 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Admin Assets Registered Clients API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Registered Clients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all Registered clients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admin-api.meshconnect.com/admin/api/v1/SubClient"
+          },
+          "docs": "Get information about all Registered clients."
+        },
+        {
+          "info": {
+            "name": "Add new Registered client",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://admin-api.meshconnect.com/admin/api/v1/SubClient",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new Registered client with specified data. Client will be created without Logo URL.\r\nIn order to specify a Logo URL, send separate Update Registered Logo request along with id of just created client."
+        },
+        {
+          "info": {
+            "name": "Get Registered client",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admin-api.meshconnect.com/admin/api/v1/SubClient/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the Registered client"
+              }
+            ]
+          },
+          "docs": "Get information about the Registered client of specified identifier."
+        },
+        {
+          "info": {
+            "name": "Update Registered client",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://admin-api.meshconnect.com/admin/api/v1/SubClient/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the Registered client to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update information about already Registered client by client id. This request does not support updating client Logo URL.\r\nIn order to update a Logo URL, send separate Update Registered Logo request along with id of the client."
+        },
+        {
+          "info": {
+            "name": "Delete Registered client",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://admin-api.meshconnect.com/admin/api/v1/SubClient/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the Registered client to delete"
+              }
+            ]
+          },
+          "docs": "Delete Registered client by id."
+        },
+        {
+          "info": {
+            "name": "Update Registered client Logo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://admin-api.meshconnect.com/admin/api/v1/SubClient/:id/logo",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the Registered client to update logo for"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "logoFile",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Adds or update a logo for Registered client.\r\nAllowed file extensions are \".png\", \".jpg\", \".jpeg\".\r\nAllowed file MIME types are \"image/png\", \"image/jpeg\", \"image/jpg\".\r\nMaximum file size is 5MB.\r\nUpload logo as form data with key 'logoFile'."
+        },
+        {
+          "info": {
+            "name": "Remove Registered client Logo",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://admin-api.meshconnect.com/admin/api/v1/SubClient/:id/logo",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the Registered client to remove logo for"
+              }
+            ]
+          },
+          "docs": "Remove logo of Registered client."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

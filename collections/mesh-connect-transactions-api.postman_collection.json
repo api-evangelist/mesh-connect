@@ -1,0 +1,1941 @@
+{
+  "item": [
+    {
+      "id": "28e91351-2e05-4d73-a3a9-70fb5d63ac45",
+      "name": "Transactions",
+      "description": {
+        "content": "\n\n### Supported integrations:\n```Robinhood```\n```ETrade```\n```Alpaca```\n```WeBull```\n```Stash```\n```InteractiveBrokers```\n```Public```\n```Coinbase```\n```Kraken```\n```CoinbasePro```\n```CryptoCom```\n```Binance```\n```Gemini```\n```OkCoin```\n```KuCoin```\n```Etoro```\n```CexIo```\n```BinanceInternational```\n```Bitstamp```\n```GateIo```\n```Okx```\n```BitFlyer```\n```Coinlist```\n```Huobi```\n```Bitfinex```\n```KrakenDirect```\n```Vanguard```\n```BinanceInternationalDirect```\n```Bybit```\n```CoinbasePrime```\n\n\n### Integration-specific notes:\n\n\n#### Binance:\n\n\nBecause of limitations of Binance API, initial loading of transaction history in Binance can take long time\n\ndepending on the size of the portfolio.\n\n\n#### OkCoin:\n\n\nGetting transactions history from OkCoin is not currently supported.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1f2a086c-9b9b-41f7-b51c-f15f783371aa",
+          "name": "Get transactions",
+          "request": {
+            "name": "Get transactions",
+            "description": {
+              "content": "Get transactions on the account - the paginated history of the executed orders along with the pending orders.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "transactions",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"count\": \"<integer>\",\n  \"statuses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"from\": \"<long>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "70637af5-866b-44b1-aaf4-ea0a44494055",
+              "name": "Transactions obtained.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"count\": 20,\n  \"statuses\": [\n    \"success\"\n  ],\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"transactions\": [\n      {\n        \"id\": \"17EC1243-D91A-48B6-B0CE-ECFDB134F8A0\",\n        \"side\": \"buy\",\n        \"symbol\": \"AAPL\",\n        \"name\": \"APPLE INC\",\n        \"assetType\": \"option\",\n        \"paymentSymbol\": \"USD\",\n        \"paymentType\": \"fiat\",\n        \"amount\": 1,\n        \"price\": 120,\n        \"value\": 120,\n        \"createdTimestamp\": 1653215676,\n        \"updatedTimestamp\": 1653215697,\n        \"status\": \"success\",\n        \"orderType\": \"market\",\n        \"timeInForce\": \"goodForDay\",\n        \"brokerType\": \"robinhood\",\n        \"transactionType\": \"order\",\n        \"optionDetails\": {\n          \"optionType\": \"call\",\n          \"direction\": \"buyToOpen\",\n          \"strikePrice\": 200,\n          \"expirationTimestamp\": 1673215697,\n          \"numberOfSharesInContract\": 100,\n          \"complexOrderStrategyType\": \"NONE\"\n        }\n      },\n      {\n        \"id\": \"F9E932AE-A780-42F3-B887-82D888D594E5\",\n        \"side\": \"sell\",\n        \"symbol\": \"AAPL\",\n        \"name\": \"APPLE INC\",\n        \"assetType\": \"equity\",\n        \"paymentSymbol\": \"USD\",\n        \"paymentType\": \"fiat\",\n        \"amount\": 2,\n        \"price\": 130,\n        \"value\": 260,\n        \"createdTimestamp\": 1651739676,\n        \"updatedTimestamp\": 1651739781,\n        \"status\": \"success\",\n        \"orderType\": \"market\",\n        \"timeInForce\": \"goodTillCanceled\",\n        \"brokerType\": \"robinhood\",\n        \"transactionType\": \"order\"\n      },\n      {\n        \"id\": \"9B5827E4-7D08-4A71-B4C0-B1B4E5562592\",\n        \"side\": \"buy\",\n        \"symbol\": \"BTC\",\n        \"name\": \"Bitcoin\",\n        \"assetType\": \"cryptocurrency\",\n        \"paymentSymbol\": \"ETH\",\n        \"paymentType\": \"cryptocurrency\",\n        \"amount\": 0.3,\n        \"price\": 18604.8197,\n        \"value\": 5581.44591,\n        \"createdTimestamp\": 1651739676,\n        \"updatedTimestamp\": 1651739781,\n        \"status\": \"success\",\n        \"orderType\": \"limit\",\n        \"timeInForce\": \"goodTillCanceled\",\n        \"brokerType\": \"robinhood\",\n        \"transactionType\": \"order\"\n      }\n    ],\n    \"cursor\": \"N2VkZDI0MDMtNmRhYy01NThhLTk5NDUDYzI12M3GQ3ZmQ2\",\n    \"total\": 3,\n    \"earliestTimestamp\": 1651739676\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "501f387b-33cd-471f-aa1c-57a1788fea4c",
+              "name": "Unauthorized: Client Id or Client Secret are not correct or provided integration token is not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"count\": 20,\n  \"statuses\": [\n    \"success\"\n  ],\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3584873-aae8-4d89-b9b9-1528c168db2a",
+              "name": "The API key used does not have read permission to call this Mesh endpoint.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"count\": 20,\n  \"statuses\": [\n    \"success\"\n  ],\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9346c061-ba5e-44d0-aa6d-fb21943edeca",
+          "name": "Get transaction details",
+          "request": {
+            "name": "Get transaction details",
+            "description": {
+              "content": "Get details of an executed order. Typically used to poll the status of the previously executed order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "transactions",
+                "details"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authToken\": \"<string>\",\n  \"id\": \"<string>\",\n  \"isCryptocurrency\": \"<boolean>\",\n  \"type\": \"<string>\",\n  \"side\": \"<string>\",\n  \"symbolPair\": \"<string>\",\n  \"mfaCode\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8082e79c-7082-49d5-a347-4ef31776498d",
+              "name": "Transactions obtained.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"17EC1243-D91A-48B6-B0CE-ECFDB134F8A0\",\n  \"isCryptocurrency\": true,\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"17EC1243-D91A-48B6-B0CE-ECFDB134F8A0\",\n  \"side\": \"buy\",\n  \"symbol\": \"AAPL\",\n  \"assetType\": \"equity\",\n  \"paymentType\": \"fiat\",\n  \"amount\": 1,\n  \"price\": 120,\n  \"value\": 120,\n  \"createdTimestamp\": 1653215676,\n  \"updatedTimestamp\": 1653215697,\n  \"status\": \"success\",\n  \"statusDetails\": \"\",\n  \"brokerType\": \"robinhood\",\n  \"transactionType\": \"order\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "955c3cc9-ac75-4e87-a42a-840d91cbb494",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"17EC1243-D91A-48B6-B0CE-ECFDB134F8A0\",\n  \"isCryptocurrency\": true,\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 3579,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "627e2e59-4777-4d75-8a96-fe2a6f341b25",
+              "name": "Unauthorized: Client Id or Client Secret are not correct or provided integration token is not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"17EC1243-D91A-48B6-B0CE-ECFDB134F8A0\",\n  \"isCryptocurrency\": true,\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69e26e36-79c9-4a3c-b945-8852b2dbeb06",
+              "name": "The API key used does not have read permission to call this Mesh endpoint.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"17EC1243-D91A-48B6-B0CE-ECFDB134F8A0\",\n  \"isCryptocurrency\": true,\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0781b79b-4c65-4749-8941-6aeae0484deb",
+              "name": "Transaction is not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"17EC1243-D91A-48B6-B0CE-ECFDB134F8A0\",\n  \"isCryptocurrency\": true,\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 3579,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1b74ca92-9350-4778-a741-67a62bf5610e",
+          "name": "Get supported order features for institution",
+          "request": {
+            "name": "Get supported order features for institution",
+            "description": {
+              "content": "Get supported features for trading for a particular financial institution. Different institutions support different\r\nfeatures (e.g. different `OrderType` or different sets of `TimeInForce` values), so this endpoint is used to\r\ndescribe such features for provided financial institution.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "transactions",
+                "featureList"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a0895269-9951-4f3b-866f-fa0cb1fb4ee0",
+              "name": "Feature list obtained.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "featureList"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"binanceInternationalDirect\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"brokerType\": \"robinhood\",\n    \"accountId\": \"5K9N3VO1\",\n    \"cryptocurrencyOrders\": {\n      \"supported\": true,\n      \"supportsFiatCurrencyPayment\": true,\n      \"supportsCryptocurrencyPayment\": false,\n      \"supportsMarginOrders\": true,\n      \"supportedCryptocurrencySymbols\": [\n        \"BTC\",\n        \"ETH\",\n        \"SOL\",\n        \"DOGE\"\n      ],\n      \"supportedFiatCurrencies\": [\n        \"USD\"\n      ],\n      \"marketType\": {\n        \"supported\": true,\n        \"supportsFractionalShares\": true,\n        \"supportsExtendedMarketHours\": true,\n        \"supportsPlacingBuyOrdersInFiatAmount\": false,\n        \"supportsPlacingSellOrdersInFiatAmount\": false,\n        \"supportedTimeInForceList\": [\n          \"fillOrKill\",\n          \"goodForDay\",\n          \"goodTillCanceled\",\n          \"immediateOrCancel\"\n        ],\n        \"supportsPlacingBuyOrdersInPaymentSymbolAmount\": false,\n        \"supportsPlacingSellOrdersInPaymentSymbolAmount\": false,\n        \"supportsPlacingBuyOrdersInBaseSymbolAmount\": true,\n        \"supportsPlacingSellOrdersInBaseSymbolAmount\": true\n      },\n      \"limitType\": {\n        \"supported\": true,\n        \"supportsFractionalShares\": true,\n        \"supportsExtendedMarketHours\": true,\n        \"supportsPlacingBuyOrdersInFiatAmount\": false,\n        \"supportsPlacingSellOrdersInFiatAmount\": false,\n        \"supportedTimeInForceList\": [\n          \"goodForDay\",\n          \"goodTillCanceled\",\n          \"immediateOrCancel\"\n        ],\n        \"supportsPlacingBuyOrdersInPaymentSymbolAmount\": false,\n        \"supportsPlacingSellOrdersInPaymentSymbolAmount\": false,\n        \"supportsPlacingBuyOrdersInBaseSymbolAmount\": true,\n        \"supportsPlacingSellOrdersInBaseSymbolAmount\": true\n      },\n      \"stopLossType\": {\n        \"supported\": true,\n        \"supportsFractionalShares\": true,\n        \"supportsExtendedMarketHours\": true,\n        \"supportsPlacingBuyOrdersInFiatAmount\": false,\n        \"supportsPlacingSellOrdersInFiatAmount\": false,\n        \"supportedTimeInForceList\": [\n          \"fillOrKill\",\n          \"goodForDay\",\n          \"goodTillCanceled\",\n          \"immediateOrCancel\"\n        ],\n        \"supportsPlacingBuyOrdersInPaymentSymbolAmount\": false,\n        \"supportsPlacingSellOrdersInPaymentSymbolAmount\": false,\n        \"supportsPlacingBuyOrdersInBaseSymbolAmount\": true,\n        \"supportsPlacingSellOrdersInBaseSymbolAmount\": true\n      }\n    },\n    \"stockOrders\": {\n      \"supported\": true,\n      \"supportsFiatCurrencyPayment\": true,\n      \"supportsCryptocurrencyPayment\": false,\n      \"supportsMarginOrders\": true,\n      \"supportedFiatCurrencies\": [\n        \"USD\"\n      ],\n      \"marketType\": {\n        \"supported\": true,\n        \"supportsFractionalShares\": true,\n        \"supportsExtendedMarketHours\": true,\n        \"supportsPlacingBuyOrdersInFiatAmount\": false,\n        \"supportsPlacingSellOrdersInFiatAmount\": false,\n        \"supportedTimeInForceList\": [\n          \"fillOrKill\",\n          \"goodForDay\",\n          \"goodTillCanceled\",\n          \"immediateOrCancel\"\n        ],\n        \"supportsPlacingBuyOrdersInPaymentSymbolAmount\": false,\n        \"supportsPlacingSellOrdersInPaymentSymbolAmount\": false,\n        \"supportsPlacingBuyOrdersInBaseSymbolAmount\": false,\n        \"supportsPlacingSellOrdersInBaseSymbolAmount\": false\n      },\n      \"limitType\": {\n        \"supported\": true,\n        \"supportsFractionalShares\": true,\n        \"supportsExtendedMarketHours\": true,\n        \"supportsPlacingBuyOrdersInFiatAmount\": false,\n        \"supportsPlacingSellOrdersInFiatAmount\": false,\n        \"supportedTimeInForceList\": [\n          \"goodForDay\",\n          \"goodTillCanceled\",\n          \"immediateOrCancel\"\n        ],\n        \"supportsPlacingBuyOrdersInPaymentSymbolAmount\": false,\n        \"supportsPlacingSellOrdersInPaymentSymbolAmount\": false,\n        \"supportsPlacingBuyOrdersInBaseSymbolAmount\": false,\n        \"supportsPlacingSellOrdersInBaseSymbolAmount\": false\n      },\n      \"stopLossType\": {\n        \"supported\": true,\n        \"supportsFractionalShares\": true,\n        \"supportsExtendedMarketHours\": true,\n        \"supportsPlacingBuyOrdersInFiatAmount\": false,\n        \"supportsPlacingSellOrdersInFiatAmount\": false,\n        \"supportedTimeInForceList\": [\n          \"fillOrKill\",\n          \"goodForDay\",\n          \"goodTillCanceled\",\n          \"immediateOrCancel\"\n        ],\n        \"supportsPlacingBuyOrdersInPaymentSymbolAmount\": false,\n        \"supportsPlacingSellOrdersInPaymentSymbolAmount\": false,\n        \"supportsPlacingBuyOrdersInBaseSymbolAmount\": false,\n        \"supportsPlacingSellOrdersInBaseSymbolAmount\": false\n      }\n    },\n    \"cryptocurrencyAssetPairTrading\": {\n      \"supported\": true,\n      \"supportedCryptocurrencySymbols\": [\n        \"BTC\",\n        \"ETH\",\n        \"SOL\",\n        \"DOGE\"\n      ],\n      \"supportedFiatCurrencies\": [\n        \"USD\"\n      ],\n      \"supportedTradingPairs\": [\n        \"BTC-ETH\",\n        \"BTC-USD\",\n        \"ETH-SOL\",\n        \"ETH-USD\",\n        \"SOL-USD\",\n        \"DOGE-USD\"\n      ],\n      \"marketType\": {\n        \"supported\": true,\n        \"supportedTimeInForceList\": [\n          \"immediateOrCancel\"\n        ],\n        \"supportsPlacingBuyOrdersInBaseSymbolAmount\": false,\n        \"supportsPlacingSellOrdersInBaseSymbolAmount\": true,\n        \"supportsPlacingBuyOrdersInQuoteSymbolAmount\": true,\n        \"supportsPlacingSellOrdersInQuoteSymbolAmount\": false\n      },\n      \"limitType\": {\n        \"supported\": true,\n        \"supportedTimeInForceList\": [\n          \"goodTillCanceled\",\n          \"goodTillDate\"\n        ],\n        \"supportsPlacingBuyOrdersInBaseSymbolAmount\": true,\n        \"supportsPlacingSellOrdersInBaseSymbolAmount\": true,\n        \"supportsPlacingBuyOrdersInQuoteSymbolAmount\": true,\n        \"supportsPlacingSellOrdersInQuoteSymbolAmount\": true\n      }\n    },\n    \"cryptocurrencyConversion\": {\n      \"supported\": true,\n      \"supportsPreview\": true,\n      \"supportedCryptocurrencySymbols\": [\n        \"BTC\",\n        \"ETH\",\n        \"SOL\",\n        \"DOGE\"\n      ],\n      \"supportedFiatCurrencies\": [\n        \"USD\"\n      ]\n    },\n    \"status\": \"succeeded\",\n    \"supportsOrderPreview\": true,\n    \"supportsPriceQuotes\": false,\n    \"supportsOrderCancellation\": true,\n    \"isIntegrationUp\": true,\n    \"isTradingSupported\": true,\n    \"fiatBalances\": [\n      {\n        \"cash\": 1355,\n        \"buyingPower\": 1355,\n        \"cryptocurrencyBuyingPower\": 1355,\n        \"currencyCode\": \"USD\"\n      }\n    ],\n    \"usesSpreads\": false\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ffc4c8c-f5cd-4282-acde-f0c8d0aee3df",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "featureList"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"binanceInternationalDirect\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 3579,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "943474cb-93ae-48f6-b0d1-3fb07889f6a9",
+              "name": "Unauthorized: Client Id or Client Secret are not correct or provided integration token is not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "featureList"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"binanceInternationalDirect\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d078b5d-4783-410d-a04b-4baf738c14fa",
+          "name": "Preview order execution",
+          "request": {
+            "name": "Preview order execution",
+            "description": {
+              "content": "Validates the order information (such as necessary balance availability), and returns additional information,\r\nsuch as expected order fee.\r\nDoes not execute the order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "transactions",
+                "preview",
+                ":side"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "side",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<double>\",\n  \"amountIsInPaymentSymbol\": \"<boolean>\",\n  \"authToken\": \"<string>\",\n  \"isCryptocurrency\": \"<boolean>\",\n  \"orderType\": \"<string>\",\n  \"paymentIsCryptocurrency\": \"<boolean>\",\n  \"paymentSymbol\": \"<string>\",\n  \"symbol\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"type\": \"<string>\",\n  \"price\": \"<double>\",\n  \"amountIsFiat\": \"<boolean>\",\n  \"amountInFiat\": \"<double>\",\n  \"amountInPaymentSymbol\": \"<double>\",\n  \"extendedHours\": \"<boolean>\",\n  \"mfaCode\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0ef892d3-0aa0-4112-b421-1c19c0e25df9",
+              "name": "Order preview obtained.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "preview",
+                    ":side"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "side",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"symbol\": \"ETH\",\n  \"paymentSymbol\": \"USD\",\n  \"amount\": 1,\n  \"price\": 1200,\n  \"isCryptocurrency\": true,\n  \"paymentIsCryptocurrency\": false,\n  \"amountIsFiat\": false,\n  \"amountIsInPaymentSymbol\": false,\n  \"extendedHours\": false,\n  \"orderType\": \"limit\",\n  \"timeInForce\": \"goodForDay\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"brokerType\": \"robinhood\",\n    \"fee\": 1.99,\n    \"feeText\": \"\",\n    \"amount\": 1,\n    \"side\": \"buy\",\n    \"status\": \"success\",\n    \"paymentSymbol\": \"USD\",\n    \"paymentIsCryptocurrency\": false,\n    \"estimatedUnitPrice\": 1200\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3dcc0bda-5476-4e6c-9968-be4d91efd007",
+              "name": "Request details are not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "preview",
+                    ":side"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "side",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"symbol\": \"ETH\",\n  \"paymentSymbol\": \"USD\",\n  \"amount\": 1,\n  \"price\": 1200,\n  \"isCryptocurrency\": true,\n  \"paymentIsCryptocurrency\": false,\n  \"amountIsFiat\": false,\n  \"amountIsInPaymentSymbol\": false,\n  \"extendedHours\": false,\n  \"orderType\": \"limit\",\n  \"timeInForce\": \"goodForDay\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 3579,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d45fe0b0-4422-4650-9486-688ff297a31d",
+              "name": "Unauthorized: Client Id or Client Secret are not correct or provided integration token is not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "preview",
+                    ":side"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "side",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"symbol\": \"ETH\",\n  \"paymentSymbol\": \"USD\",\n  \"amount\": 1,\n  \"price\": 1200,\n  \"isCryptocurrency\": true,\n  \"paymentIsCryptocurrency\": false,\n  \"amountIsFiat\": false,\n  \"amountIsInPaymentSymbol\": false,\n  \"extendedHours\": false,\n  \"orderType\": \"limit\",\n  \"timeInForce\": \"goodForDay\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89d9cfec-c46b-4056-b7d7-2d1501747380",
+              "name": "The API key used does not have write permission to call this Mesh endpoint.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "preview",
+                    ":side"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "side",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"symbol\": \"ETH\",\n  \"paymentSymbol\": \"USD\",\n  \"amount\": 1,\n  \"price\": 1200,\n  \"isCryptocurrency\": true,\n  \"paymentIsCryptocurrency\": false,\n  \"amountIsFiat\": false,\n  \"amountIsInPaymentSymbol\": false,\n  \"extendedHours\": false,\n  \"orderType\": \"limit\",\n  \"timeInForce\": \"goodForDay\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2b424c26-43b7-497e-87a8-533383726b0c",
+          "name": "Execute order",
+          "request": {
+            "name": "Execute order",
+            "description": {
+              "content": "Validates the order information and then calls institution's API to execute an order.\r\nIt's recommended to call this endpoint after calling the `preview` endpoint to make sure that the\r\norder execution request is correct.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "transactions",
+                ":side"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "side",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<double>\",\n  \"amountIsInPaymentSymbol\": \"<boolean>\",\n  \"authToken\": \"<string>\",\n  \"isCryptocurrency\": \"<boolean>\",\n  \"orderType\": \"<string>\",\n  \"paymentIsCryptocurrency\": \"<boolean>\",\n  \"paymentSymbol\": \"<string>\",\n  \"symbol\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"type\": \"<string>\",\n  \"price\": \"<double>\",\n  \"amountIsFiat\": \"<boolean>\",\n  \"amountInFiat\": \"<double>\",\n  \"amountInPaymentSymbol\": \"<double>\",\n  \"extendedHours\": \"<boolean>\",\n  \"mfaCode\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4196cb8f-2aae-4b40-b529-ea88ee1ae780",
+              "name": "Order executed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    ":side"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "side",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"symbol\": \"ETH\",\n  \"paymentSymbol\": \"USD\",\n  \"amount\": 1,\n  \"price\": 1200,\n  \"isCryptocurrency\": true,\n  \"paymentIsCryptocurrency\": false,\n  \"amountIsFiat\": false,\n  \"amountIsInPaymentSymbol\": false,\n  \"extendedHours\": false,\n  \"orderType\": \"limit\",\n  \"timeInForce\": \"goodForDay\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"orderId\": \"6713DCDC-3D2E-46BC-ACB6-CF5FDE431CE2\",\n    \"brokerType\": \"robinhood\",\n    \"side\": \"buy\",\n    \"amount\": 1,\n    \"price\": 1200,\n    \"value\": 1200,\n    \"fee\": 1.99,\n    \"timestamp\": 1661904014,\n    \"status\": \"success\",\n    \"statusDetails\": \"Executed successfully\",\n    \"timeInForce\": \"goodTillCanceled\"\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "713b271a-126d-4cb2-9c85-2fbf1c02fae8",
+              "name": "Request details are not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    ":side"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "side",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"symbol\": \"ETH\",\n  \"paymentSymbol\": \"USD\",\n  \"amount\": 1,\n  \"price\": 1200,\n  \"isCryptocurrency\": true,\n  \"paymentIsCryptocurrency\": false,\n  \"amountIsFiat\": false,\n  \"amountIsInPaymentSymbol\": false,\n  \"extendedHours\": false,\n  \"orderType\": \"limit\",\n  \"timeInForce\": \"goodForDay\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 3579,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1ecbf04-d4e6-42b7-88a5-ac37aaea473c",
+              "name": "Unauthorized: Client Id or Client Secret are not correct or provided integration token is not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    ":side"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "side",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"symbol\": \"ETH\",\n  \"paymentSymbol\": \"USD\",\n  \"amount\": 1,\n  \"price\": 1200,\n  \"isCryptocurrency\": true,\n  \"paymentIsCryptocurrency\": false,\n  \"amountIsFiat\": false,\n  \"amountIsInPaymentSymbol\": false,\n  \"extendedHours\": false,\n  \"orderType\": \"limit\",\n  \"timeInForce\": \"goodForDay\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eff7ec83-bb11-4f98-9e37-f61cae5430c4",
+              "name": "The API key used does not have write permission to call this Mesh endpoint.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    ":side"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "side",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"symbol\": \"ETH\",\n  \"paymentSymbol\": \"USD\",\n  \"amount\": 1,\n  \"price\": 1200,\n  \"isCryptocurrency\": true,\n  \"paymentIsCryptocurrency\": false,\n  \"amountIsFiat\": false,\n  \"amountIsInPaymentSymbol\": false,\n  \"extendedHours\": false,\n  \"orderType\": \"limit\",\n  \"timeInForce\": \"goodForDay\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d5a873df-fb88-4f1d-a73e-ee25125b6ba8",
+          "name": "Cancel order execution",
+          "request": {
+            "name": "Cancel order execution",
+            "description": {
+              "content": "Cancels a pending order (an order with `InProgress` status).\r\n`SymbolPair` is required to be provided for `Binance`, `BinanceInternational`, `Okx` and `BitFlyer` institutions.\r\nThis value",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "transactions",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authToken\": \"<string>\",\n  \"id\": \"<string>\",\n  \"isCryptocurrency\": \"<boolean>\",\n  \"type\": \"<string>\",\n  \"side\": \"<string>\",\n  \"symbolPair\": \"<string>\",\n  \"mfaCode\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b2508eb9-7773-4bcb-b655-3ac31e0df600",
+              "name": "Order canceled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"17EC1243-D91A-48B6-B0CE-ECFDB134F8A0\",\n  \"isCryptocurrency\": true,\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\",\n  \"message\": \"string\",\n  \"displayMessage\": \"string\",\n  \"errorType\": \"string\",\n  \"errorData\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f0c6f8f-21b4-48b4-97d3-340afee00189",
+              "name": "Request details are not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"17EC1243-D91A-48B6-B0CE-ECFDB134F8A0\",\n  \"isCryptocurrency\": true,\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 3579,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62a198ec-f4d6-467c-83fc-2bb7b6dcd4e9",
+              "name": "Unauthorized: Client Id or Client Secret are not correct or provided integration token is not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"17EC1243-D91A-48B6-B0CE-ECFDB134F8A0\",\n  \"isCryptocurrency\": true,\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efd6ac2b-96b5-47f1-8f34-778464839aa0",
+              "name": "The API key used does not have write permission to call this Mesh endpoint.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"17EC1243-D91A-48B6-B0CE-ECFDB134F8A0\",\n  \"isCryptocurrency\": true,\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9f21913-805d-43ce-bee8-9d6351c511bd",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"17EC1243-D91A-48B6-B0CE-ECFDB134F8A0\",\n  \"isCryptocurrency\": true,\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 3579,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5fb76b0e-5392-4030-b022-d4204398db20",
+          "name": "Get symbol information",
+          "request": {
+            "name": "Get symbol information",
+            "description": {
+              "content": "Returns information on trading allowance for a provided symbol.\r\nFor example - some institutions allow fractional trading for some symbols, but do not allow it\r\nfor others. So before placing an order the API client can check if the required symbol can be traded fractionally\r\nwith the provided institution.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "transactions",
+                "symbolinfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<double>\",\n  \"amountIsInPaymentSymbol\": \"<boolean>\",\n  \"authToken\": \"<string>\",\n  \"isCryptocurrency\": \"<boolean>\",\n  \"orderType\": \"<string>\",\n  \"paymentIsCryptocurrency\": \"<boolean>\",\n  \"paymentSymbol\": \"<string>\",\n  \"symbol\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"type\": \"<string>\",\n  \"price\": \"<double>\",\n  \"amountIsFiat\": \"<boolean>\",\n  \"amountInFiat\": \"<double>\",\n  \"amountInPaymentSymbol\": \"<double>\",\n  \"extendedHours\": \"<boolean>\",\n  \"mfaCode\": \"<string>\",\n  \"side\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cbdfb736-7bff-4b3a-a42d-9aadeaef0a1e",
+              "name": "Information for symbol obtained.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "symbolinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"side\": \"buy\",\n  \"symbol\": \"BTC\",\n  \"amount\": 0,\n  \"price\": 0,\n  \"isCryptocurrency\": false,\n  \"paymentIsCryptocurrency\": false,\n  \"amountIsFiat\": false,\n  \"amountIsInPaymentSymbol\": false,\n  \"extendedHours\": false,\n  \"orderType\": \"market\",\n  \"timeInForce\": \"goodTillCanceled\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"fractionalTradingAllowance\": \"fractionalTradingAllowed\",\n    \"minimumOrderValue\": 0.001,\n    \"precisionScale\": 6\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aadf946c-4207-461f-acfa-4d2ed406c0e3",
+              "name": "Request details are not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "symbolinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"side\": \"buy\",\n  \"symbol\": \"BTC\",\n  \"amount\": 0,\n  \"price\": 0,\n  \"isCryptocurrency\": false,\n  \"paymentIsCryptocurrency\": false,\n  \"amountIsFiat\": false,\n  \"amountIsInPaymentSymbol\": false,\n  \"extendedHours\": false,\n  \"orderType\": \"market\",\n  \"timeInForce\": \"goodTillCanceled\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 3579,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "738498d1-cc83-4367-8f1b-17c28bd00dbe",
+              "name": "Unauthorized: Client Id or Client Secret are not correct.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "transactions",
+                    "symbolinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"side\": \"buy\",\n  \"symbol\": \"BTC\",\n  \"amount\": 0,\n  \"price\": 0,\n  \"isCryptocurrency\": false,\n  \"paymentIsCryptocurrency\": false,\n  \"amountIsFiat\": false,\n  \"amountIsInPaymentSymbol\": false,\n  \"extendedHours\": false,\n  \"orderType\": \"market\",\n  \"timeInForce\": \"goodTillCanceled\",\n  \"type\": \"robinhood\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://admin-api.meshconnect.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3df8e87a-ef7d-483e-bc75-da1b2e9bb6d8",
+    "name": "Admin Assets Transactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\n\n### Supported integrations:\n```Robinhood```\n```ETrade```\n```Alpaca```\n```WeBull```\n```Stash```\n```InteractiveBrokers```\n```Public```\n```Coinbase```\n```Kraken```\n```CoinbasePro```\n```CryptoCom```\n```Binance```\n```Gemini```\n```OkCoin```\n```KuCoin```\n```Etoro```\n```CexIo```\n```BinanceInternational```\n```Bitstamp```\n```GateIo```\n```Okx```\n```BitFlyer```\n```Coinlist```\n```Huobi```\n```Bitfinex```\n```KrakenDirect```\n```Vanguard```\n```BinanceInternationalDirect```\n```Bybit```\n```CoinbasePrime```\n\n\n### Integration-specific notes:\n\n\n#### Binance:\n\n\nBecause of limitations of Binance API, initial loading of transaction history in Binance can take long time\n\ndepending on the size of the portfolio.\n\n\n#### OkCoin:\n\n\nGetting transactions history from OkCoin is not currently supported.\n",
+      "type": "text/plain"
+    }
+  }
+}

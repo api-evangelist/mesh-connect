@@ -1,0 +1,1657 @@
+{
+  "item": [
+    {
+      "id": "368e771e-a8d0-4951-86eb-2dca3d69ef84",
+      "name": "Registered Clients",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7f7594ab-3afc-4996-84f8-cb771182af9c",
+          "name": "Get all Registered clients",
+          "request": {
+            "name": "Get all Registered clients",
+            "description": {
+              "content": "Get information about all Registered clients.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "api",
+                "v1",
+                "SubClient"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bf9dd6ee-2294-4c01-b54e-bdfadb253d51",
+              "name": "List registered clients",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"1e21681d-b581-4028-8823-aa0ad4264e22\",\n      \"logoUrl\": \"https://file-cdn.meshconnect.com/public/clients/logo/oauth/registered/116a43e7-ddc9-4c61-b819-08ddd687d1d5f2fc96ed-cf41-454f-80c7-66520f5d047d.png\",\n      \"businessLegalName\": \"Client 1 Business Legal Name\",\n      \"displayName\": \"Client 1 Display Name\",\n      \"callbackUrls\": [\n        \"https://your-website1.com\",\n        \"https://your-website2.com\"\n      ],\n      \"catalogConfiguration\": null\n    },\n    {\n      \"id\": \"abea2b40-9856-4848-b650-626e314ef8f7\",\n      \"logoUrl\": \"https://file-cdn.meshconnect.com/public/clients/logo/oauth/registered/116a43e7-ddc9-4c61-b819-08ddd687d1d5f2fc96ed-cf41-454f-80c7-66520f5d047d.png\",\n      \"businessLegalName\": \"Client 2 Business Legal Name\",\n      \"displayName\": \"Client 2 Display Name\",\n      \"callbackUrls\": [],\n      \"catalogConfiguration\": null\n    }\n  ],\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorHash\": \"7217233b\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5826a575-cb29-44d3-a417-80a795b24ad3",
+              "name": "Unauthorized: Auth token request is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89820360-e98c-4714-9eef-b35e356d1c4d",
+              "name": "Permission denied: Request is not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorHash\": \"cd59bd31\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"missingField\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ee19fdb-2cc3-43ff-b968-231f44ce143d",
+          "name": "Add new Registered client",
+          "request": {
+            "name": "Add new Registered client",
+            "description": {
+              "content": "Create new Registered client with specified data. Client will be created without Logo URL.\r\nIn order to specify a Logo URL, send separate Update Registered Logo request along with id of just created client.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "api",
+                "v1",
+                "SubClient"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"businessLegalName\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"callbackUrls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"catalogConfiguration\": {\n    \"excludeIntegrationCategories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"excludeIntegrations\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"integrationWhiteList\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7f22605a-bd8d-4da8-8099-385591dfd172",
+              "name": "Registered client created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessLegalName\": \"Client 1 Business Legal Name\",\n  \"displayName\": \"Client 1 Display Name\",\n  \"callbackUrls\": [\n    \"https://your-website1.com\",\n    \"https://your-website2.com\"\n  ],\n  \"catalogConfiguration\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"id\": \"ec6d96eb-efa9-4c32-9425-7b3405af31f3\",\n    \"logoUrl\": \"https://file-cdn.meshconnect.com/public/clients/logo/oauth/registered/116a43e7-ddc9-4c61-b819-08ddd687d1d5f2fc96ed-cf41-454f-80c7-66520f5d047d.png\",\n    \"businessLegalName\": \"Client 1 Business Legal Name\",\n    \"displayName\": \"Client 1 Display Name\",\n    \"callbackUrls\": [\n      \"https://your-website1.com\",\n      \"https://your-website2.com\"\n    ],\n    \"catalogConfiguration\": null\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorHash\": \"51d01c67\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "737d9540-db8a-4a14-a6da-459fe138dd31",
+              "name": "Unauthorized: Auth token request is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessLegalName\": \"Client 1 Business Legal Name\",\n  \"displayName\": \"Client 1 Display Name\",\n  \"callbackUrls\": [\n    \"https://your-website1.com\",\n    \"https://your-website2.com\"\n  ],\n  \"catalogConfiguration\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6ff643c-0e2a-4334-849b-fcff8369b577",
+              "name": "Permission denied: Request is not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessLegalName\": \"Client 1 Business Legal Name\",\n  \"displayName\": \"Client 1 Display Name\",\n  \"callbackUrls\": [\n    \"https://your-website1.com\",\n    \"https://your-website2.com\"\n  ],\n  \"catalogConfiguration\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorHash\": \"cd59bd31\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"missingField\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2331a53-b758-421e-8116-58a493a3e984",
+          "name": "Get Registered client",
+          "request": {
+            "name": "Get Registered client",
+            "description": {
+              "content": "Get information about the Registered client of specified identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "api",
+                "v1",
+                "SubClient",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The identifier of the Registered client"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "104b26e8-b4f2-4cd3-b2f0-c1a0d9d21ddb",
+              "name": "Get registered client",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"id\": \"2977d1cf-5d2e-4074-8751-516834b1fba6\",\n    \"logoUrl\": \"https://file-cdn.meshconnect.com/public/clients/logo/oauth/registered/116a43e7-ddc9-4c61-b819-08ddd687d1d5f2fc96ed-cf41-454f-80c7-66520f5d047d.png\",\n    \"businessLegalName\": \"Client 1 Business Legal Name\",\n    \"displayName\": \"Client 1 Display Name\",\n    \"callbackUrls\": [\n      \"https://your-website1.com\",\n      \"https://your-website2.com\"\n    ],\n    \"catalogConfiguration\": null\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorHash\": \"51d01c67\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5404693a-a9fb-498a-b118-69547bb0f8f2",
+              "name": "Unauthorized: Auth token request is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3f1588b-bfd9-4a2c-aba6-fddf1435a415",
+              "name": "Permission denied: Request is not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorHash\": \"cd59bd31\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"missingField\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5dca2259-0f7d-40e2-bd3e-3f37d2308f07",
+          "name": "Update Registered client",
+          "request": {
+            "name": "Update Registered client",
+            "description": {
+              "content": "Update information about already Registered client by client id. This request does not support updating client Logo URL.\r\nIn order to update a Logo URL, send separate Update Registered Logo request along with id of the client.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "api",
+                "v1",
+                "SubClient",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The identifier of the Registered client to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"businessLegalName\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"callbackUrls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"catalogConfiguration\": {\n    \"excludeIntegrationCategories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"excludeIntegrations\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"integrationWhiteList\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0e8c6d00-07a7-451a-beae-b1ac13570677",
+              "name": "Registered client updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessLegalName\": \"Client 1 Business Legal Name\",\n  \"displayName\": \"Client 1 Display Name\",\n  \"callbackUrls\": [\n    \"https://your-website1.com\",\n    \"https://your-website2.com\"\n  ],\n  \"catalogConfiguration\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"id\": \"c47c6104-79f2-4838-94b9-23221119a075\",\n    \"logoUrl\": \"https://file-cdn.meshconnect.com/public/clients/logo/oauth/registered/116a43e7-ddc9-4c61-b819-08ddd687d1d5f2fc96ed-cf41-454f-80c7-66520f5d047d.png\",\n    \"businessLegalName\": \"Client 1 Business Legal Name\",\n    \"displayName\": \"Client 1 Display Name\",\n    \"callbackUrls\": [\n      \"https://your-website1.com\",\n      \"https://your-website2.com\"\n    ],\n    \"catalogConfiguration\": null\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorHash\": \"51d01c67\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67afbdfa-a0c9-47af-8a80-932ebc234373",
+              "name": "Unauthorized: Auth token request is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessLegalName\": \"Client 1 Business Legal Name\",\n  \"displayName\": \"Client 1 Display Name\",\n  \"callbackUrls\": [\n    \"https://your-website1.com\",\n    \"https://your-website2.com\"\n  ],\n  \"catalogConfiguration\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2e87358-3f93-4f9e-afb0-0bd679983648",
+              "name": "Permission denied: Request is not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessLegalName\": \"Client 1 Business Legal Name\",\n  \"displayName\": \"Client 1 Display Name\",\n  \"callbackUrls\": [\n    \"https://your-website1.com\",\n    \"https://your-website2.com\"\n  ],\n  \"catalogConfiguration\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorHash\": \"cd59bd31\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"missingField\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc6136cc-3d3f-4a5c-94cb-5ae2fbdaadeb",
+          "name": "Delete Registered client",
+          "request": {
+            "name": "Delete Registered client",
+            "description": {
+              "content": "Delete Registered client by id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "api",
+                "v1",
+                "SubClient",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The identifier of the Registered client to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "856a95f6-f897-4310-893d-b15b06caf5ef",
+              "name": "Registered client deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorHash\": \"5f9b2029\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05b33048-464c-40b4-af33-128ff8c27f94",
+              "name": "Unauthorized: Auth token request is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3cb1e144-be26-44d2-bb14-f45e5926e863",
+              "name": "Permission denied: Request is not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorHash\": \"cd59bd31\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"missingField\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e678785-2184-4861-9462-7881ab273bdd",
+          "name": "Update Registered client Logo",
+          "request": {
+            "name": "Update Registered client Logo",
+            "description": {
+              "content": "Adds or update a logo for Registered client.\r\nAllowed file extensions are \".png\", \".jpg\", \".jpeg\".\r\nAllowed file MIME types are \"image/png\", \"image/jpeg\", \"image/jpg\".\r\nMaximum file size is 5MB.\r\nUpload logo as form data with key 'logoFile'.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "api",
+                "v1",
+                "SubClient",
+                ":id",
+                "logo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The identifier of the Registered client to update logo for"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "logoFile",
+                  "type": "file",
+                  "description": "(Required) Logo image file (.png, .jpg, .jpeg only, max 5MB)"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9a496bb1-f4c8-4cb4-81bd-d3f56a8b0536",
+              "name": "Registered client logo added/updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client to update logo for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Logo image file (.png, .jpg, .jpeg only, max 5MB)",
+                        "type": "text/plain"
+                      },
+                      "key": "logoFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"content\": {\n    \"logoUrl\": \"https://file-cdn.meshconnect.com/public/clients/logo/oauth/registered/116a43e7-ddc9-4c61-b819-08ddd687d1d5f2fc96ed-cf41-454f-80c7-66520f5d047d.png\"\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorHash\": \"30967b18\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "626d7bc7-b501-4340-bec5-886ce9aef8fe",
+              "name": "Unauthorized: Auth token request is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client to update logo for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Logo image file (.png, .jpg, .jpeg only, max 5MB)",
+                        "type": "text/plain"
+                      },
+                      "key": "logoFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50897464-c50d-4363-87ef-ae7e3b657812",
+              "name": "Permission denied: Request is not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client to update logo for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Logo image file (.png, .jpg, .jpeg only, max 5MB)",
+                        "type": "text/plain"
+                      },
+                      "key": "logoFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorHash\": \"cd59bd31\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"missingField\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "500631d3-7722-4544-907a-49daa18cc09e",
+              "name": "Media type unsupported: Invalid logo file specified",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client to update logo for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Logo image file (.png, .jpg, .jpeg only, max 5MB)",
+                        "type": "text/plain"
+                      },
+                      "key": "logoFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 415\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9c849a43-da6e-4374-821d-0b134c0d4dfa",
+          "name": "Remove Registered client Logo",
+          "request": {
+            "name": "Remove Registered client Logo",
+            "description": {
+              "content": "Remove logo of Registered client.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "api",
+                "v1",
+                "SubClient",
+                ":id",
+                "logo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The identifier of the Registered client to remove logo for"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e3d2c91a-b887-4876-9727-ec5a68dcdd54",
+              "name": "Registered client logo removed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client to remove logo for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorHash\": \"5f9b2029\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2318605a-d88f-4272-8437-652a00bd30c0",
+              "name": "Unauthorized: Auth token request is not valid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client to remove logo for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9365bc5-30e0-4199-99f5-a841f5fc81ee",
+              "name": "Permission denied: Request is not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "api",
+                    "v1",
+                    "SubClient",
+                    ":id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The identifier of the Registered client to remove logo for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorHash\": \"cd59bd31\",\n  \"teamCode\": \"P4\",\n  \"errorType\": \"missingField\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://admin-api.meshconnect.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "990048d4-9e59-4d25-9f7a-f370688d2381",
+    "name": "Admin Assets Registered Clients API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}
