@@ -67,6 +67,8 @@ apis:
   humanURL: https://docs.meshconnect.com/overview
   baseURL: https://integration-api.meshconnect.com
   tags:
+  - Auth - Token
+  tags_raw:
   - Auth token
   properties:
   - type: OpenAPI
@@ -148,6 +150,8 @@ apis:
   humanURL: https://docs.meshconnect.com/overview
   baseURL: https://integration-api.meshconnect.com
   tags:
+  - Balances
+  tags_raw:
   - Balance
   properties:
   - type: OpenAPI
@@ -420,6 +424,8 @@ apis:
   humanURL: https://docs.meshconnect.com/overview
   baseURL: https://integration-api.meshconnect.com
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
