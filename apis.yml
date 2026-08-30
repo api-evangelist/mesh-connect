@@ -79,7 +79,7 @@ apis:
   humanURL: https://docs.meshconnect.com/overview
   baseURL: https://integration-api.meshconnect.com
   tags:
-  - Auth - Token
+  - Auth token
   tags_raw:
   - Auth token
   properties:
