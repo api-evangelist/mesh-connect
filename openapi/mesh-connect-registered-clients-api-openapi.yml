@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Admin Assets Registered Clients API
+  title: Admin Registered Clients API
   version: v1
 servers:
 - url: https://admin-api.meshconnect.com
@@ -62,11 +62,15 @@ paths:
                 errorHash: cd59bd31
                 teamCode: P4
                 errorType: missingField
+      operationId: getAdminApiV1SubClient
+      x-operation-id-source: derived
     post:
       tags:
       - Registered Clients
       summary: Add new Registered client
-      description: "Create new Registered client with specified data. Client will be created without Logo URL.\r\nIn order to specify a Logo URL, send separate Update Registered Logo request along with id of just created client."
+      description: 'Create new Registered client with specified data. Client will be created without Logo URL.
+
+        In order to specify a Logo URL, send separate Update Registered Logo request along with id of just created client.'
       requestBody:
         description: Create Registered client request
         content:
@@ -121,6 +125,8 @@ paths:
                 errorHash: cd59bd31
                 teamCode: P4
                 errorType: missingField
+      operationId: postAdminApiV1SubClient
+      x-operation-id-source: derived
   /admin/api/v1/SubClient/{id}:
     get:
       tags:
@@ -176,11 +182,15 @@ paths:
                 errorHash: cd59bd31
                 teamCode: P4
                 errorType: missingField
+      operationId: getAdminApiV1SubClientById
+      x-operation-id-source: derived
     put:
       tags:
       - Registered Clients
       summary: Update Registered client
-      description: "Update information about already Registered client by client id. This request does not support updating client Logo URL.\r\nIn order to update a Logo URL, send separate Update Registered Logo request along with id of the client."
+      description: 'Update information about already Registered client by client id. This request does not support updating client Logo URL.
+
+        In order to update a Logo URL, send separate Update Registered Logo request along with id of the client.'
       parameters:
       - name: id
         in: path
@@ -243,6 +253,8 @@ paths:
                 errorHash: cd59bd31
                 teamCode: P4
                 errorType: missingField
+      operationId: putAdminApiV1SubClientById
+      x-operation-id-source: derived
     delete:
       tags:
       - Registered Clients
@@ -288,12 +300,22 @@ paths:
                 errorHash: cd59bd31
                 teamCode: P4
                 errorType: missingField
+      operationId: deleteAdminApiV1SubClientById
+      x-operation-id-source: derived
   /admin/api/v1/SubClient/{id}/logo:
     post:
       tags:
       - Registered Clients
       summary: Update Registered client Logo
-      description: "Adds or update a logo for Registered client.\r\nAllowed file extensions are \".png\", \".jpg\", \".jpeg\".\r\nAllowed file MIME types are \"image/png\", \"image/jpeg\", \"image/jpg\".\r\nMaximum file size is 5MB.\r\nUpload logo as form data with key 'logoFile'."
+      description: 'Adds or update a logo for Registered client.
+
+        Allowed file extensions are ".png", ".jpg", ".jpeg".
+
+        Allowed file MIME types are "image/png", "image/jpeg", "image/jpg".
+
+        Maximum file size is 5MB.
+
+        Upload logo as form data with key ''logoFile''.'
       parameters:
       - name: id
         in: path
@@ -358,6 +380,8 @@ paths:
               schema: {}
               example:
                 statusCode: 415
+      operationId: postAdminApiV1SubClientByIdLogo
+      x-operation-id-source: derived
     delete:
       tags:
       - Registered Clients
@@ -403,37 +427,110 @@ paths:
                 errorHash: cd59bd31
                 teamCode: P4
                 errorType: missingField
+      operationId: deleteAdminApiV1SubClientByIdLogo
+      x-operation-id-source: derived
 components:
   schemas:
+    CatalogConfiguration:
+      type: object
+      properties:
+        excludeIntegrationCategories:
+          maxItems: 10
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: 'Entire categories to hide. Allowed values: "exchange", "wallet". Cannot contain both.
+
+            Applied at catalog-resolution time on top of any GUID-level Org.Front.Core.Contracts.Models.ClientConfigurations.CatalogConfiguration.ExcludeIntegrations
+
+            filtering (PRG-2793). Mutually exclusive with Org.Front.Core.Contracts.Models.ClientConfigurations.CatalogConfiguration.IntegrationWhiteList — the
+
+            whitelist mode and category exclusions cannot be combined; the validator rejects payloads
+
+            that try to set both.'
+        excludeIntegrations:
+          maxItems: 1000
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+          description: A blacklist of integration identifiers to hide. Cannot be combined with integrationWhiteList.
+        integrationWhiteList:
+          maxItems: 1000
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: uuid
+          description: 'An allow list of integration identifiers — only these show. Cannot be combined with
+
+            excludeIntegrationCategories or excludeIntegrations.'
+      additionalProperties: false
+      description: 'Catalog configuration for a profile. By default all integrations show; the fields below curate the catalog.
+
+        integrationWhiteList cannot be combined with excludeIntegrationCategories or excludeIntegrations.'
+    B2B2BRegisteredClientLogo:
+      type: object
+      properties:
+        logoUrl:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ApiResultStatus:
+      enum:
+      - ok
+      - serverFailure
+      - permissionDenied
+      - badRequest
+      - notFound
+      - conflict
+      - tooManyRequest
+      - locked
+      - unavailableForLegalReasons
+      type: string
     ApiResult:
       type: object
       properties:
         status:
           $ref: '#/components/schemas/ApiResultStatus'
         message:
-          type: string
+          type:
+          - string
+          - 'null'
           description: A message generated by the API
-          nullable: true
         displayMessage:
-          type: string
+          type:
+          - string
+          - 'null'
           description: User-friendly display message that can be presented to the end user
-          nullable: true
         errorHash:
-          type: string
+          type:
+          - string
+          - 'null'
           description: An error grouping hash from string components and caller information. Used by bugsnag on FE for correct error grouping
-          nullable: true
           readOnly: true
         teamCode:
-          type: string
-          description: "Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.\r\nFormat: 2-character code (e.g., \"7K\", \"M2\"). Use for alerting/routing, not display."
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: 'Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.
+
+            Format: 2-character code (e.g., "7K", "M2"). Use for alerting/routing, not display.'
           readOnly: true
         errorType:
-          type: string
-          description: "Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.\r\nAll possible error types are available in the documentation."
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
+
+            All possible error types are available in the documentation.'
         errorData:
-          nullable: true
           readOnly: true
       additionalProperties: false
     B2B2BRegisteredClientInfo:
@@ -453,129 +550,14 @@ components:
           type: string
           description: Registered client Display Name
         callbackUrls:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
           description: Registered client Allowed Link URLs. If no Allowed Link URLs are specified, Allowed Link URLs from main client will be used.
-          nullable: true
         catalogConfiguration:
           $ref: '#/components/schemas/CatalogConfiguration'
-      additionalProperties: false
-    B2B2BRegisteredClientLogo:
-      type: object
-      properties:
-        logoUrl:
-          type: string
-          nullable: true
-      additionalProperties: false
-    CatalogConfiguration:
-      type: object
-      properties:
-        excludeIntegrationCategories:
-          maxItems: 10
-          type: array
-          items:
-            type: string
-          description: "Entire categories to hide. Allowed values: \"exchange\", \"wallet\". Cannot contain both.\r\nApplied at catalog-resolution time on top of any GUID-level Org.Front.Core.Contracts.Models.ClientConfigurations.CatalogConfiguration.ExcludeIntegrations\r\nfiltering (PRG-2793). Mutually exclusive with Org.Front.Core.Contracts.Models.ClientConfigurations.CatalogConfiguration.IntegrationWhiteList — the\r\nwhitelist mode and category exclusions cannot be combined; the validator rejects payloads\r\nthat try to set both."
-          nullable: true
-        excludeIntegrations:
-          maxItems: 1000
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: A blacklist of integration identifiers to hide. Cannot be combined with integrationWhiteList.
-          nullable: true
-        integrationWhiteList:
-          maxItems: 1000
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: "An allow list of integration identifiers — only these show. Cannot be combined with\r\nexcludeIntegrationCategories or excludeIntegrations."
-          nullable: true
-      additionalProperties: false
-      description: "Catalog configuration for a profile. By default all integrations show; the fields below curate the catalog.\r\nintegrationWhiteList cannot be combined with excludeIntegrationCategories or excludeIntegrations."
-    ApiResultStatus:
-      enum:
-      - ok
-      - serverFailure
-      - permissionDenied
-      - badRequest
-      - notFound
-      - conflict
-      - tooManyRequest
-      - locked
-      - unavailableForLegalReasons
-      type: string
-    B2B2BRegisteredClientDataIReadOnlyCollectionApiResult:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/ApiResultStatus'
-        message:
-          type: string
-          description: A message generated by the API
-          nullable: true
-        displayMessage:
-          type: string
-          description: User-friendly display message that can be presented to the end user
-          nullable: true
-        errorHash:
-          type: string
-          description: An error grouping hash from string components and caller information. Used by bugsnag on FE for correct error grouping
-          nullable: true
-          readOnly: true
-        teamCode:
-          type: string
-          description: "Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.\r\nFormat: 2-character code (e.g., \"7K\", \"M2\"). Use for alerting/routing, not display."
-          nullable: true
-          readOnly: true
-        errorType:
-          type: string
-          description: "Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.\r\nAll possible error types are available in the documentation."
-          nullable: true
-        errorData:
-          nullable: true
-          readOnly: true
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/B2B2BRegisteredClientData'
-          nullable: true
-      additionalProperties: false
-    B2B2BRegisteredClientLogoApiResult:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/ApiResultStatus'
-        message:
-          type: string
-          description: A message generated by the API
-          nullable: true
-        displayMessage:
-          type: string
-          description: User-friendly display message that can be presented to the end user
-          nullable: true
-        errorHash:
-          type: string
-          description: An error grouping hash from string components and caller information. Used by bugsnag on FE for correct error grouping
-          nullable: true
-          readOnly: true
-        teamCode:
-          type: string
-          description: "Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.\r\nFormat: 2-character code (e.g., \"7K\", \"M2\"). Use for alerting/routing, not display."
-          nullable: true
-          readOnly: true
-        errorType:
-          type: string
-          description: "Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.\r\nAll possible error types are available in the documentation."
-          nullable: true
-        errorData:
-          nullable: true
-          readOnly: true
-        content:
-          $ref: '#/components/schemas/B2B2BRegisteredClientLogo'
       additionalProperties: false
     B2B2BRegisteredClientData:
       required:
@@ -595,11 +577,12 @@ components:
           type: string
           description: Registered client Display Name
         callbackUrls:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
           description: Registered client Allowed Link URLs. If no Allowed Link URLs are specified, Allowed Link URLs from main client will be used.
-          nullable: true
         catalogConfiguration:
           $ref: '#/components/schemas/CatalogConfiguration'
         id:
@@ -612,11 +595,100 @@ components:
           type: string
           description: Registered client Logo URL address
         fundingTokenWhitelist:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
-          description: "Funding token whitelist inherited from the parent (main) client. Read-only — sub-client level\r\nfunding token whitelisting is tracked under PRG-2682 / Lane C-3."
-          nullable: true
+          description: 'Funding token whitelist inherited from the parent (main) client. Read-only — sub-client level
+
+            funding token whitelisting is tracked under PRG-2682 / Lane C-3.'
+      additionalProperties: false
+    B2B2BRegisteredClientDataIReadOnlyCollectionApiResult:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ApiResultStatus'
+        message:
+          type:
+          - string
+          - 'null'
+          description: A message generated by the API
+        displayMessage:
+          type:
+          - string
+          - 'null'
+          description: User-friendly display message that can be presented to the end user
+        errorHash:
+          type:
+          - string
+          - 'null'
+          description: An error grouping hash from string components and caller information. Used by bugsnag on FE for correct error grouping
+          readOnly: true
+        teamCode:
+          type:
+          - string
+          - 'null'
+          description: 'Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.
+
+            Format: 2-character code (e.g., "7K", "M2"). Use for alerting/routing, not display.'
+          readOnly: true
+        errorType:
+          type:
+          - string
+          - 'null'
+          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
+
+            All possible error types are available in the documentation.'
+        errorData:
+          readOnly: true
+        content:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/B2B2BRegisteredClientData'
+      additionalProperties: false
+    B2B2BRegisteredClientLogoApiResult:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ApiResultStatus'
+        message:
+          type:
+          - string
+          - 'null'
+          description: A message generated by the API
+        displayMessage:
+          type:
+          - string
+          - 'null'
+          description: User-friendly display message that can be presented to the end user
+        errorHash:
+          type:
+          - string
+          - 'null'
+          description: An error grouping hash from string components and caller information. Used by bugsnag on FE for correct error grouping
+          readOnly: true
+        teamCode:
+          type:
+          - string
+          - 'null'
+          description: 'Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.
+
+            Format: 2-character code (e.g., "7K", "M2"). Use for alerting/routing, not display.'
+          readOnly: true
+        errorType:
+          type:
+          - string
+          - 'null'
+          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
+
+            All possible error types are available in the documentation.'
+        errorData:
+          readOnly: true
+        content:
+          $ref: '#/components/schemas/B2B2BRegisteredClientLogo'
       additionalProperties: false
     B2B2BRegisteredClientDataApiResult:
       type: object
@@ -624,29 +696,37 @@ components:
         status:
           $ref: '#/components/schemas/ApiResultStatus'
         message:
-          type: string
+          type:
+          - string
+          - 'null'
           description: A message generated by the API
-          nullable: true
         displayMessage:
-          type: string
+          type:
+          - string
+          - 'null'
           description: User-friendly display message that can be presented to the end user
-          nullable: true
         errorHash:
-          type: string
+          type:
+          - string
+          - 'null'
           description: An error grouping hash from string components and caller information. Used by bugsnag on FE for correct error grouping
-          nullable: true
           readOnly: true
         teamCode:
-          type: string
-          description: "Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.\r\nFormat: 2-character code (e.g., \"7K\", \"M2\"). Use for alerting/routing, not display."
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: 'Opaque team code for error routing. Resolved from exception origin or caller file path via CODEOWNERS.
+
+            Format: 2-character code (e.g., "7K", "M2"). Use for alerting/routing, not display.'
           readOnly: true
         errorType:
-          type: string
-          description: "Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.\r\nAll possible error types are available in the documentation."
-          nullable: true
+          type:
+          - string
+          - 'null'
+          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
+
+            All possible error types are available in the documentation.'
         errorData:
-          nullable: true
           readOnly: true
         content:
           $ref: '#/components/schemas/B2B2BRegisteredClientData'

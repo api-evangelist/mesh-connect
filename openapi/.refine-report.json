@@ -1,29 +1,19 @@
 {
   "provider": "mesh-connect",
   "sources": [
-    "mesh-connect-assets-api-openapi.yml",
-    "mesh-connect-auth-token-api-openapi.yml",
-    "mesh-connect-balance-api-openapi.yml",
-    "mesh-connect-brokeraccountdetail-api-openapi.yml",
-    "mesh-connect-main-clients-api-openapi.yml",
-    "mesh-connect-managed-account-authentication-api-openapi.yml",
-    "mesh-connect-managed-transfers-api-openapi.yml",
-    "mesh-connect-portfolio-api-openapi.yml",
-    "mesh-connect-registered-clients-api-openapi.yml",
-    "mesh-connect-self-managed-account-authentication-api-openapi.yml",
-    "mesh-connect-transactions-api-openapi.yml",
-    "mesh-connect-transfers-api-openapi.yml"
+    "_original/mesh-connect-admin-openapi-original.json",
+    "_original/mesh-connect-openapi-original.json"
   ],
   "outputs": [
-    "mesh-connect-assets-api-openapi.yml",
     "mesh-connect-auth-token-api-openapi.yml",
+    "mesh-connect-main-clients-api-openapi.yml",
+    "mesh-connect-registered-clients-api-openapi.yml",
+    "mesh-connect-assets-api-openapi.yml",
     "mesh-connect-balance-api-openapi.yml",
     "mesh-connect-brokeraccountdetail-api-openapi.yml",
-    "mesh-connect-main-clients-api-openapi.yml",
     "mesh-connect-managed-account-authentication-api-openapi.yml",
     "mesh-connect-managed-transfers-api-openapi.yml",
     "mesh-connect-portfolio-api-openapi.yml",
-    "mesh-connect-registered-clients-api-openapi.yml",
     "mesh-connect-self-managed-account-authentication-api-openapi.yml",
     "mesh-connect-transactions-api-openapi.yml",
     "mesh-connect-transfers-api-openapi.yml"
@@ -31,6 +21,27 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "mesh-connect-admin-openapi-original.json: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "mesh-connect-admin-openapi-original.json: declared missing tag: Auth token",
+    "mesh-connect-admin-openapi-original.json: declared missing tag: Main Clients",
+    "mesh-connect-admin-openapi-original.json: declared missing tag: Registered Clients",
+    "mesh-connect-openapi-original.json: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "mesh-connect-assets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mesh-connect-auth-token-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mesh-connect-balance-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mesh-connect-brokeraccountdetail-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mesh-connect-main-clients-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mesh-connect-managed-account-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mesh-connect-managed-transfers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mesh-connect-portfolio-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mesh-connect-registered-clients-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mesh-connect-self-managed-account-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mesh-connect-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mesh-connect-transfers-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
