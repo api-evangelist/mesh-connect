@@ -609,41 +609,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    IntegrationsResponse:
-      type: object
-      properties:
-        items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IntegrationModel'
-          description: Integrations list.
-      additionalProperties: false
-      description: Integration response.
-    LinkTokenModel:
-      type: object
-      properties:
-        linkToken:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    BrokerAccountTokens:
-      type: object
-      properties:
-        account:
-          allOf:
-          - $ref: '#/components/schemas/BrokerAccount'
-        accessToken:
-          type:
-          - string
-          - 'null'
-        refreshToken:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     TransferToAddressWithAmount:
       type: object
       properties:
@@ -675,95 +640,62 @@ components:
           description: Amount of tokens to transfer by specified network.
           format: double
       additionalProperties: false
-    IntegrationLogo:
+    BrokerType:
+      enum:
+      - robinhood
+      - eTrade
+      - alpaca
+      - tdAmeritrade
+      - weBull
+      - stash
+      - interactiveBrokers
+      - public
+      - coinbase
+      - kraken
+      - coinbasePro
+      - cryptoCom
+      - openSea
+      - binanceUs
+      - gemini
+      - cryptocurrencyAddress
+      - cryptocurrencyWallet
+      - okCoin
+      - bittrex
+      - kuCoin
+      - etoro
+      - cexIo
+      - binanceInternational
+      - bitstamp
+      - gateIo
+      - acorns
+      - okx
+      - bitFlyer
+      - coinlist
+      - huobi
+      - bitfinex
+      - deFiWallet
+      - krakenDirect
+      - vanguard
+      - binanceInternationalDirect
+      - bitfinexDirect
+      - bybit
+      - paxos
+      - coinbasePrime
+      type: string
+    BrokerAccountTokens:
       type: object
       properties:
-        logoWhiteUrl:
-          type:
-          - string
-          - 'null'
-          description: White logo url.
-        logoBlackUrl:
-          type:
-          - string
-          - 'null'
-          description: Black logo url.
-        logoColorUrl:
-          type:
-          - string
-          - 'null'
-          description: Colored logo url.
-        iconWhiteUrl:
-          type:
-          - string
-          - 'null'
-          description: White icon url.
-        iconBlackUrl:
-          type:
-          - string
-          - 'null'
-          description: Balck icon url.
-        iconColorUrl:
-          type:
-          - string
-          - 'null'
-          description: Colored logo url.
-      additionalProperties: false
-      description: Integreation logos.
-    BrokerBaseRequest:
-      required:
-      - authToken
-      - type
-      type: object
-      properties:
-        authToken:
-          minLength: 1
-          type: string
-          description: Auth token that allows connecting to the target institution
-        type:
-          enum:
-          - robinhood
-          - eTrade
-          - alpaca
-          - tdAmeritrade
-          - weBull
-          - stash
-          - interactiveBrokers
-          - public
-          - coinbase
-          - kraken
-          - coinbasePro
-          - cryptoCom
-          - openSea
-          - binanceUs
-          - gemini
-          - cryptocurrencyAddress
-          - cryptocurrencyWallet
-          - okCoin
-          - bittrex
-          - kuCoin
-          - etoro
-          - cexIo
-          - binanceInternational
-          - bitstamp
-          - gateIo
-          - acorns
-          - okx
-          - bitFlyer
-          - coinlist
-          - huobi
-          - bitfinex
-          - deFiWallet
-          - krakenDirect
-          - vanguard
-          - binanceInternationalDirect
-          - bitfinexDirect
-          - bybit
-          - paxos
-          - coinbasePrime
+        account:
           allOf:
-          - $ref: '#/components/schemas/BrokerType'
-          description: Type of the institution to connect
+          - $ref: '#/components/schemas/BrokerAccount'
+        accessToken:
+          type:
+          - string
+          - 'null'
+        refreshToken:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     B2BBrokerAuthStatus:
       enum:
@@ -857,6 +789,221 @@ components:
             - 'null'
           description: Additional metadata
       additionalProperties: false
+    BrokerAccount:
+      type: object
+      properties:
+        meshAccountId:
+          type: string
+          format: uuid
+        frontAccountId:
+          type: string
+          format: uuid
+          readOnly: true
+          deprecated: true
+        accountId:
+          type:
+          - string
+          - 'null'
+        accountName:
+          type:
+          - string
+          - 'null'
+        fund:
+          type:
+          - number
+          - 'null'
+          description: 'Buying power of the account. Typically consists of cash plus available margin.
+
+            For non-margin accounts fund contains cash only'
+          format: double
+        cash:
+          type:
+          - number
+          - 'null'
+          description: Cash balance in USD
+          format: double
+        isReconnected:
+          type:
+          - boolean
+          - 'null'
+          description: 'Indicates if this account was already connected by the current user and device.
+
+            Can be null.'
+        balances:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BrokerFiatBalance'
+          description: The list of all asset balances of account
+      additionalProperties: false
+    InitializeTransfersForLinkRequest:
+      type: object
+      properties:
+        toAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TransferToAddressWithAmount'
+          description: 'The list of destination addresses with corresponding networks are asset symbols that
+
+            can be used to initiate incoming transfers.'
+        amountInFiat:
+          type:
+          - number
+          - 'null'
+          description: Amount in USD to transfer. If not provided users can specify amount by themselves.
+          format: double
+        transactionId:
+          maxLength: 128
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: Transaction ID Provided by client to track transaction in future calls
+        clientFee:
+          maximum: 1
+          minimum: 0
+          type: number
+          description: 'A percentage fee (input as a ratio, eg. 0.02500 = 2.500%) added onto your users'' gross payments to your company.
+
+            This will override any default fee entered in your Mesh dashboard for an individual transaction.
+
+            Please note: this fee should only be used for Payments (when the transfer destination is an address owned by your company),
+
+            and not for Deposits (when the transfer destination is an address owned by the end user).
+
+            If used for Deposits, it will increase the size of the user''s Deposit by the fee amount,
+
+            but will incorrectly show to the user as a fee.'
+          format: double
+        transferType:
+          allOf:
+          - $ref: '#/components/schemas/TransferTypeEnum'
+          description: 'Deposit: The user is transferring crypto to a wallet they own on your platform.
+
+            Payment: The user is transferring crypto to a wallet your company owns in exchange for receiving a good or service.
+
+            Onramp: The user is using balances and linked payment methods in an exchange account to fund the purchase of crypto in their wallet on your platform.'
+      additionalProperties: false
+    BrokerFiatBalance:
+      type: object
+      properties:
+        symbol:
+          type:
+          - string
+          - 'null'
+          description: Account balance currency
+        buyingPower:
+          type:
+          - number
+          - 'null'
+          description: 'BuyingPower indicates total amount of money the user can spend for buying stock. Always includes cash and
+
+            can also include margin'
+          format: double
+        cryptoBuyingPower:
+          type:
+          - number
+          - 'null'
+          description: BuyingPower indicates total amount of money the user can spend for buying crypto.
+          format: double
+        cash:
+          type:
+          - number
+          - 'null'
+          description: Account cash indicates total amount of money
+          format: double
+      additionalProperties: false
+    TransferCryptocurrencyFundingOptions:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: 'Indicates whether the Link is permitted to use the end user''s available buying power
+
+            and/or payment methods to supplement the cryptocurrency balance if it is insufficient
+
+            for the transfer.'
+      additionalProperties: false
+    IntegrationModel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Integration unique identifier.
+          format: uuid
+        name:
+          type:
+          - string
+          - 'null'
+          description: Integration name.
+        type:
+          enum:
+          - robinhood
+          - eTrade
+          - alpaca
+          - tdAmeritrade
+          - weBull
+          - stash
+          - interactiveBrokers
+          - public
+          - coinbase
+          - kraken
+          - coinbasePro
+          - cryptoCom
+          - openSea
+          - binanceUs
+          - gemini
+          - cryptocurrencyAddress
+          - cryptocurrencyWallet
+          - okCoin
+          - bittrex
+          - kuCoin
+          - etoro
+          - cexIo
+          - binanceInternational
+          - bitstamp
+          - gateIo
+          - acorns
+          - okx
+          - bitFlyer
+          - coinlist
+          - huobi
+          - bitfinex
+          - deFiWallet
+          - krakenDirect
+          - vanguard
+          - binanceInternationalDirect
+          - bitfinexDirect
+          - bybit
+          - paxos
+          - coinbasePrime
+          allOf:
+          - $ref: '#/components/schemas/BrokerType'
+          description: Integration type.
+        deFiWalletProviderId:
+          type:
+          - string
+          - 'null'
+          description: DeFi wallet provider identifier.
+        categories:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FinancialInstitutionIntegrationType'
+          description: Integration categories.
+        logo:
+          allOf:
+          - $ref: '#/components/schemas/IntegrationLogo'
+          description: Logo object.
+        cryptoTransfersSupported:
+          type: boolean
+          description: Indicates if crypto transfers supported by integration.
+      additionalProperties: false
+      description: Integration model.
     B2BBrokerRefreshTokenResponse:
       type: object
       properties:
@@ -906,107 +1053,16 @@ components:
           items:
             $ref: '#/components/schemas/BrokerAccountTokens'
       additionalProperties: false
-    DeFiWalletHealthStatusInfo:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    BrokerFiatBalance:
-      type: object
-      properties:
-        symbol:
-          type:
-          - string
-          - 'null'
-          description: Account balance currency
-        buyingPower:
-          type:
-          - number
-          - 'null'
-          description: 'BuyingPower indicates total amount of money the user can spend for buying stock. Always includes cash and
-
-            can also include margin'
-          format: double
-        cryptoBuyingPower:
-          type:
-          - number
-          - 'null'
-          description: BuyingPower indicates total amount of money the user can spend for buying crypto.
-          format: double
-        cash:
-          type:
-          - number
-          - 'null'
-          description: Account cash indicates total amount of money
-          format: double
-      additionalProperties: false
-    LinkTokenModelApiResult:
-      type: object
-      properties:
-        status:
-          enum:
-          - ok
-          - serverFailure
-          - permissionDenied
-          - badRequest
-          - notFound
-          - conflict
-          - tooManyRequest
-          - locked
-          allOf:
-          - $ref: '#/components/schemas/ApiResultStatus'
-          readOnly: true
-        message:
-          type:
-          - string
-          - 'null'
-          description: A message generated by the API
-        displayMessage:
-          type:
-          - string
-          - 'null'
-          description: User-friendly display message that can be presented to the end user
-        errorType:
-          type:
-          - string
-          - 'null'
-          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
-
-            All possible error types are available in the documentation.'
-        errorData:
-          readOnly: true
-        content:
-          allOf:
-          - $ref: '#/components/schemas/LinkTokenModel'
-      additionalProperties: false
-    ApiResultStatus:
+    FinancialInstitutionIntegrationType:
       enum:
-      - ok
-      - serverFailure
-      - permissionDenied
-      - badRequest
-      - notFound
-      - conflict
-      - tooManyRequest
-      - locked
+      - brokerage
+      - bank
+      - exchange
+      - wallet
+      - address
+      - nftMarketplace
+      - deFiWallet
       type: string
-    TransferCryptocurrencyFundingOptions:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: 'Indicates whether the Link is permitted to use the end user''s available buying power
-
-            and/or payment methods to supplement the cryptocurrency balance if it is insufficient
-
-            for the transfer.'
-      additionalProperties: false
     GetLinkTokenRequest:
       required:
       - userId
@@ -1043,6 +1099,199 @@ components:
           - 'null'
           description: A unique identifier representing a specific integration obtained from the list of available integrations.
           format: uuid
+      additionalProperties: false
+    CatalogLink:
+      type: object
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+          description: Url to open Front catalog that should be presented to the end user.
+          format: uri
+        iFrameUrl:
+          type:
+          - string
+          - 'null'
+          description: Url to open Front catalog in iFrame that should be presented to the end user.
+          format: uri
+      additionalProperties: false
+    LinkTokenModel:
+      type: object
+      properties:
+        linkToken:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    B2BBrokersHealthStatusListApiResult:
+      type: object
+      properties:
+        status:
+          enum:
+          - ok
+          - serverFailure
+          - permissionDenied
+          - badRequest
+          - notFound
+          - conflict
+          - tooManyRequest
+          - locked
+          allOf:
+          - $ref: '#/components/schemas/ApiResultStatus'
+          readOnly: true
+        message:
+          type:
+          - string
+          - 'null'
+          description: A message generated by the API
+        displayMessage:
+          type:
+          - string
+          - 'null'
+          description: User-friendly display message that can be presented to the end user
+        errorType:
+          type:
+          - string
+          - 'null'
+          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
+
+            All possible error types are available in the documentation.'
+        errorData:
+          readOnly: true
+        content:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/B2BBrokersHealthStatus'
+      additionalProperties: false
+    ApiResultStatus:
+      enum:
+      - ok
+      - serverFailure
+      - permissionDenied
+      - badRequest
+      - notFound
+      - conflict
+      - tooManyRequest
+      - locked
+      type: string
+    LinkTokenTransferOptions:
+      type: object
+      properties:
+        toAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TransferToAddressWithAmount'
+          description: 'The list of destination addresses with corresponding networks are asset symbols that
+
+            can be used to initiate incoming transfers. If this parameter is present, the Link
+
+            session will continue to transfer flow after connecting the origin account.'
+        amountInFiat:
+          type:
+          - number
+          - 'null'
+          description: Amount in USD to transfer. If not provided users can specify amount by themselves.
+          format: double
+        transactionId:
+          maxLength: 128
+          minLength: 0
+          type:
+          - string
+          - 'null'
+          description: Transaction ID Provided by client to track transaction in future calls
+        clientFee:
+          maximum: 1
+          minimum: 0
+          type:
+          - number
+          - 'null'
+          description: 'A percentage fee (input as a ratio, eg. 0.02500 = 2.500%) added onto your users'' gross payments to your company.
+
+            This will override any default fee entered in your Mesh dashboard for an individual transaction.
+
+            Please note: this fee should only be used for Payments (when the transfer destination is an address owned by your company),
+
+            and not for Deposits (when the transfer destination is an address owned by the end user).
+
+            If used for Deposits, it will increase the size of the user''s Deposit by the fee amount,
+
+            but will incorrectly show to the user as a fee.'
+          format: double
+        transferType:
+          allOf:
+          - $ref: '#/components/schemas/TransferTypeEnum'
+          description: 'Deposit: The user is transferring crypto to a wallet they own on your platform.
+
+            Payment: The user is transferring crypto to a wallet your company owns in exchange for receiving a good or service.
+
+            Onramp: The user is using balances and linked payment methods in an exchange account to fund the purchase of crypto in their wallet on your platform.'
+        fundingOptions:
+          allOf:
+          - $ref: '#/components/schemas/TransferCryptocurrencyFundingOptions'
+          description: 'Specifies the permitted options to use the end user''s available buying power
+
+            and/or payment methods to supplement the cryptocurrency balance if it is insufficient
+
+            for the transfer.'
+        isInclusiveFeeEnabled:
+          type: boolean
+          description: Specifies if all the fees are included in the amount to transfer.
+      additionalProperties: false
+    IntegrationsResponseApiResult:
+      type: object
+      properties:
+        status:
+          enum:
+          - ok
+          - serverFailure
+          - permissionDenied
+          - badRequest
+          - notFound
+          - conflict
+          - tooManyRequest
+          - locked
+          allOf:
+          - $ref: '#/components/schemas/ApiResultStatus'
+          readOnly: true
+        message:
+          type:
+          - string
+          - 'null'
+          description: A message generated by the API
+        displayMessage:
+          type:
+          - string
+          - 'null'
+          description: User-friendly display message that can be presented to the end user
+        errorType:
+          type:
+          - string
+          - 'null'
+          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
+
+            All possible error types are available in the documentation.'
+        errorData:
+          readOnly: true
+        content:
+          allOf:
+          - $ref: '#/components/schemas/IntegrationsResponse'
+          description: Integration response.
+      additionalProperties: false
+    DeFiWalletHealthStatusInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     B2BBrokersHealthStatus:
       type: object
@@ -1128,200 +1377,28 @@ components:
           - $ref: '#/components/schemas/DeFiWalletHealthStatusInfo'
           description: Short information about DeFiWallet
       additionalProperties: false
-    TransferTypeEnum:
-      enum:
-      - deposit
-      - payment
-      - onramp
-      type: string
-    IntegrationsResponseApiResult:
+    IntegrationsResponse:
       type: object
       properties:
-        status:
-          enum:
-          - ok
-          - serverFailure
-          - permissionDenied
-          - badRequest
-          - notFound
-          - conflict
-          - tooManyRequest
-          - locked
-          allOf:
-          - $ref: '#/components/schemas/ApiResultStatus'
-          readOnly: true
-        message:
-          type:
-          - string
-          - 'null'
-          description: A message generated by the API
-        displayMessage:
-          type:
-          - string
-          - 'null'
-          description: User-friendly display message that can be presented to the end user
-        errorType:
-          type:
-          - string
-          - 'null'
-          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
-
-            All possible error types are available in the documentation.'
-        errorData:
-          readOnly: true
-        content:
-          allOf:
-          - $ref: '#/components/schemas/IntegrationsResponse'
-          description: Integration response.
-      additionalProperties: false
-    B2BBrokersHealthStatusListApiResult:
-      type: object
-      properties:
-        status:
-          enum:
-          - ok
-          - serverFailure
-          - permissionDenied
-          - badRequest
-          - notFound
-          - conflict
-          - tooManyRequest
-          - locked
-          allOf:
-          - $ref: '#/components/schemas/ApiResultStatus'
-          readOnly: true
-        message:
-          type:
-          - string
-          - 'null'
-          description: A message generated by the API
-        displayMessage:
-          type:
-          - string
-          - 'null'
-          description: User-friendly display message that can be presented to the end user
-        errorType:
-          type:
-          - string
-          - 'null'
-          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
-
-            All possible error types are available in the documentation.'
-        errorData:
-          readOnly: true
-        content:
+        items:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/B2BBrokersHealthStatus'
+            $ref: '#/components/schemas/IntegrationModel'
+          description: Integrations list.
       additionalProperties: false
-    FinancialInstitutionIntegrationType:
-      enum:
-      - brokerage
-      - bank
-      - exchange
-      - wallet
-      - address
-      - nftMarketplace
-      - deFiWallet
-      type: string
-    BrokerAccount:
+      description: Integration response.
+    BrokerBaseRequest:
+      required:
+      - authToken
+      - type
       type: object
       properties:
-        meshAccountId:
+        authToken:
+          minLength: 1
           type: string
-          format: uuid
-        frontAccountId:
-          type: string
-          format: uuid
-          readOnly: true
-          deprecated: true
-        accountId:
-          type:
-          - string
-          - 'null'
-        accountName:
-          type:
-          - string
-          - 'null'
-        fund:
-          type:
-          - number
-          - 'null'
-          description: 'Buying power of the account. Typically consists of cash plus available margin.
-
-            For non-margin accounts fund contains cash only'
-          format: double
-        cash:
-          type:
-          - number
-          - 'null'
-          description: Cash balance in USD
-          format: double
-        isReconnected:
-          type:
-          - boolean
-          - 'null'
-          description: 'Indicates if this account was already connected by the current user and device.
-
-            Can be null.'
-        balances:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BrokerFiatBalance'
-          description: The list of all asset balances of account
-      additionalProperties: false
-    ApiResult:
-      type: object
-      properties:
-        status:
-          enum:
-          - ok
-          - serverFailure
-          - permissionDenied
-          - badRequest
-          - notFound
-          - conflict
-          - tooManyRequest
-          - locked
-          allOf:
-          - $ref: '#/components/schemas/ApiResultStatus'
-          readOnly: true
-        message:
-          type:
-          - string
-          - 'null'
-          description: A message generated by the API
-        displayMessage:
-          type:
-          - string
-          - 'null'
-          description: User-friendly display message that can be presented to the end user
-        errorType:
-          type:
-          - string
-          - 'null'
-          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
-
-            All possible error types are available in the documentation.'
-        errorData:
-          readOnly: true
-      additionalProperties: false
-    IntegrationModel:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Integration unique identifier.
-          format: uuid
-        name:
-          type:
-          - string
-          - 'null'
-          description: Integration name.
+          description: Auth token that allows connecting to the target institution
         type:
           enum:
           - robinhood
@@ -1365,160 +1442,9 @@ components:
           - coinbasePrime
           allOf:
           - $ref: '#/components/schemas/BrokerType'
-          description: Integration type.
-        deFiWalletProviderId:
-          type:
-          - string
-          - 'null'
-          description: DeFi wallet provider identifier.
-        categories:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/FinancialInstitutionIntegrationType'
-          description: Integration categories.
-        logo:
-          allOf:
-          - $ref: '#/components/schemas/IntegrationLogo'
-          description: Logo object.
-        cryptoTransfersSupported:
-          type: boolean
-          description: Indicates if crypto transfers supported by integration.
+          description: Type of the institution to connect
       additionalProperties: false
-      description: Integration model.
-    CatalogLink:
-      type: object
-      properties:
-        url:
-          type:
-          - string
-          - 'null'
-          description: Url to open Front catalog that should be presented to the end user.
-          format: uri
-        iFrameUrl:
-          type:
-          - string
-          - 'null'
-          description: Url to open Front catalog in iFrame that should be presented to the end user.
-          format: uri
-      additionalProperties: false
-    LinkTokenTransferOptions:
-      type: object
-      properties:
-        toAddresses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TransferToAddressWithAmount'
-          description: 'The list of destination addresses with corresponding networks are asset symbols that
-
-            can be used to initiate incoming transfers. If this parameter is present, the Link
-
-            session will continue to transfer flow after connecting the origin account.'
-        amountInFiat:
-          type:
-          - number
-          - 'null'
-          description: Amount in USD to transfer. If not provided users can specify amount by themselves.
-          format: double
-        transactionId:
-          maxLength: 128
-          minLength: 0
-          type:
-          - string
-          - 'null'
-          description: Transaction ID Provided by client to track transaction in future calls
-        clientFee:
-          maximum: 1
-          minimum: 0
-          type:
-          - number
-          - 'null'
-          description: 'A percentage fee (input as a ratio, eg. 0.02500 = 2.500%) added onto your users'' gross payments to your company.
-
-            This will override any default fee entered in your Mesh dashboard for an individual transaction.
-
-            Please note: this fee should only be used for Payments (when the transfer destination is an address owned by your company),
-
-            and not for Deposits (when the transfer destination is an address owned by the end user).
-
-            If used for Deposits, it will increase the size of the user''s Deposit by the fee amount,
-
-            but will incorrectly show to the user as a fee.'
-          format: double
-        transferType:
-          allOf:
-          - $ref: '#/components/schemas/TransferTypeEnum'
-          description: 'Deposit: The user is transferring crypto to a wallet they own on your platform.
-
-            Payment: The user is transferring crypto to a wallet your company owns in exchange for receiving a good or service.
-
-            Onramp: The user is using balances and linked payment methods in an exchange account to fund the purchase of crypto in their wallet on your platform.'
-        fundingOptions:
-          allOf:
-          - $ref: '#/components/schemas/TransferCryptocurrencyFundingOptions'
-          description: 'Specifies the permitted options to use the end user''s available buying power
-
-            and/or payment methods to supplement the cryptocurrency balance if it is insufficient
-
-            for the transfer.'
-        isInclusiveFeeEnabled:
-          type: boolean
-          description: Specifies if all the fees are included in the amount to transfer.
-      additionalProperties: false
-    InitializeTransfersForLinkRequest:
-      type: object
-      properties:
-        toAddresses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TransferToAddressWithAmount'
-          description: 'The list of destination addresses with corresponding networks are asset symbols that
-
-            can be used to initiate incoming transfers.'
-        amountInFiat:
-          type:
-          - number
-          - 'null'
-          description: Amount in USD to transfer. If not provided users can specify amount by themselves.
-          format: double
-        transactionId:
-          maxLength: 128
-          minLength: 0
-          type:
-          - string
-          - 'null'
-          description: Transaction ID Provided by client to track transaction in future calls
-        clientFee:
-          maximum: 1
-          minimum: 0
-          type: number
-          description: 'A percentage fee (input as a ratio, eg. 0.02500 = 2.500%) added onto your users'' gross payments to your company.
-
-            This will override any default fee entered in your Mesh dashboard for an individual transaction.
-
-            Please note: this fee should only be used for Payments (when the transfer destination is an address owned by your company),
-
-            and not for Deposits (when the transfer destination is an address owned by the end user).
-
-            If used for Deposits, it will increase the size of the user''s Deposit by the fee amount,
-
-            but will incorrectly show to the user as a fee.'
-          format: double
-        transferType:
-          allOf:
-          - $ref: '#/components/schemas/TransferTypeEnum'
-          description: 'Deposit: The user is transferring crypto to a wallet they own on your platform.
-
-            Payment: The user is transferring crypto to a wallet your company owns in exchange for receiving a good or service.
-
-            Onramp: The user is using balances and linked payment methods in an exchange account to fund the purchase of crypto in their wallet on your platform.'
-      additionalProperties: false
-    CatalogLinkApiResult:
+    ApiResult:
       type: object
       properties:
         status:
@@ -1553,10 +1479,48 @@ components:
             All possible error types are available in the documentation.'
         errorData:
           readOnly: true
-        content:
-          allOf:
-          - $ref: '#/components/schemas/CatalogLink'
       additionalProperties: false
+    TransferTypeEnum:
+      enum:
+      - deposit
+      - payment
+      - onramp
+      type: string
+    IntegrationLogo:
+      type: object
+      properties:
+        logoWhiteUrl:
+          type:
+          - string
+          - 'null'
+          description: White logo url.
+        logoBlackUrl:
+          type:
+          - string
+          - 'null'
+          description: Black logo url.
+        logoColorUrl:
+          type:
+          - string
+          - 'null'
+          description: Colored logo url.
+        iconWhiteUrl:
+          type:
+          - string
+          - 'null'
+          description: White icon url.
+        iconBlackUrl:
+          type:
+          - string
+          - 'null'
+          description: Balck icon url.
+        iconColorUrl:
+          type:
+          - string
+          - 'null'
+          description: Colored logo url.
+      additionalProperties: false
+      description: Integreation logos.
     B2BBrokerRefreshTokenResponseApiResult:
       type: object
       properties:
@@ -1608,48 +1572,84 @@ components:
       - paymentMethods
       - conversions
       type: string
-    BrokerType:
-      enum:
-      - robinhood
-      - eTrade
-      - alpaca
-      - tdAmeritrade
-      - weBull
-      - stash
-      - interactiveBrokers
-      - public
-      - coinbase
-      - kraken
-      - coinbasePro
-      - cryptoCom
-      - openSea
-      - binanceUs
-      - gemini
-      - cryptocurrencyAddress
-      - cryptocurrencyWallet
-      - okCoin
-      - bittrex
-      - kuCoin
-      - etoro
-      - cexIo
-      - binanceInternational
-      - bitstamp
-      - gateIo
-      - acorns
-      - okx
-      - bitFlyer
-      - coinlist
-      - huobi
-      - bitfinex
-      - deFiWallet
-      - krakenDirect
-      - vanguard
-      - binanceInternationalDirect
-      - bitfinexDirect
-      - bybit
-      - paxos
-      - coinbasePrime
-      type: string
+    CatalogLinkApiResult:
+      type: object
+      properties:
+        status:
+          enum:
+          - ok
+          - serverFailure
+          - permissionDenied
+          - badRequest
+          - notFound
+          - conflict
+          - tooManyRequest
+          - locked
+          allOf:
+          - $ref: '#/components/schemas/ApiResultStatus'
+          readOnly: true
+        message:
+          type:
+          - string
+          - 'null'
+          description: A message generated by the API
+        displayMessage:
+          type:
+          - string
+          - 'null'
+          description: User-friendly display message that can be presented to the end user
+        errorType:
+          type:
+          - string
+          - 'null'
+          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
+
+            All possible error types are available in the documentation.'
+        errorData:
+          readOnly: true
+        content:
+          allOf:
+          - $ref: '#/components/schemas/CatalogLink'
+      additionalProperties: false
+    LinkTokenModelApiResult:
+      type: object
+      properties:
+        status:
+          enum:
+          - ok
+          - serverFailure
+          - permissionDenied
+          - badRequest
+          - notFound
+          - conflict
+          - tooManyRequest
+          - locked
+          allOf:
+          - $ref: '#/components/schemas/ApiResultStatus'
+          readOnly: true
+        message:
+          type:
+          - string
+          - 'null'
+          description: A message generated by the API
+        displayMessage:
+          type:
+          - string
+          - 'null'
+          description: User-friendly display message that can be presented to the end user
+        errorType:
+          type:
+          - string
+          - 'null'
+          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
+
+            All possible error types are available in the documentation.'
+        errorData:
+          readOnly: true
+        content:
+          allOf:
+          - $ref: '#/components/schemas/LinkTokenModel'
+      additionalProperties: false
   securitySchemes:
     Client-Secret:
       type: apiKey
