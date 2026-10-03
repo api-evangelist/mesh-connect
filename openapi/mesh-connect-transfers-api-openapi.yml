@@ -459,7 +459,36 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    B2BBrokerCryptocurrencyDepositAddressResponseApiResult:
+    BrokerResponseStatus:
+      enum:
+      - unknown
+      - mfaRequired
+      - kycRequired
+      type: string
+    B2BBrokerCryptocurrencySymbolDetailsResponse:
+      type: object
+      properties:
+        symbol:
+          type:
+          - string
+          - 'null'
+          description: Requested symbol
+        addressTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CryptocurrencyAddressType'
+          description: Supported address types
+        chains:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BrokerCryptocurrencyChain'
+          description: Supported chains. One of the values should be provided to execute transfers
+      additionalProperties: false
+    B2BBrokerCreateCryptocurrencyTransactionResponseApiResult:
       type: object
       properties:
         status:
@@ -496,7 +525,147 @@ components:
           readOnly: true
         content:
           allOf:
-          - $ref: '#/components/schemas/B2BBrokerCryptocurrencyDepositAddressResponse'
+          - $ref: '#/components/schemas/B2BBrokerCreateCryptocurrencyTransactionResponse'
+      additionalProperties: false
+    B2BBrokerCryptocurrencyTransaction:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: Identifier of the transfer, if provided by the financial institution
+        status:
+          enum:
+          - unknown
+          - failed
+          - frozen
+          - succeeded
+          - mfaRequired
+          - pending
+          - expired
+          - canceled
+          - waitingForSignature
+          - waitingForClearing
+          - awaitingApproval
+          - awaitingConfirmation
+          - awaitingVerification
+          - rejected
+          - pendingCancel
+          - emailVerification
+          - deviceConfirmationRequired
+          - mfaFailed
+          - addressWhitelistRequired
+          - secondMfaRequired
+          allOf:
+          - $ref: '#/components/schemas/BrokerCryptocurrencyTransactionStatus'
+          description: Current status of the transaction
+        statusDetails:
+          type:
+          - string
+          - 'null'
+          description: Details of the current status of the transfer, as provided by the financial institution
+        type:
+          enum:
+          - unknown
+          - deposit
+          - withdrawal
+          allOf:
+          - $ref: '#/components/schemas/BrokerCryptocurrencyTransactionType'
+          description: The direction of the transaction
+        fromAddress:
+          type:
+          - string
+          - 'null'
+          description: Address where the transaction was sent from
+        targetAddress:
+          type:
+          - string
+          - 'null'
+          description: Address where the transaction was sent to
+        symbol:
+          type:
+          - string
+          - 'null'
+          description: Ticker of the transaction
+        chain:
+          type:
+          - string
+          - 'null'
+          description: Crypto Chain the transaction belongs to
+        memo:
+          type:
+          - string
+          - 'null'
+          description: Memo of the transaction (also called "Tag")
+        hash:
+          type:
+          - string
+          - 'null'
+          description: Hash of the transaction
+        amount:
+          type: number
+          description: Full amount affected the balance, typically transaction amount plus fee
+          format: double
+        transactionAmount:
+          type:
+          - number
+          - 'null'
+          description: Transaction amount
+          format: double
+        createdTimestamp:
+          type: integer
+          description: Unix timestamp in seconds indicating when the transaction was created
+          format: int64
+        updatedTimestamp:
+          type: integer
+          description: Unix timestamp in seconds indicating when the transaction was last updated
+          format: int64
+        networkTransactionFee:
+          allOf:
+          - $ref: '#/components/schemas/BrokerCryptocurrencyTransactionNetworkFee'
+          description: Fee taken by the network
+        transferFee:
+          type:
+          - number
+          - 'null'
+          description: Fee taken by the financial institution
+          format: double
+        confirmations:
+          type:
+          - integer
+          - 'null'
+          description: Number of confirmations on the blockchain
+          format: int64
+        blockchainMethodName:
+          type:
+          - string
+          - 'null'
+          description: Name of the executed blockchain function based on decoded input data
+        blockchainMethod:
+          enum:
+          - transfer
+          - swap
+          - mint
+          - withdraw
+          - claimRewards
+          - deposit
+          - approve
+          - forgeToken
+          - multicall
+          - migrateToken
+          - claim
+          - openSeaTransfer
+          - cancel
+          - commit
+          - run
+          - repay
+          - execute
+          - stake
+          - merge
+          allOf:
+          - $ref: '#/components/schemas/BrokerCryptocurrencyTransactionBlockchainMethod'
+          description: Executed blockchain function based on decoded input data. Not guaranteed to be identified
       additionalProperties: false
     B2BBrokerTransactionsListModelApiResult:
       type: object
@@ -536,219 +705,6 @@ components:
         content:
           allOf:
           - $ref: '#/components/schemas/B2BBrokerTransactionsListModel'
-      additionalProperties: false
-    BrokerCryptocurrencyTransactionType:
-      enum:
-      - unknown
-      - deposit
-      - withdrawal
-      type: string
-    B2BBrokerTransactionsListModel:
-      type: object
-      properties:
-        transfers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/B2BBrokerCryptocurrencyTransaction'
-          description: List of obtained transfers.
-        total:
-          type: integer
-          description: Total amount of records.
-          format: int64
-        cursor:
-          type:
-          - string
-          - 'null'
-          description: The cursor to retrieve the next page of transfers.
-        earliestTimestamp:
-          type: integer
-          description: Earliest transfer timestamp.
-          format: int64
-      additionalProperties: false
-    BrokerType:
-      enum:
-      - robinhood
-      - eTrade
-      - alpaca
-      - tdAmeritrade
-      - weBull
-      - stash
-      - interactiveBrokers
-      - public
-      - coinbase
-      - kraken
-      - coinbasePro
-      - cryptoCom
-      - openSea
-      - binanceUs
-      - gemini
-      - cryptocurrencyAddress
-      - cryptocurrencyWallet
-      - okCoin
-      - bittrex
-      - kuCoin
-      - etoro
-      - cexIo
-      - binanceInternational
-      - bitstamp
-      - gateIo
-      - acorns
-      - okx
-      - bitFlyer
-      - coinlist
-      - huobi
-      - bitfinex
-      - deFiWallet
-      - krakenDirect
-      - vanguard
-      - binanceInternationalDirect
-      - bitfinexDirect
-      - bybit
-      - paxos
-      - coinbasePrime
-      type: string
-    CryptocurrencyAddressType:
-      enum:
-      - ethAddress
-      - btcAddress
-      - ltcAddress
-      - solAddress
-      - algoAddress
-      - celoAddress
-      - cardanoAddress
-      - polygonAddress
-      - bnbAddress
-      - elrondAddress
-      - neoAddress
-      - xrpAddress
-      - flowAddress
-      - harmonyOneAddress
-      - tronAddress
-      - dogeAddress
-      - opAddress
-      type: string
-    TransfersBrokerCryptocurrencyTransactionDetailsRequest:
-      required:
-      - authToken
-      - type
-      type: object
-      properties:
-        authToken:
-          minLength: 1
-          type: string
-          description: Auth token that allows connecting to the target institution
-        type:
-          enum:
-          - robinhood
-          - eTrade
-          - alpaca
-          - tdAmeritrade
-          - weBull
-          - stash
-          - interactiveBrokers
-          - public
-          - coinbase
-          - kraken
-          - coinbasePro
-          - cryptoCom
-          - openSea
-          - binanceUs
-          - gemini
-          - cryptocurrencyAddress
-          - cryptocurrencyWallet
-          - okCoin
-          - bittrex
-          - kuCoin
-          - etoro
-          - cexIo
-          - binanceInternational
-          - bitstamp
-          - gateIo
-          - acorns
-          - okx
-          - bitFlyer
-          - coinlist
-          - huobi
-          - bitfinex
-          - deFiWallet
-          - krakenDirect
-          - vanguard
-          - binanceInternationalDirect
-          - bitfinexDirect
-          - bybit
-          - paxos
-          - coinbasePrime
-          allOf:
-          - $ref: '#/components/schemas/BrokerType'
-          description: 'Type of the institution to connect
-
-
-            ### Supported integrations:
-
-            ```Robinhood```
-
-            ```Coinbase```
-
-            ```Kraken```
-
-            ```CoinbasePro```
-
-            ```CryptoCom```
-
-            ```Binance```
-
-            ```Gemini```
-
-            ```OkCoin```
-
-            ```KuCoin```
-
-            ```BinanceInternational```
-
-            ```Bitstamp```
-
-            ```GateIo```
-
-            ```Okx```
-
-            ```Huobi```
-
-            ```Bitfinex```
-
-            ```KrakenDirect```
-
-            ```BinanceInternationalDirect```
-
-            ```Bybit```
-
-            ```Paxos```
-
-            ```CoinbasePrime```
-
-            ```DeFiWallet```
-
-            '
-        addressType:
-          allOf:
-          - $ref: '#/components/schemas/CryptocurrencyAddressType'
-          description: Type of the address of the transferred asset. Can be used instead of the `Symbol` field.
-        transactionId:
-          type:
-          - string
-          - 'null'
-          description: Transaction Id by the financial institution
-        transactionHash:
-          type:
-          - string
-          - 'null'
-          description: Hash of the transaction on the blockchain
-        symbol:
-          type:
-          - string
-          - 'null'
-          description: Symbol of the transferred asset. Can be provided instead of the `AddressType` field.
       additionalProperties: false
     TransfersBrokerCreateCryptocurrencyTransactionRequest:
       required:
@@ -921,488 +877,6 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    MfaType:
-      enum:
-      - phone
-      - email
-      - totp
-      - phoneAndEmail
-      - requireNextSecurityQuestion
-      - readEmail
-      - face
-      type: string
-    B2BBrokerCryptocurrencyTransaction:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          description: Identifier of the transfer, if provided by the financial institution
-        status:
-          enum:
-          - unknown
-          - failed
-          - frozen
-          - succeeded
-          - mfaRequired
-          - pending
-          - expired
-          - canceled
-          - waitingForSignature
-          - waitingForClearing
-          - awaitingApproval
-          - awaitingConfirmation
-          - awaitingVerification
-          - rejected
-          - pendingCancel
-          - emailVerification
-          - deviceConfirmationRequired
-          - mfaFailed
-          - addressWhitelistRequired
-          - secondMfaRequired
-          allOf:
-          - $ref: '#/components/schemas/BrokerCryptocurrencyTransactionStatus'
-          description: Current status of the transaction
-        statusDetails:
-          type:
-          - string
-          - 'null'
-          description: Details of the current status of the transfer, as provided by the financial institution
-        type:
-          enum:
-          - unknown
-          - deposit
-          - withdrawal
-          allOf:
-          - $ref: '#/components/schemas/BrokerCryptocurrencyTransactionType'
-          description: The direction of the transaction
-        fromAddress:
-          type:
-          - string
-          - 'null'
-          description: Address where the transaction was sent from
-        targetAddress:
-          type:
-          - string
-          - 'null'
-          description: Address where the transaction was sent to
-        symbol:
-          type:
-          - string
-          - 'null'
-          description: Ticker of the transaction
-        chain:
-          type:
-          - string
-          - 'null'
-          description: Crypto Chain the transaction belongs to
-        memo:
-          type:
-          - string
-          - 'null'
-          description: Memo of the transaction (also called "Tag")
-        hash:
-          type:
-          - string
-          - 'null'
-          description: Hash of the transaction
-        amount:
-          type: number
-          description: Full amount affected the balance, typically transaction amount plus fee
-          format: double
-        transactionAmount:
-          type:
-          - number
-          - 'null'
-          description: Transaction amount
-          format: double
-        createdTimestamp:
-          type: integer
-          description: Unix timestamp in seconds indicating when the transaction was created
-          format: int64
-        updatedTimestamp:
-          type: integer
-          description: Unix timestamp in seconds indicating when the transaction was last updated
-          format: int64
-        networkTransactionFee:
-          allOf:
-          - $ref: '#/components/schemas/BrokerCryptocurrencyTransactionNetworkFee'
-          description: Fee taken by the network
-        transferFee:
-          type:
-          - number
-          - 'null'
-          description: Fee taken by the financial institution
-          format: double
-        confirmations:
-          type:
-          - integer
-          - 'null'
-          description: Number of confirmations on the blockchain
-          format: int64
-        blockchainMethodName:
-          type:
-          - string
-          - 'null'
-          description: Name of the executed blockchain function based on decoded input data
-        blockchainMethod:
-          enum:
-          - transfer
-          - swap
-          - mint
-          - withdraw
-          - claimRewards
-          - deposit
-          - approve
-          - forgeToken
-          - multicall
-          - migrateToken
-          - claim
-          - openSeaTransfer
-          - cancel
-          - commit
-          - run
-          - repay
-          - execute
-          - stake
-          - merge
-          allOf:
-          - $ref: '#/components/schemas/BrokerCryptocurrencyTransactionBlockchainMethod'
-          description: Executed blockchain function based on decoded input data. Not guaranteed to be identified
-      additionalProperties: false
-    B2BBrokerCryptocurrencyTransactionApiResult:
-      type: object
-      properties:
-        status:
-          enum:
-          - ok
-          - serverFailure
-          - permissionDenied
-          - badRequest
-          - notFound
-          - conflict
-          - tooManyRequest
-          - locked
-          allOf:
-          - $ref: '#/components/schemas/ApiResultStatus'
-          readOnly: true
-        message:
-          type:
-          - string
-          - 'null'
-          description: A message generated by the API
-        displayMessage:
-          type:
-          - string
-          - 'null'
-          description: User-friendly display message that can be presented to the end user
-        errorType:
-          type:
-          - string
-          - 'null'
-          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
-
-            All possible error types are available in the documentation.'
-        errorData:
-          readOnly: true
-        content:
-          allOf:
-          - $ref: '#/components/schemas/B2BBrokerCryptocurrencyTransaction'
-      additionalProperties: false
-    B2BBrokerCreateCryptocurrencyTransactionResponse:
-      type: object
-      properties:
-        transactionId:
-          type:
-          - string
-          - 'null'
-          description: Transaction Id by the financial institution
-        failed:
-          type: boolean
-        mfaType:
-          allOf:
-          - $ref: '#/components/schemas/MfaType'
-        verificationSteps:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/MfaType'
-        qrCode:
-          type:
-          - string
-          - 'null'
-        qrCodeLink:
-          type:
-          - string
-          - 'null'
-        status:
-          enum:
-          - unknown
-          - failed
-          - frozen
-          - succeeded
-          - mfaRequired
-          - pending
-          - expired
-          - canceled
-          - waitingForSignature
-          - waitingForClearing
-          - awaitingApproval
-          - awaitingConfirmation
-          - awaitingVerification
-          - rejected
-          - pendingCancel
-          - emailVerification
-          - deviceConfirmationRequired
-          - mfaFailed
-          - addressWhitelistRequired
-          - secondMfaRequired
-          allOf:
-          - $ref: '#/components/schemas/BrokerCryptocurrencyTransactionStatus'
-          description: Status of the operation
-        statusDetails:
-          type:
-          - string
-          - 'null'
-          description: Details of the current status of the transfer, as provided by the financial institution
-        transaction:
-          allOf:
-          - $ref: '#/components/schemas/B2BBrokerCryptocurrencyTransaction'
-          description: Details of the created transaction
-      additionalProperties: false
-    B2BBrokerCryptocurrencySymbolDetailsResponse:
-      type: object
-      properties:
-        symbol:
-          type:
-          - string
-          - 'null'
-          description: Requested symbol
-        addressTypes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CryptocurrencyAddressType'
-          description: Supported address types
-        chains:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BrokerCryptocurrencyChain'
-          description: Supported chains. One of the values should be provided to execute transfers
-      additionalProperties: false
-    BrokerCryptocurrencyChain:
-      type: object
-      properties:
-        chain:
-          type:
-          - string
-          - 'null'
-          description: Name of the chain, should be provided when initiating a transfer
-        feeDescription:
-          type:
-          - string
-          - 'null'
-        notes:
-          type:
-          - string
-          - 'null'
-          description: Notes or tips provided by the integration
-        fee:
-          type:
-          - number
-          - 'null'
-          format: double
-        minWithdrawAmount:
-          type:
-          - number
-          - 'null'
-          format: double
-        maxWithdrawAmount:
-          type:
-          - number
-          - 'null'
-          format: double
-        networkId:
-          type:
-          - string
-          - 'null'
-          format: uuid
-      additionalProperties: false
-    B2BBrokerCreateCryptocurrencyTransactionResponseApiResult:
-      type: object
-      properties:
-        status:
-          enum:
-          - ok
-          - serverFailure
-          - permissionDenied
-          - badRequest
-          - notFound
-          - conflict
-          - tooManyRequest
-          - locked
-          allOf:
-          - $ref: '#/components/schemas/ApiResultStatus'
-          readOnly: true
-        message:
-          type:
-          - string
-          - 'null'
-          description: A message generated by the API
-        displayMessage:
-          type:
-          - string
-          - 'null'
-          description: User-friendly display message that can be presented to the end user
-        errorType:
-          type:
-          - string
-          - 'null'
-          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
-
-            All possible error types are available in the documentation.'
-        errorData:
-          readOnly: true
-        content:
-          allOf:
-          - $ref: '#/components/schemas/B2BBrokerCreateCryptocurrencyTransactionResponse'
-      additionalProperties: false
-    TransfersBrokerCryptocurrencyDepositAddressRequest:
-      required:
-      - authToken
-      - type
-      type: object
-      properties:
-        authToken:
-          minLength: 1
-          type: string
-          description: Auth token that allows connecting to the target institution
-        type:
-          enum:
-          - robinhood
-          - eTrade
-          - alpaca
-          - tdAmeritrade
-          - weBull
-          - stash
-          - interactiveBrokers
-          - public
-          - coinbase
-          - kraken
-          - coinbasePro
-          - cryptoCom
-          - openSea
-          - binanceUs
-          - gemini
-          - cryptocurrencyAddress
-          - cryptocurrencyWallet
-          - okCoin
-          - bittrex
-          - kuCoin
-          - etoro
-          - cexIo
-          - binanceInternational
-          - bitstamp
-          - gateIo
-          - acorns
-          - okx
-          - bitFlyer
-          - coinlist
-          - huobi
-          - bitfinex
-          - deFiWallet
-          - krakenDirect
-          - vanguard
-          - binanceInternationalDirect
-          - bitfinexDirect
-          - bybit
-          - paxos
-          - coinbasePrime
-          allOf:
-          - $ref: '#/components/schemas/BrokerType'
-          description: 'Type of the institution to connect
-
-
-            ### Supported integrations:
-
-            ```Robinhood```
-
-            ```Coinbase```
-
-            ```Kraken```
-
-            ```CoinbasePro```
-
-            ```CryptoCom```
-
-            ```Binance```
-
-            ```Gemini```
-
-            ```OkCoin```
-
-            ```KuCoin```
-
-            ```BinanceInternational```
-
-            ```Bitstamp```
-
-            ```GateIo```
-
-            ```Okx```
-
-            ```Huobi```
-
-            ```Bitfinex```
-
-            ```KrakenDirect```
-
-            ```BinanceInternationalDirect```
-
-            ```Bybit```
-
-            ```Paxos```
-
-            ```CoinbasePrime```
-
-            ```DeFiWallet```
-
-            '
-        symbol:
-          type:
-          - string
-          - 'null'
-          description: 'Symbol of the required cryptocurrency, e.g. ETH or BTC.
-
-            Can be used instead of the `AddressType` field.'
-        addressType:
-          allOf:
-          - $ref: '#/components/schemas/CryptocurrencyAddressType'
-          description: 'Type of the address of symbol to be transferred. Providing `EthAddress` will assume a transfer of ETH over Ethereum blockchain.
-
-            Can be used instead of `Symbol` field.'
-        chain:
-          type:
-          - string
-          - 'null'
-          description: Chain of the required cryptocurrency, e.g. USDT has USDT-ERC20, USDT-TRC20, and USDT-Omni
-        mfaCode:
-          type:
-          - string
-          - 'null'
-          description: Some of integrations require MFA code to create a deposit address, e.g. KrakenDirect
-      additionalProperties: false
-    BrokerResponseStatus:
-      enum:
-      - unknown
-      - mfaRequired
-      - kycRequired
-      type: string
     TransfersBrokerTransactionsListRequest:
       required:
       - authToken
@@ -1539,52 +1013,44 @@ components:
           description: If this value is provided, result set is filtered to only include transactions created after this timestamp
           format: int64
       additionalProperties: false
-    ApiResultStatus:
-      enum:
-      - ok
-      - serverFailure
-      - permissionDenied
-      - badRequest
-      - notFound
-      - conflict
-      - tooManyRequest
-      - locked
-      type: string
-    B2BBrokerCryptocurrencyDepositAddressResponse:
+    B2BBrokerCryptocurrencyDepositAddressResponseApiResult:
       type: object
       properties:
-        symbol:
-          type:
-          - string
-          - 'null'
-        address:
-          type:
-          - string
-          - 'null'
-        chain:
-          type:
-          - string
-          - 'null'
-        memo:
-          type:
-          - string
-          - 'null'
-        minimumDepositAmount:
-          type:
-          - string
-          - 'null'
-        networkId:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        brokerResponseStatus:
+        status:
+          enum:
+          - ok
+          - serverFailure
+          - permissionDenied
+          - badRequest
+          - notFound
+          - conflict
+          - tooManyRequest
+          - locked
           allOf:
-          - $ref: '#/components/schemas/BrokerResponseStatus'
-        errorMessage:
+          - $ref: '#/components/schemas/ApiResultStatus'
+          readOnly: true
+        message:
           type:
           - string
           - 'null'
+          description: A message generated by the API
+        displayMessage:
+          type:
+          - string
+          - 'null'
+          description: User-friendly display message that can be presented to the end user
+        errorType:
+          type:
+          - string
+          - 'null'
+          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
+
+            All possible error types are available in the documentation.'
+        errorData:
+          readOnly: true
+        content:
+          allOf:
+          - $ref: '#/components/schemas/B2BBrokerCryptocurrencyDepositAddressResponse'
       additionalProperties: false
     BrokerCryptocurrencyTransactionBlockchainMethod:
       enum:
@@ -1608,6 +1074,127 @@ components:
       - stake
       - merge
       type: string
+    TransfersBrokerCryptocurrencyTransactionDetailsRequest:
+      required:
+      - authToken
+      - type
+      type: object
+      properties:
+        authToken:
+          minLength: 1
+          type: string
+          description: Auth token that allows connecting to the target institution
+        type:
+          enum:
+          - robinhood
+          - eTrade
+          - alpaca
+          - tdAmeritrade
+          - weBull
+          - stash
+          - interactiveBrokers
+          - public
+          - coinbase
+          - kraken
+          - coinbasePro
+          - cryptoCom
+          - openSea
+          - binanceUs
+          - gemini
+          - cryptocurrencyAddress
+          - cryptocurrencyWallet
+          - okCoin
+          - bittrex
+          - kuCoin
+          - etoro
+          - cexIo
+          - binanceInternational
+          - bitstamp
+          - gateIo
+          - acorns
+          - okx
+          - bitFlyer
+          - coinlist
+          - huobi
+          - bitfinex
+          - deFiWallet
+          - krakenDirect
+          - vanguard
+          - binanceInternationalDirect
+          - bitfinexDirect
+          - bybit
+          - paxos
+          - coinbasePrime
+          allOf:
+          - $ref: '#/components/schemas/BrokerType'
+          description: 'Type of the institution to connect
+
+
+            ### Supported integrations:
+
+            ```Robinhood```
+
+            ```Coinbase```
+
+            ```Kraken```
+
+            ```CoinbasePro```
+
+            ```CryptoCom```
+
+            ```Binance```
+
+            ```Gemini```
+
+            ```OkCoin```
+
+            ```KuCoin```
+
+            ```BinanceInternational```
+
+            ```Bitstamp```
+
+            ```GateIo```
+
+            ```Okx```
+
+            ```Huobi```
+
+            ```Bitfinex```
+
+            ```KrakenDirect```
+
+            ```BinanceInternationalDirect```
+
+            ```Bybit```
+
+            ```Paxos```
+
+            ```CoinbasePrime```
+
+            ```DeFiWallet```
+
+            '
+        addressType:
+          allOf:
+          - $ref: '#/components/schemas/CryptocurrencyAddressType'
+          description: Type of the address of the transferred asset. Can be used instead of the `Symbol` field.
+        transactionId:
+          type:
+          - string
+          - 'null'
+          description: Transaction Id by the financial institution
+        transactionHash:
+          type:
+          - string
+          - 'null'
+          description: Hash of the transaction on the blockchain
+        symbol:
+          type:
+          - string
+          - 'null'
+          description: Symbol of the transferred asset. Can be provided instead of the `AddressType` field.
+      additionalProperties: false
     BrokerCryptocurrencyTransactionNetworkFee:
       type: object
       properties:
@@ -1631,6 +1218,392 @@ components:
           - string
           - 'null'
       additionalProperties: false
+    B2BBrokerCreateCryptocurrencyTransactionResponse:
+      type: object
+      properties:
+        transactionId:
+          type:
+          - string
+          - 'null'
+          description: Transaction Id by the financial institution
+        failed:
+          type: boolean
+        mfaType:
+          allOf:
+          - $ref: '#/components/schemas/MfaType'
+        verificationSteps:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/MfaType'
+        qrCode:
+          type:
+          - string
+          - 'null'
+        qrCodeLink:
+          type:
+          - string
+          - 'null'
+        status:
+          enum:
+          - unknown
+          - failed
+          - frozen
+          - succeeded
+          - mfaRequired
+          - pending
+          - expired
+          - canceled
+          - waitingForSignature
+          - waitingForClearing
+          - awaitingApproval
+          - awaitingConfirmation
+          - awaitingVerification
+          - rejected
+          - pendingCancel
+          - emailVerification
+          - deviceConfirmationRequired
+          - mfaFailed
+          - addressWhitelistRequired
+          - secondMfaRequired
+          allOf:
+          - $ref: '#/components/schemas/BrokerCryptocurrencyTransactionStatus'
+          description: Status of the operation
+        statusDetails:
+          type:
+          - string
+          - 'null'
+          description: Details of the current status of the transfer, as provided by the financial institution
+        transaction:
+          allOf:
+          - $ref: '#/components/schemas/B2BBrokerCryptocurrencyTransaction'
+          description: Details of the created transaction
+      additionalProperties: false
+    ApiResult:
+      type: object
+      properties:
+        status:
+          enum:
+          - ok
+          - serverFailure
+          - permissionDenied
+          - badRequest
+          - notFound
+          - conflict
+          - tooManyRequest
+          - locked
+          allOf:
+          - $ref: '#/components/schemas/ApiResultStatus'
+          readOnly: true
+        message:
+          type:
+          - string
+          - 'null'
+          description: A message generated by the API
+        displayMessage:
+          type:
+          - string
+          - 'null'
+          description: User-friendly display message that can be presented to the end user
+        errorType:
+          type:
+          - string
+          - 'null'
+          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
+
+            All possible error types are available in the documentation.'
+        errorData:
+          readOnly: true
+      additionalProperties: false
+    TransfersBrokerCryptocurrencyDepositAddressRequest:
+      required:
+      - authToken
+      - type
+      type: object
+      properties:
+        authToken:
+          minLength: 1
+          type: string
+          description: Auth token that allows connecting to the target institution
+        type:
+          enum:
+          - robinhood
+          - eTrade
+          - alpaca
+          - tdAmeritrade
+          - weBull
+          - stash
+          - interactiveBrokers
+          - public
+          - coinbase
+          - kraken
+          - coinbasePro
+          - cryptoCom
+          - openSea
+          - binanceUs
+          - gemini
+          - cryptocurrencyAddress
+          - cryptocurrencyWallet
+          - okCoin
+          - bittrex
+          - kuCoin
+          - etoro
+          - cexIo
+          - binanceInternational
+          - bitstamp
+          - gateIo
+          - acorns
+          - okx
+          - bitFlyer
+          - coinlist
+          - huobi
+          - bitfinex
+          - deFiWallet
+          - krakenDirect
+          - vanguard
+          - binanceInternationalDirect
+          - bitfinexDirect
+          - bybit
+          - paxos
+          - coinbasePrime
+          allOf:
+          - $ref: '#/components/schemas/BrokerType'
+          description: 'Type of the institution to connect
+
+
+            ### Supported integrations:
+
+            ```Robinhood```
+
+            ```Coinbase```
+
+            ```Kraken```
+
+            ```CoinbasePro```
+
+            ```CryptoCom```
+
+            ```Binance```
+
+            ```Gemini```
+
+            ```OkCoin```
+
+            ```KuCoin```
+
+            ```BinanceInternational```
+
+            ```Bitstamp```
+
+            ```GateIo```
+
+            ```Okx```
+
+            ```Huobi```
+
+            ```Bitfinex```
+
+            ```KrakenDirect```
+
+            ```BinanceInternationalDirect```
+
+            ```Bybit```
+
+            ```Paxos```
+
+            ```CoinbasePrime```
+
+            ```DeFiWallet```
+
+            '
+        symbol:
+          type:
+          - string
+          - 'null'
+          description: 'Symbol of the required cryptocurrency, e.g. ETH or BTC.
+
+            Can be used instead of the `AddressType` field.'
+        addressType:
+          allOf:
+          - $ref: '#/components/schemas/CryptocurrencyAddressType'
+          description: 'Type of the address of symbol to be transferred. Providing `EthAddress` will assume a transfer of ETH over Ethereum blockchain.
+
+            Can be used instead of `Symbol` field.'
+        chain:
+          type:
+          - string
+          - 'null'
+          description: Chain of the required cryptocurrency, e.g. USDT has USDT-ERC20, USDT-TRC20, and USDT-Omni
+        mfaCode:
+          type:
+          - string
+          - 'null'
+          description: Some of integrations require MFA code to create a deposit address, e.g. KrakenDirect
+      additionalProperties: false
+    BrokerCryptocurrencyChain:
+      type: object
+      properties:
+        chain:
+          type:
+          - string
+          - 'null'
+          description: Name of the chain, should be provided when initiating a transfer
+        feeDescription:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+          description: Notes or tips provided by the integration
+        fee:
+          type:
+          - number
+          - 'null'
+          format: double
+        minWithdrawAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        maxWithdrawAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        networkId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+      additionalProperties: false
+    BrokerCryptocurrencyTransactionStatus:
+      enum:
+      - unknown
+      - failed
+      - frozen
+      - succeeded
+      - mfaRequired
+      - pending
+      - expired
+      - canceled
+      - waitingForSignature
+      - waitingForClearing
+      - awaitingApproval
+      - awaitingConfirmation
+      - awaitingVerification
+      - rejected
+      - pendingCancel
+      - emailVerification
+      - deviceConfirmationRequired
+      - mfaFailed
+      - addressWhitelistRequired
+      - secondMfaRequired
+      type: string
+    ApiResultStatus:
+      enum:
+      - ok
+      - serverFailure
+      - permissionDenied
+      - badRequest
+      - notFound
+      - conflict
+      - tooManyRequest
+      - locked
+      type: string
+    B2BBrokerCryptocurrencyTransactionApiResult:
+      type: object
+      properties:
+        status:
+          enum:
+          - ok
+          - serverFailure
+          - permissionDenied
+          - badRequest
+          - notFound
+          - conflict
+          - tooManyRequest
+          - locked
+          allOf:
+          - $ref: '#/components/schemas/ApiResultStatus'
+          readOnly: true
+        message:
+          type:
+          - string
+          - 'null'
+          description: A message generated by the API
+        displayMessage:
+          type:
+          - string
+          - 'null'
+          description: User-friendly display message that can be presented to the end user
+        errorType:
+          type:
+          - string
+          - 'null'
+          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
+
+            All possible error types are available in the documentation.'
+        errorData:
+          readOnly: true
+        content:
+          allOf:
+          - $ref: '#/components/schemas/B2BBrokerCryptocurrencyTransaction'
+      additionalProperties: false
+    BrokerType:
+      enum:
+      - robinhood
+      - eTrade
+      - alpaca
+      - tdAmeritrade
+      - weBull
+      - stash
+      - interactiveBrokers
+      - public
+      - coinbase
+      - kraken
+      - coinbasePro
+      - cryptoCom
+      - openSea
+      - binanceUs
+      - gemini
+      - cryptocurrencyAddress
+      - cryptocurrencyWallet
+      - okCoin
+      - bittrex
+      - kuCoin
+      - etoro
+      - cexIo
+      - binanceInternational
+      - bitstamp
+      - gateIo
+      - acorns
+      - okx
+      - bitFlyer
+      - coinlist
+      - huobi
+      - bitfinex
+      - deFiWallet
+      - krakenDirect
+      - vanguard
+      - binanceInternationalDirect
+      - bitfinexDirect
+      - bybit
+      - paxos
+      - coinbasePrime
+      type: string
+    MfaType:
+      enum:
+      - phone
+      - email
+      - totp
+      - phoneAndEmail
+      - requireNextSecurityQuestion
+      - readEmail
+      - face
+      type: string
     B2BBrokerCryptocurrencySymbolDetailsResponseApiResult:
       type: object
       properties:
@@ -1670,64 +1643,91 @@ components:
           allOf:
           - $ref: '#/components/schemas/B2BBrokerCryptocurrencySymbolDetailsResponse'
       additionalProperties: false
-    ApiResult:
-      type: object
-      properties:
-        status:
-          enum:
-          - ok
-          - serverFailure
-          - permissionDenied
-          - badRequest
-          - notFound
-          - conflict
-          - tooManyRequest
-          - locked
-          allOf:
-          - $ref: '#/components/schemas/ApiResultStatus'
-          readOnly: true
-        message:
-          type:
-          - string
-          - 'null'
-          description: A message generated by the API
-        displayMessage:
-          type:
-          - string
-          - 'null'
-          description: User-friendly display message that can be presented to the end user
-        errorType:
-          type:
-          - string
-          - 'null'
-          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
-
-            All possible error types are available in the documentation.'
-        errorData:
-          readOnly: true
-      additionalProperties: false
-    BrokerCryptocurrencyTransactionStatus:
+    BrokerCryptocurrencyTransactionType:
       enum:
       - unknown
-      - failed
-      - frozen
-      - succeeded
-      - mfaRequired
-      - pending
-      - expired
-      - canceled
-      - waitingForSignature
-      - waitingForClearing
-      - awaitingApproval
-      - awaitingConfirmation
-      - awaitingVerification
-      - rejected
-      - pendingCancel
-      - emailVerification
-      - deviceConfirmationRequired
-      - mfaFailed
-      - addressWhitelistRequired
-      - secondMfaRequired
+      - deposit
+      - withdrawal
+      type: string
+    B2BBrokerCryptocurrencyDepositAddressResponse:
+      type: object
+      properties:
+        symbol:
+          type:
+          - string
+          - 'null'
+        address:
+          type:
+          - string
+          - 'null'
+        chain:
+          type:
+          - string
+          - 'null'
+        memo:
+          type:
+          - string
+          - 'null'
+        minimumDepositAmount:
+          type:
+          - string
+          - 'null'
+        networkId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        brokerResponseStatus:
+          allOf:
+          - $ref: '#/components/schemas/BrokerResponseStatus'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    B2BBrokerTransactionsListModel:
+      type: object
+      properties:
+        transfers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/B2BBrokerCryptocurrencyTransaction'
+          description: List of obtained transfers.
+        total:
+          type: integer
+          description: Total amount of records.
+          format: int64
+        cursor:
+          type:
+          - string
+          - 'null'
+          description: The cursor to retrieve the next page of transfers.
+        earliestTimestamp:
+          type: integer
+          description: Earliest transfer timestamp.
+          format: int64
+      additionalProperties: false
+    CryptocurrencyAddressType:
+      enum:
+      - ethAddress
+      - btcAddress
+      - ltcAddress
+      - solAddress
+      - algoAddress
+      - celoAddress
+      - cardanoAddress
+      - polygonAddress
+      - bnbAddress
+      - elrondAddress
+      - neoAddress
+      - xrpAddress
+      - flowAddress
+      - harmonyOneAddress
+      - tronAddress
+      - dogeAddress
+      - opAddress
       type: string
   securitySchemes:
     Client-Secret:

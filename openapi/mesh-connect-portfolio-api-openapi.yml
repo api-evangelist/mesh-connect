@@ -325,258 +325,194 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PortfolioHoldingsRequest:
-      required:
-      - authToken
-      - type
+    NftPositionWithMarketValues:
       type: object
       properties:
-        authToken:
-          minLength: 1
-          type: string
-          description: Auth token that allows connecting to the target institution
-        type:
-          enum:
-          - robinhood
-          - eTrade
-          - alpaca
-          - tdAmeritrade
-          - weBull
-          - stash
-          - interactiveBrokers
-          - public
-          - coinbase
-          - kraken
-          - coinbasePro
-          - cryptoCom
-          - openSea
-          - binanceUs
-          - gemini
-          - cryptocurrencyAddress
-          - cryptocurrencyWallet
-          - okCoin
-          - bittrex
-          - kuCoin
-          - etoro
-          - cexIo
-          - binanceInternational
-          - bitstamp
-          - gateIo
-          - acorns
-          - okx
-          - bitFlyer
-          - coinlist
-          - huobi
-          - bitfinex
-          - deFiWallet
-          - krakenDirect
-          - vanguard
-          - binanceInternationalDirect
-          - bitfinexDirect
-          - bybit
-          - paxos
-          - coinbasePrime
+        amount:
+          type: number
+          format: double
+        costBasis:
+          type:
+          - number
+          - 'null'
+          format: double
+        contractAddress:
+          type:
+          - string
+          - 'null'
+        paymentTokenSymbol:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        imageUrl:
+          type:
+          - string
+          - 'null'
+        imageOriginalUrl:
+          type:
+          - string
+          - 'null'
+        animationUrl:
+          type:
+          - string
+          - 'null'
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+        marketplaceId:
+          type:
+          - string
+          - 'null'
+        tokenId:
+          type:
+          - string
+          - 'null'
+        numberOfSales:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        contractType:
+          type:
+          - string
+          - 'null'
+        contractName:
+          type:
+          - string
+          - 'null'
+        contractSchemaName:
+          type:
+          - string
+          - 'null'
+        contractSymbol:
+          type:
+          - string
+          - 'null'
+        contractDescription:
+          type:
+          - string
+          - 'null'
+        marketplacePermalink:
+          type:
+          - string
+          - 'null'
+        contractExternalLink:
+          type:
+          - string
+          - 'null'
+        creatorAddress:
+          type:
+          - string
+          - 'null'
+        currentOffer:
           allOf:
-          - $ref: '#/components/schemas/BrokerType'
-          description: 'Type of the institution to connect
-
-
-            ### Supported integrations:
-
-            ```Robinhood```
-
-            ```ETrade```
-
-            ```Alpaca```
-
-            ```WeBull```
-
-            ```Stash```
-
-            ```InteractiveBrokers```
-
-            ```Public```
-
-            ```Coinbase```
-
-            ```Kraken```
-
-            ```CoinbasePro```
-
-            ```CryptoCom```
-
-            ```OpenSea```
-
-            ```Binance```
-
-            ```Gemini```
-
-            ```OkCoin```
-
-            ```KuCoin```
-
-            ```Etoro```
-
-            ```CexIo```
-
-            ```BinanceInternational```
-
-            ```Bitstamp```
-
-            ```GateIo```
-
-            ```Acorns```
-
-            ```Okx```
-
-            ```BitFlyer```
-
-            ```Coinlist```
-
-            ```Huobi```
-
-            ```Bitfinex```
-
-            ```KrakenDirect```
-
-            ```Vanguard```
-
-            ```BinanceInternationalDirect```
-
-            ```BitfinexDirect```
-
-            ```Bybit```
-
-            ```Paxos```
-
-            ```CoinbasePrime```
-
-            ```DeFiWallet```
-
-            '
-        includeMarketValue:
-          type: boolean
+          - $ref: '#/components/schemas/NftOrder'
+        lastSale:
+          allOf:
+          - $ref: '#/components/schemas/NftOrder'
+        blockchain:
+          enum:
+          - ethereum
+          - polygon
+          - klaytn
+          allOf:
+          - $ref: '#/components/schemas/NftBlockchain'
+        addressExplorerLink:
+          type:
+          - string
+          - 'null'
+        twitterUsername:
+          type:
+          - string
+          - 'null'
+        marketValue:
+          type:
+          - number
+          - 'null'
+          description: Amount of NFTs multiplied by NFT value
+          format: double
+        portfolioPercentage:
+          type:
+          - number
+          - 'null'
+          description: What percentage of total portfolio value is taken by this NFT
+          format: double
       additionalProperties: false
-    NftOrderSide:
-      enum:
-      - buy
-      - sell
-      type: string
-    BrokerType:
-      enum:
-      - robinhood
-      - eTrade
-      - alpaca
-      - tdAmeritrade
-      - weBull
-      - stash
-      - interactiveBrokers
-      - public
-      - coinbase
-      - kraken
-      - coinbasePro
-      - cryptoCom
-      - openSea
-      - binanceUs
-      - gemini
-      - cryptocurrencyAddress
-      - cryptocurrencyWallet
-      - okCoin
-      - bittrex
-      - kuCoin
-      - etoro
-      - cexIo
-      - binanceInternational
-      - bitstamp
-      - gateIo
-      - acorns
-      - okx
-      - bitFlyer
-      - coinlist
-      - huobi
-      - bitfinex
-      - deFiWallet
-      - krakenDirect
-      - vanguard
-      - binanceInternationalDirect
-      - bitfinexDirect
-      - bybit
-      - paxos
-      - coinbasePrime
-      type: string
-    CryptocurrencyAddressType:
-      enum:
-      - ethAddress
-      - btcAddress
-      - ltcAddress
-      - solAddress
-      - algoAddress
-      - celoAddress
-      - cardanoAddress
-      - polygonAddress
-      - bnbAddress
-      - elrondAddress
-      - neoAddress
-      - xrpAddress
-      - flowAddress
-      - harmonyOneAddress
-      - tronAddress
-      - dogeAddress
-      - opAddress
-      type: string
-    B2BOptionPosition:
+    Position:
       type: object
       properties:
         symbol:
           type:
           - string
           - 'null'
-          description: Symbol of the underlying stock
+          description: Symbol of the asset
         amount:
           type: number
-          description: Amount of options
+          description: Amount of the asset
           format: double
-        averageOpenPrice:
-          type: number
-          description: Total average paid price
+        costBasis:
+          type:
+          - number
+          - 'null'
+          description: The total original value (or purchase price) of the asset
           format: double
-        direction:
-          enum:
-          - unknown
-          - buyToOpen
-          - buyToClose
-          - sellToOpen
-          - sellToClose
-          - buyToCover
-          - sellShort
-          allOf:
-          - $ref: '#/components/schemas/BrokerOptionDirection'
-          description: Side of the option, buy or sell
-        createdTimestamp:
-          type: integer
-          format: int64
-        updatedTimestamp:
-          type: integer
-          format: int64
-        numberOfSharesInContract:
+      additionalProperties: false
+    BrokerRequestStatus:
+      enum:
+      - succeeded
+      - failed
+      - notAuthorized
+      type: string
+    BrokerOptionType:
+      enum:
+      - unknown
+      - call
+      - put
+      type: string
+    NftBlockchain:
+      enum:
+      - ethereum
+      - polygon
+      - klaytn
+      type: string
+    PositionWithMarketValue:
+      type: object
+      properties:
+        symbol:
+          type:
+          - string
+          - 'null'
+          description: Symbol of the asset
+        amount:
           type: number
-          description: Number of shares of the underlying stock
+          description: Amount of the asset
           format: double
-        optionType:
-          enum:
-          - unknown
-          - call
-          - put
-          allOf:
-          - $ref: '#/components/schemas/BrokerOptionType'
-          description: Type of the option, put or call
-        expirationTimestamp:
-          type: integer
-          description: The last day that the option contract is valid
-          format: int64
-        strikePrice:
-          type: number
-          description: The price at which a put or call option can be exercised
+        costBasis:
+          type:
+          - number
+          - 'null'
+          description: The total original value (or purchase price) of the asset
+          format: double
+        marketValue:
+          type:
+          - number
+          - 'null'
+          description: 'Market value of the asset: amount of asset multiplied by last asset value.'
+          format: double
+        lastPrice:
+          type:
+          - number
+          - 'null'
+          description: Current last price of the asset.
           format: double
       additionalProperties: false
     B2BPortfolioModelApiResult:
@@ -714,12 +650,139 @@ components:
           allOf:
           - $ref: '#/components/schemas/CryptocurrencyAddressType'
       additionalProperties: false
-    BrokerRequestStatus:
+    ApiResult:
+      type: object
+      properties:
+        status:
+          enum:
+          - ok
+          - serverFailure
+          - permissionDenied
+          - badRequest
+          - notFound
+          - conflict
+          - tooManyRequest
+          - locked
+          allOf:
+          - $ref: '#/components/schemas/ApiResultStatus'
+          readOnly: true
+        message:
+          type:
+          - string
+          - 'null'
+          description: A message generated by the API
+        displayMessage:
+          type:
+          - string
+          - 'null'
+          description: User-friendly display message that can be presented to the end user
+        errorType:
+          type:
+          - string
+          - 'null'
+          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
+
+            All possible error types are available in the documentation.'
+        errorData:
+          readOnly: true
+      additionalProperties: false
+    BrokerPortfolioValueModel:
+      type: object
+      properties:
+        totalValue:
+          type: number
+          description: Total USD value of portfolio.
+          format: double
+          readOnly: true
+        totalPerformance:
+          type: number
+          description: Total performance in percents based on the cost basis.
+          format: double
+        equitiesValue:
+          type: number
+          description: USD value of all equities in the portfolio.
+          format: double
+        equitiesPerformance:
+          type: number
+          description: Performance in percents of all equities based on the cost basis.
+          format: double
+        cryptocurrenciesValue:
+          type: number
+          description: USD value of all cryptocurrencies in the portfolio.
+          format: double
+        cryptocurrenciesPerformance:
+          type: number
+          description: Performance in percents of all cryptocurrencies in the portfolio based on the cost basis.
+          format: double
+        nftsValue:
+          type: number
+          description: USD value of all NFTs in the portfolio.
+          format: double
+        fiatValue:
+          type: number
+          description: USD value of all fiat currencies in the portfolio.
+          format: double
+      additionalProperties: false
+    NftOrderSide:
       enum:
-      - succeeded
-      - failed
-      - notAuthorized
+      - buy
+      - sell
       type: string
+    B2BOptionPosition:
+      type: object
+      properties:
+        symbol:
+          type:
+          - string
+          - 'null'
+          description: Symbol of the underlying stock
+        amount:
+          type: number
+          description: Amount of options
+          format: double
+        averageOpenPrice:
+          type: number
+          description: Total average paid price
+          format: double
+        direction:
+          enum:
+          - unknown
+          - buyToOpen
+          - buyToClose
+          - sellToOpen
+          - sellToClose
+          - buyToCover
+          - sellShort
+          allOf:
+          - $ref: '#/components/schemas/BrokerOptionDirection'
+          description: Side of the option, buy or sell
+        createdTimestamp:
+          type: integer
+          format: int64
+        updatedTimestamp:
+          type: integer
+          format: int64
+        numberOfSharesInContract:
+          type: number
+          description: Number of shares of the underlying stock
+          format: double
+        optionType:
+          enum:
+          - unknown
+          - call
+          - put
+          allOf:
+          - $ref: '#/components/schemas/BrokerOptionType'
+          description: Type of the option, put or call
+        expirationTimestamp:
+          type: integer
+          description: The last day that the option contract is valid
+          format: int64
+        strikePrice:
+          type: number
+          description: The price at which a put or call option can be exercised
+          format: double
+      additionalProperties: false
     BrokerOptionDirection:
       enum:
       - unknown
@@ -769,307 +832,17 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    Position:
-      type: object
-      properties:
-        symbol:
-          type:
-          - string
-          - 'null'
-          description: Symbol of the asset
-        amount:
-          type: number
-          description: Amount of the asset
-          format: double
-        costBasis:
-          type:
-          - number
-          - 'null'
-          description: The total original value (or purchase price) of the asset
-          format: double
-      additionalProperties: false
-    NftBlockchain:
+    ApiResultStatus:
       enum:
-      - ethereum
-      - polygon
-      - klaytn
+      - ok
+      - serverFailure
+      - permissionDenied
+      - badRequest
+      - notFound
+      - conflict
+      - tooManyRequest
+      - locked
       type: string
-    B2BPortfolioModel:
-      type: object
-      properties:
-        portfolioCostBasis:
-          type:
-          - number
-          - 'null'
-          description: Amount of money spent to buy all positions of the portfolio.
-          format: double
-        actualPortfolioPerformance:
-          type:
-          - number
-          - 'null'
-          description: Actual performance based on the cost basis.
-          format: double
-        equitiesValue:
-          type: number
-          description: Total USD portfolio value of all equities (sum(equity price * equity amount)). Does not include cash balance.
-          format: double
-        cryptocurrenciesValue:
-          type: number
-          description: Total USD value of all cryptocurrencies in the portfolio.
-          format: double
-        nftsValue:
-          type: number
-          description: Total USD value of all NFTs in the portfolio.
-          format: double
-        equityPositions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PositionWithReturn'
-          description: List of equity positions
-        cryptocurrencyPositions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PositionWithReturn'
-          description: List of cryptocurrency positions
-        nftPositions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NftPositionWithMarketValues'
-          description: List of NFT positions
-      additionalProperties: false
-    BrokerPortfolioValueModel:
-      type: object
-      properties:
-        totalValue:
-          type: number
-          description: Total USD value of portfolio.
-          format: double
-          readOnly: true
-        totalPerformance:
-          type: number
-          description: Total performance in percents based on the cost basis.
-          format: double
-        equitiesValue:
-          type: number
-          description: USD value of all equities in the portfolio.
-          format: double
-        equitiesPerformance:
-          type: number
-          description: Performance in percents of all equities based on the cost basis.
-          format: double
-        cryptocurrenciesValue:
-          type: number
-          description: USD value of all cryptocurrencies in the portfolio.
-          format: double
-        cryptocurrenciesPerformance:
-          type: number
-          description: Performance in percents of all cryptocurrencies in the portfolio based on the cost basis.
-          format: double
-        nftsValue:
-          type: number
-          description: USD value of all NFTs in the portfolio.
-          format: double
-        fiatValue:
-          type: number
-          description: USD value of all fiat currencies in the portfolio.
-          format: double
-      additionalProperties: false
-    NftPositionWithMarketValues:
-      type: object
-      properties:
-        amount:
-          type: number
-          format: double
-        costBasis:
-          type:
-          - number
-          - 'null'
-          format: double
-        contractAddress:
-          type:
-          - string
-          - 'null'
-        paymentTokenSymbol:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        imageUrl:
-          type:
-          - string
-          - 'null'
-        imageOriginalUrl:
-          type:
-          - string
-          - 'null'
-        animationUrl:
-          type:
-          - string
-          - 'null'
-        backgroundColor:
-          type:
-          - string
-          - 'null'
-        marketplaceId:
-          type:
-          - string
-          - 'null'
-        tokenId:
-          type:
-          - string
-          - 'null'
-        numberOfSales:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        contractType:
-          type:
-          - string
-          - 'null'
-        contractName:
-          type:
-          - string
-          - 'null'
-        contractSchemaName:
-          type:
-          - string
-          - 'null'
-        contractSymbol:
-          type:
-          - string
-          - 'null'
-        contractDescription:
-          type:
-          - string
-          - 'null'
-        marketplacePermalink:
-          type:
-          - string
-          - 'null'
-        contractExternalLink:
-          type:
-          - string
-          - 'null'
-        creatorAddress:
-          type:
-          - string
-          - 'null'
-        currentOffer:
-          allOf:
-          - $ref: '#/components/schemas/NftOrder'
-        lastSale:
-          allOf:
-          - $ref: '#/components/schemas/NftOrder'
-        blockchain:
-          enum:
-          - ethereum
-          - polygon
-          - klaytn
-          allOf:
-          - $ref: '#/components/schemas/NftBlockchain'
-        addressExplorerLink:
-          type:
-          - string
-          - 'null'
-        twitterUsername:
-          type:
-          - string
-          - 'null'
-        marketValue:
-          type:
-          - number
-          - 'null'
-          description: Amount of NFTs multiplied by NFT value
-          format: double
-        portfolioPercentage:
-          type:
-          - number
-          - 'null'
-          description: What percentage of total portfolio value is taken by this NFT
-          format: double
-      additionalProperties: false
-    PositionWithReturn:
-      type: object
-      properties:
-        symbol:
-          type:
-          - string
-          - 'null'
-          description: Symbol of the asset
-        amount:
-          type: number
-          description: Amount of the asset
-          format: double
-        costBasis:
-          type:
-          - number
-          - 'null'
-          description: The total original value (or purchase price) of the asset
-          format: double
-        marketValue:
-          type:
-          - number
-          - 'null'
-          description: 'Market value of the asset: amount of asset multiplied by last asset value.'
-          format: double
-        lastPrice:
-          type:
-          - number
-          - 'null'
-          description: Current last price of the asset.
-          format: double
-        portfolioPercentage:
-          type:
-          - number
-          - 'null'
-          description: What percentage of total portfolio value is taken by this asset.
-          format: double
-        totalReturn:
-          type:
-          - number
-          - 'null'
-          description: 'Total return of investment of this asset. Can be negative or null. Based on the cost basis of the asset, cost basis
-
-            is not available by some of integrations.'
-          format: double
-        returnPercentage:
-          type:
-          - number
-          - 'null'
-          description: Percent of return of investment for this asset. Can be negative or null.
-          format: double
-        companyName:
-          type:
-          - string
-          - 'null'
-          description: Company name of the relative asset/
-        totalDailyReturn:
-          type:
-          - number
-          - 'null'
-          description: Total daily return of investment for this asset. Can be negative.
-          format: double
-        dailyReturnPercentage:
-          type:
-          - number
-          - 'null'
-          description: Daily percent of return of investment for this asset. Can be negative.
-          format: double
-      additionalProperties: false
     PortfolioBrokerBaseRequest:
       required:
       - authToken
@@ -1200,62 +973,187 @@ components:
 
             '
       additionalProperties: false
-    ApiResultStatus:
-      enum:
-      - ok
-      - serverFailure
-      - permissionDenied
-      - badRequest
-      - notFound
-      - conflict
-      - tooManyRequest
-      - locked
-      type: string
-    BrokerPortfolioValueModelApiResult:
+    B2BPortfolioModel:
       type: object
       properties:
-        status:
-          enum:
-          - ok
-          - serverFailure
-          - permissionDenied
-          - badRequest
-          - notFound
-          - conflict
-          - tooManyRequest
-          - locked
-          allOf:
-          - $ref: '#/components/schemas/ApiResultStatus'
-          readOnly: true
-        message:
+        portfolioCostBasis:
           type:
-          - string
+          - number
           - 'null'
-          description: A message generated by the API
-        displayMessage:
+          description: Amount of money spent to buy all positions of the portfolio.
+          format: double
+        actualPortfolioPerformance:
           type:
-          - string
+          - number
           - 'null'
-          description: User-friendly display message that can be presented to the end user
-        errorType:
+          description: Actual performance based on the cost basis.
+          format: double
+        equitiesValue:
+          type: number
+          description: Total USD portfolio value of all equities (sum(equity price * equity amount)). Does not include cash balance.
+          format: double
+        cryptocurrenciesValue:
+          type: number
+          description: Total USD value of all cryptocurrencies in the portfolio.
+          format: double
+        nftsValue:
+          type: number
+          description: Total USD value of all NFTs in the portfolio.
+          format: double
+        equityPositions:
           type:
-          - string
+          - array
           - 'null'
-          description: 'Strictly-typed error type that is explaining the reason of an unsuccessful status of the operation.
-
-            All possible error types are available in the documentation.'
-        errorData:
-          readOnly: true
-        content:
-          allOf:
-          - $ref: '#/components/schemas/BrokerPortfolioValueModel'
+          items:
+            $ref: '#/components/schemas/PositionWithReturn'
+          description: List of equity positions
+        cryptocurrencyPositions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PositionWithReturn'
+          description: List of cryptocurrency positions
+        nftPositions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NftPositionWithMarketValues'
+          description: List of NFT positions
       additionalProperties: false
-    BrokerOptionType:
-      enum:
-      - unknown
-      - call
-      - put
-      type: string
+    PortfolioHoldingsRequest:
+      required:
+      - authToken
+      - type
+      type: object
+      properties:
+        authToken:
+          minLength: 1
+          type: string
+          description: Auth token that allows connecting to the target institution
+        type:
+          enum:
+          - robinhood
+          - eTrade
+          - alpaca
+          - tdAmeritrade
+          - weBull
+          - stash
+          - interactiveBrokers
+          - public
+          - coinbase
+          - kraken
+          - coinbasePro
+          - cryptoCom
+          - openSea
+          - binanceUs
+          - gemini
+          - cryptocurrencyAddress
+          - cryptocurrencyWallet
+          - okCoin
+          - bittrex
+          - kuCoin
+          - etoro
+          - cexIo
+          - binanceInternational
+          - bitstamp
+          - gateIo
+          - acorns
+          - okx
+          - bitFlyer
+          - coinlist
+          - huobi
+          - bitfinex
+          - deFiWallet
+          - krakenDirect
+          - vanguard
+          - binanceInternationalDirect
+          - bitfinexDirect
+          - bybit
+          - paxos
+          - coinbasePrime
+          allOf:
+          - $ref: '#/components/schemas/BrokerType'
+          description: 'Type of the institution to connect
+
+
+            ### Supported integrations:
+
+            ```Robinhood```
+
+            ```ETrade```
+
+            ```Alpaca```
+
+            ```WeBull```
+
+            ```Stash```
+
+            ```InteractiveBrokers```
+
+            ```Public```
+
+            ```Coinbase```
+
+            ```Kraken```
+
+            ```CoinbasePro```
+
+            ```CryptoCom```
+
+            ```OpenSea```
+
+            ```Binance```
+
+            ```Gemini```
+
+            ```OkCoin```
+
+            ```KuCoin```
+
+            ```Etoro```
+
+            ```CexIo```
+
+            ```BinanceInternational```
+
+            ```Bitstamp```
+
+            ```GateIo```
+
+            ```Acorns```
+
+            ```Okx```
+
+            ```BitFlyer```
+
+            ```Coinlist```
+
+            ```Huobi```
+
+            ```Bitfinex```
+
+            ```KrakenDirect```
+
+            ```Vanguard```
+
+            ```BinanceInternationalDirect```
+
+            ```BitfinexDirect```
+
+            ```Bybit```
+
+            ```Paxos```
+
+            ```CoinbasePrime```
+
+            ```DeFiWallet```
+
+            '
+        includeMarketValue:
+          type: boolean
+      additionalProperties: false
     HoldingsModel:
       type: object
       properties:
@@ -1379,7 +1277,7 @@ components:
             $ref: '#/components/schemas/PositionWithMarketValue'
           description: Cryptocurrency holdings on the account
       additionalProperties: false
-    ApiResult:
+    BrokerPortfolioValueModelApiResult:
       type: object
       properties:
         status:
@@ -1414,8 +1312,53 @@ components:
             All possible error types are available in the documentation.'
         errorData:
           readOnly: true
+        content:
+          allOf:
+          - $ref: '#/components/schemas/BrokerPortfolioValueModel'
       additionalProperties: false
-    PositionWithMarketValue:
+    BrokerType:
+      enum:
+      - robinhood
+      - eTrade
+      - alpaca
+      - tdAmeritrade
+      - weBull
+      - stash
+      - interactiveBrokers
+      - public
+      - coinbase
+      - kraken
+      - coinbasePro
+      - cryptoCom
+      - openSea
+      - binanceUs
+      - gemini
+      - cryptocurrencyAddress
+      - cryptocurrencyWallet
+      - okCoin
+      - bittrex
+      - kuCoin
+      - etoro
+      - cexIo
+      - binanceInternational
+      - bitstamp
+      - gateIo
+      - acorns
+      - okx
+      - bitFlyer
+      - coinlist
+      - huobi
+      - bitfinex
+      - deFiWallet
+      - krakenDirect
+      - vanguard
+      - binanceInternationalDirect
+      - bitfinexDirect
+      - bybit
+      - paxos
+      - coinbasePrime
+      type: string
+    PositionWithReturn:
       type: object
       properties:
         symbol:
@@ -1445,7 +1388,64 @@ components:
           - 'null'
           description: Current last price of the asset.
           format: double
+        portfolioPercentage:
+          type:
+          - number
+          - 'null'
+          description: What percentage of total portfolio value is taken by this asset.
+          format: double
+        totalReturn:
+          type:
+          - number
+          - 'null'
+          description: 'Total return of investment of this asset. Can be negative or null. Based on the cost basis of the asset, cost basis
+
+            is not available by some of integrations.'
+          format: double
+        returnPercentage:
+          type:
+          - number
+          - 'null'
+          description: Percent of return of investment for this asset. Can be negative or null.
+          format: double
+        companyName:
+          type:
+          - string
+          - 'null'
+          description: Company name of the relative asset/
+        totalDailyReturn:
+          type:
+          - number
+          - 'null'
+          description: Total daily return of investment for this asset. Can be negative.
+          format: double
+        dailyReturnPercentage:
+          type:
+          - number
+          - 'null'
+          description: Daily percent of return of investment for this asset. Can be negative.
+          format: double
       additionalProperties: false
+    CryptocurrencyAddressType:
+      enum:
+      - ethAddress
+      - btcAddress
+      - ltcAddress
+      - solAddress
+      - algoAddress
+      - celoAddress
+      - cardanoAddress
+      - polygonAddress
+      - bnbAddress
+      - elrondAddress
+      - neoAddress
+      - xrpAddress
+      - flowAddress
+      - harmonyOneAddress
+      - tronAddress
+      - dogeAddress
+      - opAddress
+      type: string
   securitySchemes:
     Client-Secret:
       type: apiKey

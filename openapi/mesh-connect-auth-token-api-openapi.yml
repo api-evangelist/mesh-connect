@@ -80,6 +80,51 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    OAuthTokenResponse:
+      type: object
+      properties:
+        id_token:
+          type:
+          - string
+          - 'null'
+          description: Authentication token.
+        expires_in:
+          type:
+          - integer
+          - 'null'
+          description: Expiration time in seconds.
+          format: int64
+        status:
+          $ref: '#/components/schemas/AuthenticationStatus'
+      additionalProperties: false
+    ClientAdminTokenRequest:
+      required:
+      - clientId
+      - clientSecret
+      type: object
+      properties:
+        clientId:
+          minLength: 1
+          type: string
+          description: Contact Mesh to get client Id.
+        clientSecret:
+          minLength: 1
+          type: string
+          description: Contact Mesh to get Client Secret for Account Management API.
+      additionalProperties: false
+      description: Generate Auth token.
+    ApiResultStatus:
+      enum:
+      - ok
+      - serverFailure
+      - permissionDenied
+      - badRequest
+      - notFound
+      - conflict
+      - tooManyRequest
+      - locked
+      - unavailableForLegalReasons
+      type: string
     OAuthTokenResponseApiResult:
       type: object
       properties:
@@ -121,18 +166,6 @@ components:
         content:
           $ref: '#/components/schemas/OAuthTokenResponse'
       additionalProperties: false
-    ApiResultStatus:
-      enum:
-      - ok
-      - serverFailure
-      - permissionDenied
-      - badRequest
-      - notFound
-      - conflict
-      - tooManyRequest
-      - locked
-      - unavailableForLegalReasons
-      type: string
     AuthenticationStatus:
       enum:
       - failed
@@ -140,39 +173,6 @@ components:
       - mfaRequired
       - available
       type: string
-    ClientAdminTokenRequest:
-      required:
-      - clientId
-      - clientSecret
-      type: object
-      properties:
-        clientId:
-          minLength: 1
-          type: string
-          description: Contact Mesh to get client Id.
-        clientSecret:
-          minLength: 1
-          type: string
-          description: Contact Mesh to get Client Secret for Account Management API.
-      additionalProperties: false
-      description: Generate Auth token.
-    OAuthTokenResponse:
-      type: object
-      properties:
-        id_token:
-          type:
-          - string
-          - 'null'
-          description: Authentication token.
-        expires_in:
-          type:
-          - integer
-          - 'null'
-          description: Expiration time in seconds.
-          format: int64
-        status:
-          $ref: '#/components/schemas/AuthenticationStatus'
-      additionalProperties: false
   securitySchemes:
     Bearer:
       type: http

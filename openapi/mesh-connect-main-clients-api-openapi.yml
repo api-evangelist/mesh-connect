@@ -106,6 +106,17 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    B2BPortalClientCallbackUrlsResponse:
+      type: object
+      properties:
+        callbackUrls:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Client Allowed Link URLs.
+      additionalProperties: false
     B2BPortalClientCallbackUrlsUpdateRequest:
       required:
       - callbackUrls
@@ -117,6 +128,18 @@ components:
             type: string
           description: Client Allowed Link URLs.
       additionalProperties: false
+    ApiResultStatus:
+      enum:
+      - ok
+      - serverFailure
+      - permissionDenied
+      - badRequest
+      - notFound
+      - conflict
+      - tooManyRequest
+      - locked
+      - unavailableForLegalReasons
+      type: string
     ApiResult:
       type: object
       properties:
@@ -156,18 +179,6 @@ components:
         errorData:
           readOnly: true
       additionalProperties: false
-    ApiResultStatus:
-      enum:
-      - ok
-      - serverFailure
-      - permissionDenied
-      - badRequest
-      - notFound
-      - conflict
-      - tooManyRequest
-      - locked
-      - unavailableForLegalReasons
-      type: string
     B2BPortalClientCallbackUrlsResponseApiResult:
       type: object
       properties:
@@ -208,17 +219,6 @@ components:
           readOnly: true
         content:
           $ref: '#/components/schemas/B2BPortalClientCallbackUrlsResponse'
-      additionalProperties: false
-    B2BPortalClientCallbackUrlsResponse:
-      type: object
-      properties:
-        callbackUrls:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Client Allowed Link URLs.
       additionalProperties: false
   securitySchemes:
     Bearer:
