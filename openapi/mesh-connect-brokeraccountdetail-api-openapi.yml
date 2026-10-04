@@ -85,6 +85,13 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    UserIdentificationType:
+      enum:
+      - none
+      - idCard
+      - driversLicense
+      - passport
+      type: string
     B2BBrokerAccountDetailsResponseApiResult:
       type: object
       properties:
@@ -123,39 +130,6 @@ components:
         content:
           allOf:
           - $ref: '#/components/schemas/B2BBrokerAccountDetailsResponse'
-      additionalProperties: false
-    ApiResultStatus:
-      enum:
-      - ok
-      - serverFailure
-      - permissionDenied
-      - badRequest
-      - notFound
-      - conflict
-      - tooManyRequest
-      - locked
-      type: string
-    UserIdentificationType:
-      enum:
-      - none
-      - idCard
-      - driversLicense
-      - passport
-      type: string
-    B2BBrokerAccountDetailsRequest:
-      required:
-      - authToken
-      - integrationId
-      type: object
-      properties:
-        authToken:
-          minLength: 1
-          type: string
-          description: Auth token that allows connecting to the target institution.
-        integrationId:
-          type: string
-          description: The Id which uniquely identifies the integration.
-          format: uuid
       additionalProperties: false
     B2BBrokerAccountDetailsResponse:
       type: object
@@ -261,6 +235,32 @@ components:
             All possible error types are available in the documentation.'
         errorData:
           readOnly: true
+      additionalProperties: false
+    ApiResultStatus:
+      enum:
+      - ok
+      - serverFailure
+      - permissionDenied
+      - badRequest
+      - notFound
+      - conflict
+      - tooManyRequest
+      - locked
+      type: string
+    B2BBrokerAccountDetailsRequest:
+      required:
+      - authToken
+      - integrationId
+      type: object
+      properties:
+        authToken:
+          minLength: 1
+          type: string
+          description: Auth token that allows connecting to the target institution.
+        integrationId:
+          type: string
+          description: The Id which uniquely identifies the integration.
+          format: uuid
       additionalProperties: false
   securitySchemes:
     Client-Secret:

@@ -117,17 +117,6 @@ components:
             type: string
           description: Client Allowed Link URLs.
       additionalProperties: false
-    B2BPortalClientCallbackUrlsUpdateRequest:
-      required:
-      - callbackUrls
-      type: object
-      properties:
-        callbackUrls:
-          type: array
-          items:
-            type: string
-          description: Client Allowed Link URLs.
-      additionalProperties: false
     ApiResultStatus:
       enum:
       - ok
@@ -178,6 +167,17 @@ components:
             All possible error types are available in the documentation.'
         errorData:
           readOnly: true
+      additionalProperties: false
+    B2BPortalClientCallbackUrlsUpdateRequest:
+      required:
+      - callbackUrls
+      type: object
+      properties:
+        callbackUrls:
+          type: array
+          items:
+            type: string
+          description: Client Allowed Link URLs.
       additionalProperties: false
     B2BPortalClientCallbackUrlsResponseApiResult:
       type: object
