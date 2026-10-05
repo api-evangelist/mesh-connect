@@ -1,0 +1,12 @@
+{
+ "url": "https://admin-api.meshconnect.com/swagger/AdminAPI/swagger.json",
+ "requested_url": "https://admin-api.meshconnect.com/swagger/AdminAPI/swagger.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 50503,
+ "sha256": "936dae545de53165c17d2388aa259953d62bad9477dee7695338562c91aca99a",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.909), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
