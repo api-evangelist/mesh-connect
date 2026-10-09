@@ -1,154 +1,28 @@
-generated: '2026-07-20'
+generated: '2026-09-23'
 method: generated
-source: openapi/mesh-connect-admin-openapi-original.json, openapi/mesh-connect-openapi-original.json
+source: openapi/mesh-connect-assets-api-openapi.yml, openapi/mesh-connect-auth-token-api-openapi.yml,
+  openapi/mesh-connect-balance-api-openapi.yml, openapi/mesh-connect-brokeraccountdetail-api-openapi.yml,
+  openapi/mesh-connect-main-clients-api-openapi.yml, openapi/mesh-connect-managed-account-authentication-api-openapi.yml,
+  openapi/mesh-connect-managed-transfers-api-openapi.yml, openapi/mesh-connect-portfolio-api-openapi.yml,
+  openapi/mesh-connect-registered-clients-api-openapi.yml, openapi/mesh-connect-self-managed-account-authentication-api-openapi.yml,
+  openapi/mesh-connect-transactions-api-openapi.yml, openapi/mesh-connect-transfers-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 50
   by_action_class:
-    acting: 33
-    connected: 17
+    connected: 26
+    acting: 24
   by_consequence:
-    write: 19
-    read: 17
-    physical: 14
+    read: 26
+    write: 12
+    physical: 12
   human_in_the_loop_required: 0
 operations:
-- path: /admin/api/v1/Token
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /admin/api/v1/Client/callbackUrls
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /admin/api/v1/Client/callbackUrls
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /admin/api/v1/SubClient
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /admin/api/v1/SubClient
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /admin/api/v1/SubClient/{id}
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /admin/api/v1/SubClient/{id}
-  method: put
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /admin/api/v1/SubClient/{id}
-  method: delete
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /admin/api/v1/SubClient/{id}/logo
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /admin/api/v1/SubClient/{id}/logo
-  method: delete
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /api/v1/assets/{assetType}
   method: get
+  operationId: getApiV1AssetsByAssetType
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -158,6 +32,7 @@ operations:
     audit: none
 - path: /api/v1/assets/equity/{symbol}/price
   method: get
+  operationId: getApiV1AssetsEquityBySymbolPrice
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -165,8 +40,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/v1/balance/get
+- path: /admin/api/v1/Token
   method: post
+  operationId: postAdminApiV1Token
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -180,8 +56,19 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /api/v1/balance/get
+  method: post
+  operationId: postApiV1BalanceGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /api/v1/balance/portfolio
   method: get
+  operationId: getApiV1BalancePortfolio
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -191,6 +78,33 @@ operations:
     audit: none
 - path: /api/v1/account/verify
   method: post
+  operationId: postApiV1AccountVerify
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /admin/api/v1/Client/callbackUrls
+  method: get
+  operationId: getAdminApiV1ClientCallbackUrls
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /admin/api/v1/Client/callbackUrls
+  method: post
+  operationId: postAdminApiV1ClientCallbackUrls
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -206,6 +120,7 @@ operations:
     audit: required
 - path: /api/v1/cataloglink
   method: get
+  operationId: getApiV1Cataloglink
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -215,21 +130,17 @@ operations:
     audit: none
 - path: /api/v1/cataloglink
   method: post
+  operationId: postApiV1Cataloglink
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /api/v1/linktoken
   method: post
+  operationId: postApiV1Linktoken
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -245,6 +156,7 @@ operations:
     audit: required
 - path: /api/v1/token/refresh
   method: post
+  operationId: postApiV1TokenRefresh
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -260,6 +172,7 @@ operations:
     audit: required
 - path: /api/v1/account
   method: delete
+  operationId: deleteApiV1Account
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -275,39 +188,7 @@ operations:
     audit: required
 - path: /api/v1/status
   method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/authenticationSchemes
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v1/authenticate
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v1/authenticate/{brokerType}
-  method: get
+  operationId: getApiV1Status
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -317,6 +198,7 @@ operations:
     audit: none
 - path: /api/v1/integrations
   method: get
+  operationId: getApiV1Integrations
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -326,6 +208,7 @@ operations:
     audit: none
 - path: /api/v1/transfers/managed/networks
   method: get
+  operationId: getApiV1TransfersManagedNetworks
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -335,6 +218,7 @@ operations:
     audit: none
 - path: /api/v1/transfers/managed/integrations
   method: get
+  operationId: getApiV1TransfersManagedIntegrations
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -344,6 +228,7 @@ operations:
     audit: none
 - path: /api/v1/transfers/managed/tokens
   method: get
+  operationId: getApiV1TransfersManagedTokens
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -353,6 +238,7 @@ operations:
     audit: none
 - path: /api/v1/transfers/managed/verify
   method: get
+  operationId: getApiV1TransfersManagedVerify
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -362,6 +248,7 @@ operations:
     audit: none
 - path: /api/v1/transfers/managed/configure
   method: post
+  operationId: postApiV1TransfersManagedConfigure
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -379,6 +266,7 @@ operations:
     audit: required
 - path: /api/v1/transfers/managed/preview
   method: post
+  operationId: postApiV1TransfersManagedPreview
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -396,6 +284,7 @@ operations:
     audit: required
 - path: /api/v1/transfers/managed/execute
   method: post
+  operationId: postApiV1TransfersManagedExecute
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -413,6 +302,7 @@ operations:
     audit: required
 - path: /api/v1/transfers/managed/address/get
   method: post
+  operationId: postApiV1TransfersManagedAddressGet
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -430,6 +320,7 @@ operations:
     audit: required
 - path: /api/v1/transfers/managed/quote
   method: post
+  operationId: postApiV1TransfersManagedQuote
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -447,6 +338,7 @@ operations:
     audit: required
 - path: /api/v1/transfers/managed/mesh
   method: get
+  operationId: getApiV1TransfersManagedMesh
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -456,21 +348,47 @@ operations:
     audit: none
 - path: /api/v1/holdings/get
   method: post
+  operationId: postApiV1HoldingsGet
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /api/v1/holdings/value
   method: post
+  operationId: postApiV1HoldingsValue
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/holdings/portfolio
+  method: get
+  operationId: getApiV1HoldingsPortfolio
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /admin/api/v1/SubClient
+  method: get
+  operationId: getAdminApiV1SubClient
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /admin/api/v1/SubClient
+  method: post
+  operationId: postAdminApiV1SubClient
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -484,8 +402,109 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/holdings/portfolio
+- path: /admin/api/v1/SubClient/{id}
   method: get
+  operationId: getAdminApiV1SubClientById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /admin/api/v1/SubClient/{id}
+  method: put
+  operationId: putAdminApiV1SubClientById
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /admin/api/v1/SubClient/{id}
+  method: delete
+  operationId: deleteAdminApiV1SubClientById
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /admin/api/v1/SubClient/{id}/logo
+  method: post
+  operationId: postAdminApiV1SubClientByIdLogo
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /admin/api/v1/SubClient/{id}/logo
+  method: delete
+  operationId: deleteAdminApiV1SubClientByIdLogo
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/authenticationSchemes
+  method: get
+  operationId: getApiV1AuthenticationSchemes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/authenticate
+  method: post
+  operationId: postApiV1Authenticate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/authenticate/{brokerType}
+  method: get
+  operationId: getApiV1AuthenticateByBrokerType
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -495,53 +514,37 @@ operations:
     audit: none
 - path: /api/v1/transactions/list
   method: post
+  operationId: postApiV1TransactionsList
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /api/v1/transactions/details
   method: post
+  operationId: postApiV1TransactionsDetails
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /api/v1/transactions/featureList
   method: post
+  operationId: postApiV1TransactionsFeatureList
   x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /api/v1/transactions/preview/{side}
   method: post
+  operationId: postApiV1TransactionsPreviewBySide
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -559,6 +562,7 @@ operations:
     audit: required
 - path: /api/v1/transactions/{side}
   method: post
+  operationId: postApiV1TransactionsBySide
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -576,6 +580,7 @@ operations:
     audit: required
 - path: /api/v1/transactions/cancel
   method: post
+  operationId: postApiV1TransactionsCancel
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -593,21 +598,17 @@ operations:
     audit: required
 - path: /api/v1/transactions/symbolinfo
   method: post
+  operationId: postApiV1TransactionsSymbolinfo
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /api/v1/transfers/list
   method: post
+  operationId: postApiV1TransfersList
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -625,6 +626,7 @@ operations:
     audit: required
 - path: /api/v1/transfers/details
   method: post
+  operationId: postApiV1TransfersDetails
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -642,6 +644,7 @@ operations:
     audit: required
 - path: /api/v1/transfers
   method: post
+  operationId: postApiV1Transfers
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -659,6 +662,7 @@ operations:
     audit: required
 - path: /api/v1/transfers/address/get
   method: post
+  operationId: postApiV1TransfersAddressGet
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -676,18 +680,11 @@ operations:
     audit: required
 - path: /api/v1/transfers/symbol/details
   method: post
+  operationId: postApiV1TransfersSymbolDetails
   x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
