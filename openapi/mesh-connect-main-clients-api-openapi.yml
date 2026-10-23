@@ -225,3 +225,9 @@ components:
       type: http
       description: 'Authorization header using the Bearer scheme. Example: "Authorization: Bearer {Value}"'
       scheme: bearer
+x-provenance:
+  method: harvested
+  publisher: Mesh Connect
+  source: https://admin-api.meshconnect.com/swagger/AdminAPI/swagger.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
