@@ -667,6 +667,8 @@ apis:
   - type: Authentication
     url: authentication/mesh-connect-authentication.yml
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/mesh-connect/overview
 - type: Overlay
   url: overlays/mesh-connect-admin-overlay.yaml
 - type: AgenticAccess
