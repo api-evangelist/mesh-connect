@@ -1,1435 +1,1605 @@
 {
+  "info": {
+    "_postman_id": "7e02cae6-71a0-4371-b9f5-1791aa6e5b67",
+    "name": "Mesh Connect Integration Transfers API",
+    "description": "Mesh allows users to connect accounts of financial institutions,\ncrypto exchanges, and self-custody wallets. Mesh handles credential\nvalidation, MFA, and error handling for each integration. After\nan account is connected, Mesh allows client applications to read holdings,\ntransaction history and balances and execute crypto transfers (with user approval).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:23:50.000Z",
+    "updatedAt": "2026-10-22T01:23:50.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-7e02cae6-71a0-4371-b9f5-1791aa6e5b67"
+  },
   "item": [
     {
-      "id": "03b0345d-e1d1-47b0-ac79-f8157d99224c",
-      "name": "Transfers",
-      "description": {
-        "content": "\n\n### Supported integrations:\n```Robinhood```\n```Coinbase```\n```Kraken```\n```CoinbasePro```\n```CryptoCom```\n```Binance```\n```Gemini```\n```OkCoin```\n```KuCoin```\n```BinanceInternational```\n```Bitstamp```\n```GateIo```\n```Okx```\n```Huobi```\n```Bitfinex```\n```KrakenDirect```\n```BinanceInternationalDirect```\n```Bybit```\n```Paxos```\n```CoinbasePrime```\n```DeFiWallet```\n\n\n### Integration-specific notes:\n\n\n#### Robinhood:\n\n\nCryptocurrency transfers should be enabled in Robinhood settings. Transfers are disabled by default, enabling them for end users requires a review from Robinhood.\n\nPlease note:\n * `MfaCode` parameter is required to initiate a transaction in Robinhood.\n * The user's security settings should be configured to use an authenticator application.\n * Robinhood doesn't allow initiation of transactions if the authenticator application is not configured.\n\n\n#### Coinbase:\n\n\n`MfaCode` parameter should be used to initiate transactions in Coinbase.\n * If the end user's Coinbase account is configured to use text messages (SMS) for two factor authentication, the API will return `MfaRequired` status, and a text code will then be sent by Coinbase. The code is expected to be provided in the subsequent call using the `MfaCode` request field\n * If the account is configured to use an authenticator application, the API is expecting to get the code in the `MfaCode` request field.\n\n\n#### Kraken:\n\n\nKraken requires the explicit chain name to be provided (e.g. `Dogecoin` or `Ethereum (ERC20)`). The list of possible chains can be obtained by calling `symbol/details` endpoint.\n\nTo initiate a transaction, a Kraken Address Key name should be provided in `TargetAddress` field. Target address should be added using Kraken UI, then its name should be used.\n\n\n#### CoinbasePro:\n * CoinbasePro does not provide multiple chains per a symbol, so default chains are used for getting Deposit addresses.\n\n\n#### Binance:\n\n\n`Enable Withdrawals` permission should be given to the user's API key to initiate transfers with Binance Us.\n\nBinance requires adding the IP address to the list of trusted IPs to be able to create API keys with transfer permission.\n * Please reach out to Front to get the static IP address. This address should be provided to the end user, and the user should be instructed to add it to the list of trusted IP addresses.\n * By default, the permission to enable withdrawals is turned off. If the end user's API key does not have the permission, asset transfers will not be available.\n\n\n#### KuCoin:\n\n\nKuCoin requires adding the IP address to the list of trusted IPs to be able to create API keys with transfer permission.\n\n`Fee` parameter should be used to initiate a transaction in KuCoin.\n\nPlease note:\n * Please reach out to Front to get the static IP address. This address should be provided to the end user, and the user should be instructed to add it to the list of trusted IP addresses.\n * All currencies have their minimum `fee` and `amount` requirements. Please use `symbol/details` endpoint to get this data for a particular symbol.\n * KuCoin requires chain name to be provided for getting deposit address or initiating a cryptocurrency transfer. Some cryptocurrencies are supported over multiple chains. It's recommended to use `symbol/details` endpoint to get the list of supported chains and show it to the end user to select a target one.\n\n\n#### BinanceInternational:\n\n\n`Enable Withdrawals` permission should be given to the user's API key to initiate transfers with Binance International.\n\nBinance requires adding the IP address to the list of trusted IPs to be able to create API keys with transfer permission.\n * Please reach out to Front to get the static IP address. This address should be provided to the end user, and the user should be instructed to add it to the list of trusted IP addresses.\n * By default, the permission to enable withdrawals is turned off. If the end user's API key does not have the permission, asset transfers will not be available.\n\n\n#### GateIo:\n\n\nGate.io requires adding IP address to the list of trusted IP addresses to be able to initiate a cryptocurrency transfers.\n\nWithdrawal address should be already verified or added on the Gate.io UI (in mobile application or on the web site).\n * Please reach out to Front to get the static IP address for withdrawals. This address should be provided to the end user, and the user should be instructed to add it to the list of trusted IP addresses.\n * Only verified withdrawal blockchain addresses are allowed for withdrawal with Gate.io API.\n * Gate.io requires chain name to be provided for getting deposit address or initiating a cryptocurrency transfer. Some cryptocurrencies are supported over multiple chains. It's recommended to use `symbol/details` endpoint to get the list of supported chains and show it to the end user to select a target one.\n\n\n#### Huobi:\n\n\nWarning: Huobi does not refund executed deposits that are below the `Minimum Deposit Amount`\n * Please check the MinimumDepositAmount in Get Deposit Address response in order to avoid making a deposit below the minimum amount\n * Huobi does not allow withdrawals to addresses that are not white-listed, please add the address that you would like to withdraw to the white list of addresses through the UI so that a withrawal can be processed\n\n\n#### Bitfinex:\n * The hash of transfer is not available when making a transfer in Bitfinex. To get the hash please re-query the transfer using the transaction id.\n * Bitfinex does not separate sub-accounts when returning the list of transfers.Therefore the same list of transfers is returned for all Bitfinex sub-accounts.\n\n\n#### KrakenDirect:\n\n\nKraken requires the explicit chain name to be provided (e.g. `Dogecoin` or `Ethereum (ERC20)`). The list of possible chains can be obtained by calling `symbol/details` endpoint.\n\nTo initiate a transaction, a Kraken Address Key name should be provided in `TargetAddress` field. Target address should be added using Kraken UI, then its name should be used.\n",
-        "type": "text/plain"
-      },
+      "name": "api",
       "item": [
         {
-          "id": "1b2f50b8-fbe5-4d29-8ce7-52c7d5efcf13",
-          "name": "Get transfer history",
-          "request": {
-            "name": "Get transfer history",
-            "description": {
-              "content": "Get entire history of cryptocurrency transfers (withdrawals or deposits) executed from an exchange.\r\nOnly supports Exchange integrations.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v1",
-                "transfers",
-                "list"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"<string>\",\n  \"count\": \"<integer>\",\n  \"cursor\": \"<string>\",\n  \"statuses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cryptocurrencyAddressType\": \"<string>\",\n  \"from\": \"<long>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "v1",
+          "item": [
             {
-              "id": "7459b235-7039-4904-a04d-ba360db12889",
-              "name": "Transfers obtained.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "list"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"<string>\",\n  \"count\": \"<integer>\",\n  \"cursor\": \"<string>\",\n  \"statuses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cryptocurrencyAddressType\": \"<string>\",\n  \"from\": \"<long>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "transfers",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "list",
+                  "item": [
+                    {
+                      "name": "Get transfer history",
+                      "id": "5c7bfa68-8cb5-4a6d-bd07-88ae825356bf",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"vanguard\",\n  \"count\": \"<integer>\",\n  \"cursor\": \"<string,null>\",\n  \"statuses\": \"<array,null>\",\n  \"cryptocurrencyAddressType\": \"elrondAddress\",\n  \"from\": \"<integer,null-int64>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/transfers/list",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "transfers",
+                            "list"
+                          ]
+                        },
+                        "description": "Get entire history of cryptocurrency transfers (withdrawals or deposits) executed from an exchange.\nOnly supports Exchange integrations."
+                      },
+                      "response": [
+                        {
+                          "id": "26b97540-41f5-4c39-8e16-10d51bbffa58",
+                          "name": "Transfers obtained.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Client-Secret",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"vanguard\",\n  \"count\": \"<integer>\",\n  \"cursor\": \"<string,null>\",\n  \"statuses\": \"<array,null>\",\n  \"cryptocurrencyAddressType\": \"elrondAddress\",\n  \"from\": \"<integer,null-int64>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/transfers/list",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "transfers",
+                                "list"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"status\": \"serverFailure\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  },\n  \"content\": {\n    \"transfers\": \"<array,null>\",\n    \"total\": \"<long>\",\n    \"cursor\": \"<string,null>\",\n    \"earliestTimestamp\": \"<long>\"\n  }\n}",
+                          "createdAt": "2026-10-22T01:23:51.000Z",
+                          "updatedAt": "2026-10-22T01:23:51.000Z",
+                          "uid": "35240-26b97540-41f5-4c39-8e16-10d51bbffa58"
+                        },
+                        {
+                          "id": "c63e3688-ea68-4aae-b429-15e6d84d4b3f",
+                          "name": "Bad Request",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Client-Secret",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"vanguard\",\n  \"count\": \"<integer>\",\n  \"cursor\": \"<string,null>\",\n  \"statuses\": \"<array,null>\",\n  \"cryptocurrencyAddressType\": \"elrondAddress\",\n  \"from\": \"<integer,null-int64>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/transfers/list",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "transfers",
+                                "list"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  }\n}",
+                          "createdAt": "2026-10-22T01:23:51.000Z",
+                          "updatedAt": "2026-10-22T01:23:51.000Z",
+                          "uid": "35240-c63e3688-ea68-4aae-b429-15e6d84d4b3f"
+                        },
+                        {
+                          "id": "97dd6e2f-9696-47ce-8dc4-e4b1253bd235",
+                          "name": "Unauthorized: Client Id or Client Secret are not correct or missing.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Client-Secret",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"vanguard\",\n  \"count\": \"<integer>\",\n  \"cursor\": \"<string,null>\",\n  \"statuses\": \"<array,null>\",\n  \"cryptocurrencyAddressType\": \"elrondAddress\",\n  \"from\": \"<integer,null-int64>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/transfers/list",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "transfers",
+                                "list"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{}",
+                          "createdAt": "2026-10-22T01:23:51.000Z",
+                          "updatedAt": "2026-10-22T01:23:51.000Z",
+                          "uid": "35240-97dd6e2f-9696-47ce-8dc4-e4b1253bd235"
+                        },
+                        {
+                          "id": "be4d8337-96e8-4080-9ad8-dfe888782c23",
+                          "name": "The API key used does not have read permission to call this Mesh endpoint.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Client-Secret",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"vanguard\",\n  \"count\": \"<integer>\",\n  \"cursor\": \"<string,null>\",\n  \"statuses\": \"<array,null>\",\n  \"cryptocurrencyAddressType\": \"elrondAddress\",\n  \"from\": \"<integer,null-int64>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/transfers/list",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "transfers",
+                                "list"
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{}",
+                          "createdAt": "2026-10-22T01:23:51.000Z",
+                          "updatedAt": "2026-10-22T01:23:51.000Z",
+                          "uid": "35240-be4d8337-96e8-4080-9ad8-dfe888782c23"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T01:23:51.000Z",
+                      "updatedAt": "2026-10-22T01:23:51.000Z",
+                      "uid": "35240-5c7bfa68-8cb5-4a6d-bd07-88ae825356bf"
+                    }
+                  ],
+                  "id": "bf18c86d-d46d-45a6-ba2d-dff993d84d3f",
+                  "createdAt": "2026-10-22T01:23:51.000Z",
+                  "updatedAt": "2026-10-22T01:23:51.000Z",
+                  "uid": "35240-bf18c86d-d46d-45a6-ba2d-dff993d84d3f"
+                },
+                {
+                  "name": "details",
+                  "item": [
+                    {
+                      "name": "Get transfer details",
+                      "id": "16338045-55f5-48c4-8f46-4ecb684a00b8",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"bitstamp\",\n  \"addressType\": \"neoAddress\",\n  \"transactionId\": \"<string,null>\",\n  \"transactionHash\": \"<string,null>\",\n  \"symbol\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/transfers/details",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "transfers",
+                            "details"
+                          ]
+                        },
+                        "description": "Get details of a specific transfer (withdrawals or deposits) executed from an exchange.\nOnly supports Exchange integrations."
+                      },
+                      "response": [
+                        {
+                          "id": "bc0f239c-aab6-40e3-886b-011656023f0b",
+                          "name": "Transfer details obtained.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Client-Secret",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"bitstamp\",\n  \"addressType\": \"neoAddress\",\n  \"transactionId\": \"<string,null>\",\n  \"transactionHash\": \"<string,null>\",\n  \"symbol\": \"<string,null>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/transfers/details",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "transfers",
+                                "details"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"status\": \"notFound\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  },\n  \"content\": {\n    \"id\": \"<string,null>\",\n    \"status\": \"deviceConfirmationRequired\",\n    \"statusDetails\": \"<string,null>\",\n    \"type\": \"withdrawal\",\n    \"fromAddress\": \"<string,null>\",\n    \"targetAddress\": \"<string,null>\",\n    \"symbol\": \"<string,null>\",\n    \"chain\": \"<string,null>\",\n    \"memo\": \"<string,null>\",\n    \"hash\": \"<string,null>\",\n    \"amount\": \"<double>\",\n    \"transactionAmount\": \"<number,null-double>\",\n    \"createdTimestamp\": \"<long>\",\n    \"updatedTimestamp\": \"<long>\",\n    \"networkTransactionFee\": {\n      \"gasPrice\": \"<number,null-double>\",\n      \"gasUsed\": \"<number,null-double>\",\n      \"amount\": \"<number,null-double>\",\n      \"symbol\": \"<string,null>\"\n    },\n    \"transferFee\": \"<number,null-double>\",\n    \"confirmations\": \"<integer,null-int64>\",\n    \"blockchainMethodName\": \"<string,null>\",\n    \"blockchainMethod\": \"run\"\n  }\n}",
+                          "createdAt": "2026-10-22T01:23:51.000Z",
+                          "updatedAt": "2026-10-22T01:23:51.000Z",
+                          "uid": "35240-bc0f239c-aab6-40e3-886b-011656023f0b"
+                        },
+                        {
+                          "id": "fa31f946-c533-47c2-857e-fc96797018a5",
+                          "name": "Transfer details are not correct.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Client-Secret",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"bitstamp\",\n  \"addressType\": \"neoAddress\",\n  \"transactionId\": \"<string,null>\",\n  \"transactionHash\": \"<string,null>\",\n  \"symbol\": \"<string,null>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/transfers/details",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "transfers",
+                                "details"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  }\n}",
+                          "createdAt": "2026-10-22T01:23:51.000Z",
+                          "updatedAt": "2026-10-22T01:23:51.000Z",
+                          "uid": "35240-fa31f946-c533-47c2-857e-fc96797018a5"
+                        },
+                        {
+                          "id": "e67fa52b-578c-4beb-a7e1-9d3c4640a6b5",
+                          "name": "Unauthorized: Client Id or Client Secret are not correct or missing.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Client-Secret",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"bitstamp\",\n  \"addressType\": \"neoAddress\",\n  \"transactionId\": \"<string,null>\",\n  \"transactionHash\": \"<string,null>\",\n  \"symbol\": \"<string,null>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/transfers/details",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "transfers",
+                                "details"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{}",
+                          "createdAt": "2026-10-22T01:23:51.000Z",
+                          "updatedAt": "2026-10-22T01:23:51.000Z",
+                          "uid": "35240-e67fa52b-578c-4beb-a7e1-9d3c4640a6b5"
+                        },
+                        {
+                          "id": "1970ffee-1949-4a3c-8cff-569c95094058",
+                          "name": "The API key used does not have read permission to call this Mesh endpoint.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Client-Secret",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"bitstamp\",\n  \"addressType\": \"neoAddress\",\n  \"transactionId\": \"<string,null>\",\n  \"transactionHash\": \"<string,null>\",\n  \"symbol\": \"<string,null>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/transfers/details",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "transfers",
+                                "details"
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{}",
+                          "createdAt": "2026-10-22T01:23:51.000Z",
+                          "updatedAt": "2026-10-22T01:23:51.000Z",
+                          "uid": "35240-1970ffee-1949-4a3c-8cff-569c95094058"
+                        },
+                        {
+                          "id": "f3035056-2562-4ad8-8286-5db6da721e2d",
+                          "name": "Transfer with provided id was not found.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Client-Secret",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"bitstamp\",\n  \"addressType\": \"neoAddress\",\n  \"transactionId\": \"<string,null>\",\n  \"transactionHash\": \"<string,null>\",\n  \"symbol\": \"<string,null>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/transfers/details",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "transfers",
+                                "details"
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  }\n}",
+                          "createdAt": "2026-10-22T01:23:51.000Z",
+                          "updatedAt": "2026-10-22T01:23:51.000Z",
+                          "uid": "35240-f3035056-2562-4ad8-8286-5db6da721e2d"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T01:23:51.000Z",
+                      "updatedAt": "2026-10-22T01:23:51.000Z",
+                      "uid": "35240-16338045-55f5-48c4-8f46-4ecb684a00b8"
+                    }
+                  ],
+                  "id": "1dc6caab-3814-40f0-beac-f511fb0bc271",
+                  "createdAt": "2026-10-22T01:23:51.000Z",
+                  "updatedAt": "2026-10-22T01:23:51.000Z",
+                  "uid": "35240-1dc6caab-3814-40f0-beac-f511fb0bc271"
+                },
+                {
+                  "name": "address",
+                  "item": [
+                    {
+                      "name": "get",
+                      "item": [
+                        {
+                          "name": "Get deposit address",
+                          "id": "99bb20d3-2b28-491e-af26-85261a4aca4d",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"tdAmeritrade\",\n  \"symbol\": \"<string,null>\",\n  \"addressType\": \"polygonAddress\",\n  \"chain\": \"<string,null>\",\n  \"mfaCode\": \"<string,null>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/transfers/address/get",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "transfers",
+                                "address",
+                                "get"
+                              ]
+                            },
+                            "description": "Get or generate a cryptocurrency deposit address that can be used to transfer assets to the financial institution"
+                          },
+                          "response": [
+                            {
+                              "id": "d793c568-ebc8-4440-9490-a29dc024eb04",
+                              "name": "Address successfully obtained or generation initiated.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Client-Secret",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"tdAmeritrade\",\n  \"symbol\": \"<string,null>\",\n  \"addressType\": \"polygonAddress\",\n  \"chain\": \"<string,null>\",\n  \"mfaCode\": \"<string,null>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/transfers/address/get",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "transfers",
+                                    "address",
+                                    "get"
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"status\": \"badRequest\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  },\n  \"content\": {\n    \"symbol\": \"<string,null>\",\n    \"address\": \"<string,null>\",\n    \"chain\": \"<string,null>\",\n    \"memo\": \"<string,null>\",\n    \"minimumDepositAmount\": \"<string,null>\",\n    \"networkId\": \"<string,null-uuid>\",\n    \"brokerResponseStatus\": \"unknown\",\n    \"errorMessage\": \"<string,null>\"\n  }\n}",
+                              "createdAt": "2026-10-22T01:23:51.000Z",
+                              "updatedAt": "2026-10-22T01:23:51.000Z",
+                              "uid": "35240-d793c568-ebc8-4440-9490-a29dc024eb04"
+                            },
+                            {
+                              "id": "0fa62541-307c-4aa2-8768-108a1b4c3d2c",
+                              "name": "Request details are not correct.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Client-Secret",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"tdAmeritrade\",\n  \"symbol\": \"<string,null>\",\n  \"addressType\": \"polygonAddress\",\n  \"chain\": \"<string,null>\",\n  \"mfaCode\": \"<string,null>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/transfers/address/get",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "transfers",
+                                    "address",
+                                    "get"
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  }\n}",
+                              "createdAt": "2026-10-22T01:23:51.000Z",
+                              "updatedAt": "2026-10-22T01:23:51.000Z",
+                              "uid": "35240-0fa62541-307c-4aa2-8768-108a1b4c3d2c"
+                            },
+                            {
+                              "id": "fcfad5e9-3144-4845-a60c-f2b0cf264009",
+                              "name": "Unauthorized: Client Id or Client Secret are not correct or missing.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Client-Secret",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"tdAmeritrade\",\n  \"symbol\": \"<string,null>\",\n  \"addressType\": \"polygonAddress\",\n  \"chain\": \"<string,null>\",\n  \"mfaCode\": \"<string,null>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/transfers/address/get",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "transfers",
+                                    "address",
+                                    "get"
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{}",
+                              "createdAt": "2026-10-22T01:23:51.000Z",
+                              "updatedAt": "2026-10-22T01:23:51.000Z",
+                              "uid": "35240-fcfad5e9-3144-4845-a60c-f2b0cf264009"
+                            },
+                            {
+                              "id": "c8468c6a-17a0-4bf1-b775-0ba98fef098e",
+                              "name": "Address for the required symbol is not found.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Client-Secret",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"tdAmeritrade\",\n  \"symbol\": \"<string,null>\",\n  \"addressType\": \"polygonAddress\",\n  \"chain\": \"<string,null>\",\n  \"mfaCode\": \"<string,null>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/transfers/address/get",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "transfers",
+                                    "address",
+                                    "get"
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  }\n}",
+                              "createdAt": "2026-10-22T01:23:51.000Z",
+                              "updatedAt": "2026-10-22T01:23:51.000Z",
+                              "uid": "35240-c8468c6a-17a0-4bf1-b775-0ba98fef098e"
+                            }
+                          ],
+                          "createdAt": "2026-10-22T01:23:51.000Z",
+                          "updatedAt": "2026-10-22T01:23:51.000Z",
+                          "uid": "35240-99bb20d3-2b28-491e-af26-85261a4aca4d"
+                        }
+                      ],
+                      "id": "93a4df5b-6a15-4789-828e-7a6de25a3bac",
+                      "createdAt": "2026-10-22T01:23:51.000Z",
+                      "updatedAt": "2026-10-22T01:23:51.000Z",
+                      "uid": "35240-93a4df5b-6a15-4789-828e-7a6de25a3bac"
+                    }
+                  ],
+                  "id": "bfb48fab-f768-4fde-abed-e92287f9e91c",
+                  "createdAt": "2026-10-22T01:23:51.000Z",
+                  "updatedAt": "2026-10-22T01:23:51.000Z",
+                  "uid": "35240-bfb48fab-f768-4fde-abed-e92287f9e91c"
+                },
+                {
+                  "name": "symbol",
+                  "item": [
+                    {
+                      "name": "details",
+                      "item": [
+                        {
+                          "name": "Get details of asset",
+                          "id": "286a02f6-ccb2-4f4a-a435-b7274f629706",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"tdAmeritrade\",\n  \"symbol\": \"<string,null>\",\n  \"addressType\": \"polygonAddress\",\n  \"chain\": \"<string,null>\",\n  \"mfaCode\": \"<string,null>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/transfers/symbol/details",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "transfers",
+                                "symbol",
+                                "details"
+                              ]
+                            },
+                            "description": "Get details of the asset for deposit or withdrawal. For example, several exchanges support same tokens over multiple\nblockchains, and thus require the name of chain to be supplied for transfers. This endpoint allows getting such details."
+                          },
+                          "response": [
+                            {
+                              "id": "1dded5cb-7173-43ec-8ddc-67544bce2e3b",
+                              "name": "Address successfully obtained or generation initiated.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Client-Secret",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"tdAmeritrade\",\n  \"symbol\": \"<string,null>\",\n  \"addressType\": \"polygonAddress\",\n  \"chain\": \"<string,null>\",\n  \"mfaCode\": \"<string,null>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/transfers/symbol/details",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "transfers",
+                                    "symbol",
+                                    "details"
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"status\": \"tooManyRequest\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  },\n  \"content\": {\n    \"symbol\": \"<string,null>\",\n    \"addressTypes\": \"<array,null>\",\n    \"chains\": \"<array,null>\"\n  }\n}",
+                              "createdAt": "2026-10-22T01:23:51.000Z",
+                              "updatedAt": "2026-10-22T01:23:51.000Z",
+                              "uid": "35240-1dded5cb-7173-43ec-8ddc-67544bce2e3b"
+                            },
+                            {
+                              "id": "21aeac4e-1138-406d-a86d-a3a1ff4faf3b",
+                              "name": "Request details are not correct.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Client-Secret",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"tdAmeritrade\",\n  \"symbol\": \"<string,null>\",\n  \"addressType\": \"polygonAddress\",\n  \"chain\": \"<string,null>\",\n  \"mfaCode\": \"<string,null>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/transfers/symbol/details",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "transfers",
+                                    "symbol",
+                                    "details"
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  }\n}",
+                              "createdAt": "2026-10-22T01:23:51.000Z",
+                              "updatedAt": "2026-10-22T01:23:51.000Z",
+                              "uid": "35240-21aeac4e-1138-406d-a86d-a3a1ff4faf3b"
+                            },
+                            {
+                              "id": "f4e75ab9-f4c3-48aa-be68-c7708d668fa6",
+                              "name": "Unauthorized: Client Id or Client Secret are not correct or missing.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Client-Secret",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"tdAmeritrade\",\n  \"symbol\": \"<string,null>\",\n  \"addressType\": \"polygonAddress\",\n  \"chain\": \"<string,null>\",\n  \"mfaCode\": \"<string,null>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/transfers/symbol/details",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "transfers",
+                                    "symbol",
+                                    "details"
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{}",
+                              "createdAt": "2026-10-22T01:23:51.000Z",
+                              "updatedAt": "2026-10-22T01:23:51.000Z",
+                              "uid": "35240-f4e75ab9-f4c3-48aa-be68-c7708d668fa6"
+                            },
+                            {
+                              "id": "9d205c54-7661-4637-98c8-22157191e64d",
+                              "name": "Asset details for provided symbol are not found.",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "X-Client-Secret",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"tdAmeritrade\",\n  \"symbol\": \"<string,null>\",\n  \"addressType\": \"polygonAddress\",\n  \"chain\": \"<string,null>\",\n  \"mfaCode\": \"<string,null>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/transfers/symbol/details",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "transfers",
+                                    "symbol",
+                                    "details"
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  }\n}",
+                              "createdAt": "2026-10-22T01:23:51.000Z",
+                              "updatedAt": "2026-10-22T01:23:51.000Z",
+                              "uid": "35240-9d205c54-7661-4637-98c8-22157191e64d"
+                            }
+                          ],
+                          "createdAt": "2026-10-22T01:23:51.000Z",
+                          "updatedAt": "2026-10-22T01:23:51.000Z",
+                          "uid": "35240-286a02f6-ccb2-4f4a-a435-b7274f629706"
+                        }
+                      ],
+                      "id": "b418f5b2-c369-4cc4-aaa4-9e05dcf7347c",
+                      "createdAt": "2026-10-22T01:23:51.000Z",
+                      "updatedAt": "2026-10-22T01:23:51.000Z",
+                      "uid": "35240-b418f5b2-c369-4cc4-aaa4-9e05dcf7347c"
+                    }
+                  ],
+                  "id": "fc108b45-df49-4e4c-b5bd-4c7874b99e7a",
+                  "createdAt": "2026-10-22T01:23:51.000Z",
+                  "updatedAt": "2026-10-22T01:23:51.000Z",
+                  "uid": "35240-fc108b45-df49-4e4c-b5bd-4c7874b99e7a"
+                },
+                {
+                  "name": "Initiate a transfer",
+                  "id": "50504293-c352-4947-b337-856c258f9be8",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"authToken\": \"<string>\",\n  \"targetAddress\": \"<string>\",\n  \"type\": \"binanceInternationalDirect\",\n  \"data\": \"<string,null>\",\n  \"amount\": \"<double>\",\n  \"fee\": \"<double>\",\n  \"addressType\": \"cardanoAddress\",\n  \"mfaCode\": \"<string,null>\",\n  \"mfaType\": \"totp\",\n  \"verificationSteps\": \"<array,null>\",\n  \"password\": \"<string,null>\",\n  \"chain\": \"<string,null>\",\n  \"memo\": \"<string,null>\",\n  \"symbol\": \"<string,null>\",\n  \"challengeId\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/transfers",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "v1",
+                        "transfers"
+                      ]
+                    },
+                    "description": "Initiate a new cryptocurrency transfer on a blockchain, cryptocurrency broker or cryptocurrency exchange.\nObsolete endpoint, please use POST /transfers/managed/execute endpoint instead."
+                  },
+                  "response": [
+                    {
+                      "id": "7421b865-e0f1-42a9-b92f-ddf4b01a2442",
+                      "name": "Transfer successfully initiated.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Client-Secret",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"authToken\": \"<string>\",\n  \"targetAddress\": \"<string>\",\n  \"type\": \"binanceInternationalDirect\",\n  \"data\": \"<string,null>\",\n  \"amount\": \"<double>\",\n  \"fee\": \"<double>\",\n  \"addressType\": \"cardanoAddress\",\n  \"mfaCode\": \"<string,null>\",\n  \"mfaType\": \"totp\",\n  \"verificationSteps\": \"<array,null>\",\n  \"password\": \"<string,null>\",\n  \"chain\": \"<string,null>\",\n  \"memo\": \"<string,null>\",\n  \"symbol\": \"<string,null>\",\n  \"challengeId\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/transfers",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "transfers"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"status\": \"conflict\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  },\n  \"content\": {\n    \"transactionId\": \"<string,null>\",\n    \"failed\": \"<boolean>\",\n    \"mfaType\": \"phoneAndEmail\",\n    \"verificationSteps\": \"<array,null>\",\n    \"qrCode\": \"<string,null>\",\n    \"qrCodeLink\": \"<string,null>\",\n    \"status\": \"deviceConfirmationRequired\",\n    \"statusDetails\": \"<string,null>\",\n    \"transaction\": {\n      \"id\": \"<string,null>\",\n      \"status\": \"secondMfaRequired\",\n      \"statusDetails\": \"<string,null>\",\n      \"type\": \"deposit\",\n      \"fromAddress\": \"<string,null>\",\n      \"targetAddress\": \"<string,null>\",\n      \"symbol\": \"<string,null>\",\n      \"chain\": \"<string,null>\",\n      \"memo\": \"<string,null>\",\n      \"hash\": \"<string,null>\",\n      \"amount\": \"<double>\",\n      \"transactionAmount\": \"<number,null-double>\",\n      \"createdTimestamp\": \"<long>\",\n      \"updatedTimestamp\": \"<long>\",\n      \"networkTransactionFee\": {\n        \"gasPrice\": \"<number,null-double>\",\n        \"gasUsed\": \"<number,null-double>\",\n        \"amount\": \"<number,null-double>\",\n        \"symbol\": \"<string,null>\"\n      },\n      \"transferFee\": \"<number,null-double>\",\n      \"confirmations\": \"<integer,null-int64>\",\n      \"blockchainMethodName\": \"<string,null>\",\n      \"blockchainMethod\": \"swap\"\n    }\n  }\n}",
+                      "createdAt": "2026-10-22T01:23:51.000Z",
+                      "updatedAt": "2026-10-22T01:23:51.000Z",
+                      "uid": "35240-7421b865-e0f1-42a9-b92f-ddf4b01a2442"
+                    },
+                    {
+                      "id": "4954db41-3282-4d3a-9be2-55821bba7dac",
+                      "name": "Transfer details are not correct.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Client-Secret",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"authToken\": \"<string>\",\n  \"targetAddress\": \"<string>\",\n  \"type\": \"binanceInternationalDirect\",\n  \"data\": \"<string,null>\",\n  \"amount\": \"<double>\",\n  \"fee\": \"<double>\",\n  \"addressType\": \"cardanoAddress\",\n  \"mfaCode\": \"<string,null>\",\n  \"mfaType\": \"totp\",\n  \"verificationSteps\": \"<array,null>\",\n  \"password\": \"<string,null>\",\n  \"chain\": \"<string,null>\",\n  \"memo\": \"<string,null>\",\n  \"symbol\": \"<string,null>\",\n  \"challengeId\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/transfers",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "transfers"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"status\": \"permissionDenied\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  }\n}",
+                      "createdAt": "2026-10-22T01:23:51.000Z",
+                      "updatedAt": "2026-10-22T01:23:51.000Z",
+                      "uid": "35240-4954db41-3282-4d3a-9be2-55821bba7dac"
+                    },
+                    {
+                      "id": "bf6d9bde-bc69-4099-8086-92f37f849289",
+                      "name": "Unauthorized: Client Id or Client Secret are not correct or missing.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Client-Secret",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"authToken\": \"<string>\",\n  \"targetAddress\": \"<string>\",\n  \"type\": \"binanceInternationalDirect\",\n  \"data\": \"<string,null>\",\n  \"amount\": \"<double>\",\n  \"fee\": \"<double>\",\n  \"addressType\": \"cardanoAddress\",\n  \"mfaCode\": \"<string,null>\",\n  \"mfaType\": \"totp\",\n  \"verificationSteps\": \"<array,null>\",\n  \"password\": \"<string,null>\",\n  \"chain\": \"<string,null>\",\n  \"memo\": \"<string,null>\",\n  \"symbol\": \"<string,null>\",\n  \"challengeId\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/transfers",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "transfers"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{}",
+                      "createdAt": "2026-10-22T01:23:51.000Z",
+                      "updatedAt": "2026-10-22T01:23:51.000Z",
+                      "uid": "35240-bf6d9bde-bc69-4099-8086-92f37f849289"
+                    },
+                    {
+                      "id": "2ee95891-2d8d-4c7c-8843-6b6bba0329c3",
+                      "name": "The API key used does not have write permission to call this Mesh endpoint.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Client-Secret",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"authToken\": \"<string>\",\n  \"targetAddress\": \"<string>\",\n  \"type\": \"binanceInternationalDirect\",\n  \"data\": \"<string,null>\",\n  \"amount\": \"<double>\",\n  \"fee\": \"<double>\",\n  \"addressType\": \"cardanoAddress\",\n  \"mfaCode\": \"<string,null>\",\n  \"mfaType\": \"totp\",\n  \"verificationSteps\": \"<array,null>\",\n  \"password\": \"<string,null>\",\n  \"chain\": \"<string,null>\",\n  \"memo\": \"<string,null>\",\n  \"symbol\": \"<string,null>\",\n  \"challengeId\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/transfers",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "transfers"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{}",
+                      "createdAt": "2026-10-22T01:23:51.000Z",
+                      "updatedAt": "2026-10-22T01:23:51.000Z",
+                      "uid": "35240-2ee95891-2d8d-4c7c-8843-6b6bba0329c3"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:23:51.000Z",
+                  "updatedAt": "2026-10-22T01:23:51.000Z",
+                  "uid": "35240-50504293-c352-4947-b337-856c258f9be8"
                 }
               ],
-              "body": "{\n  \"content\": {\n    \"transfers\": [\n      {\n        \"id\": \"8E25ACB5-A9E2-4D00-8772-A255F010A2A9\",\n        \"status\": \"succeeded\",\n        \"type\": \"deposit\",\n        \"fromAddress\": \"D5PumQwt...\",\n        \"targetAddress\": \"D641Fmzx...\",\n        \"symbol\": \"DOGE\",\n        \"hash\": \"3310c6202aaeb44754a118ce11f255382d012060ade0d6d9f...\",\n        \"amount\": 15,\n        \"transactionAmount\": 10,\n        \"createdTimestamp\": 1653215600,\n        \"updatedTimestamp\": 1653215600,\n        \"networkTransactionFee\": {\n          \"amount\": 5,\n          \"symbol\": \"DOGE\"\n        },\n        \"confirmations\": 17,\n        \"blockchainMethod\": \"transfer\"\n      },\n      {\n        \"id\": \"70E6E3CF-5ACF-49C5-A4E1-5FB85A567F26\",\n        \"status\": \"succeeded\",\n        \"type\": \"withdrawal\",\n        \"fromAddress\": \"0x7BDE8361Fe587daD0e35448E754...\",\n        \"targetAddress\": \"0x83C8F28c26bF6aaca652Df1DbBE...\",\n        \"symbol\": \"ETH\",\n        \"hash\": \"0x77f3a280aa5cfe956a5759c24cf774325504070b32b4159...\",\n        \"amount\": 0.1,\n        \"transactionAmount\": 0.099,\n        \"createdTimestamp\": 1653211113,\n        \"updatedTimestamp\": 1653211113,\n        \"networkTransactionFee\": {\n          \"amount\": 0.001,\n          \"symbol\": \"ETH\"\n        },\n        \"confirmations\": 18,\n        \"blockchainMethod\": \"transfer\"\n      }\n    ],\n    \"total\": 2,\n    \"cursor\": \"N2VkZDI0MDMtNmRhYy01NThhLTk5NDUDYzI12M3GQ3ZmQ2\",\n    \"earliestTimestamp\": 1653211113\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorType\": \"\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "b95e9a0e-8173-4459-b0cd-d1547df8641f",
-              "name": "Bad Request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "list"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"<string>\",\n  \"count\": \"<integer>\",\n  \"cursor\": \"<string>\",\n  \"statuses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cryptocurrencyAddressType\": \"<string>\",\n  \"from\": \"<long>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"badRequest\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorType\": \"missingField\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ba5802bc-5907-48ec-95cd-223688889085",
-              "name": "Unauthorized: Client Id or Client Secret are not correct or missing.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "list"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"<string>\",\n  \"count\": \"<integer>\",\n  \"cursor\": \"<string>\",\n  \"statuses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cryptocurrencyAddressType\": \"<string>\",\n  \"from\": \"<long>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "58c98f2e-f9a0-4d56-a80b-1017bcfa3cc3",
-              "name": "The API key used does not have read permission to call this Mesh endpoint.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "list"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"<string>\",\n  \"count\": \"<integer>\",\n  \"cursor\": \"<string>\",\n  \"statuses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cryptocurrencyAddressType\": \"<string>\",\n  \"from\": \"<long>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "c2867b8e-3dc8-440c-8147-4c9b3430fb79",
+              "createdAt": "2026-10-22T01:23:51.000Z",
+              "updatedAt": "2026-10-22T01:23:51.000Z",
+              "uid": "35240-c2867b8e-3dc8-440c-8147-4c9b3430fb79"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "8003064b-9465-4858-9046-42b37f025814",
-          "name": "Get transfer details",
-          "request": {
-            "name": "Get transfer details",
-            "description": {
-              "content": "Get details of a specific transfer (withdrawals or deposits) executed from an exchange.\r\nOnly supports Exchange integrations.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v1",
-                "transfers",
-                "details"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"<string>\",\n  \"addressType\": \"<string>\",\n  \"transactionId\": \"<string>\",\n  \"transactionHash\": \"<string>\",\n  \"symbol\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "ad3da683-0e87-4881-a839-d7dd9e40412d",
-              "name": "Transfer details obtained.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "details"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"transactionId\": \"63F1A6B6-BF45-4E51-A624-EC52B5680D48\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"content\": {\n    \"id\": \"8E25ACB5-A9E2-4D00-8772-A255F010A2A9\",\n    \"status\": \"succeeded\",\n    \"type\": \"deposit\",\n    \"fromAddress\": \"D5PumQwt...\",\n    \"targetAddress\": \"D641Fmzx...\",\n    \"symbol\": \"DOGE\",\n    \"hash\": \"3310c6202aaeb44754a118ce11f255382d012060ade0d6d9f...\",\n    \"amount\": 15,\n    \"transactionAmount\": 10,\n    \"createdTimestamp\": 1653215600,\n    \"updatedTimestamp\": 1653215600,\n    \"networkTransactionFee\": {\n      \"amount\": 5,\n      \"symbol\": \"DOGE\"\n    },\n    \"confirmations\": 17,\n    \"blockchainMethod\": \"transfer\"\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorType\": \"\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "59f60891-3e03-4f7e-bca4-c5bf973c3d59",
-              "name": "Transfer details are not correct.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "details"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"transactionId\": \"63F1A6B6-BF45-4E51-A624-EC52B5680D48\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"badRequest\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorType\": \"missingField\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "1103c358-3233-4712-81a1-855f88f2a034",
-              "name": "Unauthorized: Client Id or Client Secret are not correct or missing.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "details"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"transactionId\": \"63F1A6B6-BF45-4E51-A624-EC52B5680D48\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "21ab9346-7c43-4360-b056-a12430d637bb",
-              "name": "The API key used does not have read permission to call this Mesh endpoint.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "details"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"transactionId\": \"63F1A6B6-BF45-4E51-A624-EC52B5680D48\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "b81663d0-8d51-475b-8ff2-d17509394a49",
-              "name": "Transfer with provided id was not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "details"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"transactionId\": \"63F1A6B6-BF45-4E51-A624-EC52B5680D48\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"notFound\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorType\": \"missingField\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "73f375ba-49fb-48a1-a7d0-12ba37ee6e10",
-          "name": "Initiate a transfer",
-          "request": {
-            "name": "Initiate a transfer",
-            "description": {
-              "content": "Initiate a new cryptocurrency transfer on a blockchain, cryptocurrency broker or cryptocurrency exchange.\r\nObsolete endpoint, please use POST /transfers/managed/execute endpoint instead.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v1",
-                "transfers"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"authToken\": \"<string>\",\n  \"targetAddress\": \"<string>\",\n  \"type\": \"<string>\",\n  \"data\": \"<string>\",\n  \"amount\": \"<double>\",\n  \"fee\": \"<double>\",\n  \"addressType\": \"<string>\",\n  \"mfaCode\": \"<string>\",\n  \"mfaType\": \"<string>\",\n  \"verificationSteps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"password\": \"<string>\",\n  \"chain\": \"<string>\",\n  \"memo\": \"<string>\",\n  \"symbol\": \"<string>\",\n  \"challengeId\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "23ee4f48-8151-4efd-9b5b-6f7b6f5f6180",
-              "name": "Transfer successfully initiated.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"data\": \"Some memo\",\n  \"targetAddress\": \"D641Fmzx...\",\n  \"amount\": 100,\n  \"fee\": 5,\n  \"addressType\": \"dogeAddress\",\n  \"mfaCode\": \"000000\",\n  \"password\": \"$sb7u26\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"coinbase\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"content\": {\n    \"failed\": false,\n    \"status\": \"pending\",\n    \"statusDetails\": \"Accepted\",\n    \"transaction\": {\n      \"id\": \"8E25ACB5-A9E2-4D00-8772-A255F010A2A9\",\n      \"status\": \"pending\",\n      \"type\": \"withdrawal\",\n      \"fromAddress\": \"D5PumQwt...\",\n      \"targetAddress\": \"D641Fmzx...\",\n      \"symbol\": \"DOGE\",\n      \"hash\": \"3310c6202aaeb44754a118ce11f255382d012060ade0d6d9f...\",\n      \"amount\": 105,\n      \"transactionAmount\": 100,\n      \"createdTimestamp\": 1653215600,\n      \"updatedTimestamp\": 1653215600,\n      \"networkTransactionFee\": {\n        \"amount\": 5,\n        \"symbol\": \"DOGE\"\n      },\n      \"confirmations\": 3,\n      \"blockchainMethod\": \"transfer\"\n    }\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorType\": \"\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "016cde01-1b71-4b64-b5c5-5907d6cfdbbc",
-              "name": "Transfer details are not correct.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"data\": \"Some memo\",\n  \"targetAddress\": \"D641Fmzx...\",\n  \"amount\": 100,\n  \"fee\": 5,\n  \"addressType\": \"dogeAddress\",\n  \"mfaCode\": \"000000\",\n  \"password\": \"$sb7u26\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"coinbase\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"badRequest\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorType\": \"missingField\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7a08dade-58c5-4670-a180-f3c90dc2ca90",
-              "name": "Unauthorized: Client Id or Client Secret are not correct or missing.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"data\": \"Some memo\",\n  \"targetAddress\": \"D641Fmzx...\",\n  \"amount\": 100,\n  \"fee\": 5,\n  \"addressType\": \"dogeAddress\",\n  \"mfaCode\": \"000000\",\n  \"password\": \"$sb7u26\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"coinbase\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "fc443877-f088-48de-9069-537b6e716efc",
-              "name": "The API key used does not have write permission to call this Mesh endpoint.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"data\": \"Some memo\",\n  \"targetAddress\": \"D641Fmzx...\",\n  \"amount\": 100,\n  \"fee\": 5,\n  \"addressType\": \"dogeAddress\",\n  \"mfaCode\": \"000000\",\n  \"password\": \"$sb7u26\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"coinbase\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "0ff854d1-111b-40d7-bc04-4e03f570ada6",
-          "name": "Get deposit address",
-          "request": {
-            "name": "Get deposit address",
-            "description": {
-              "content": "Get or generate a cryptocurrency deposit address that can be used to transfer assets to the financial institution",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v1",
-                "transfers",
-                "address",
-                "get"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"<string>\",\n  \"symbol\": \"<string>\",\n  \"addressType\": \"<string>\",\n  \"chain\": \"<string>\",\n  \"mfaCode\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "288dfded-ab0d-4b71-b192-07d5e61a69a1",
-              "name": "Address successfully obtained or generation initiated.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "address",
-                    "get"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"symbol\": \"DOGE\",\n  \"chain\": \"DOGE\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"content\": {\n    \"symbol\": \"DOGE\",\n    \"address\": \"D641Fmzx...\",\n    \"chain\": \"DOGE\"\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorType\": \"\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "76664505-4a9b-4efd-ad6c-b86f45dac3ff",
-              "name": "Request details are not correct.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "address",
-                    "get"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"symbol\": \"DOGE\",\n  \"chain\": \"DOGE\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"badRequest\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorType\": \"missingField\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "adb91dd6-3b8e-40cb-b2d2-9b8e34baebcd",
-              "name": "Unauthorized: Client Id or Client Secret are not correct or missing.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "address",
-                    "get"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"symbol\": \"DOGE\",\n  \"chain\": \"DOGE\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8a75aa71-bcb2-4ada-a984-4462ba12436b",
-              "name": "Address for the required symbol is not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "address",
-                    "get"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"symbol\": \"DOGE\",\n  \"chain\": \"DOGE\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"notFound\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorType\": \"missingField\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "d32d519f-22b4-4f6d-b9a2-c1b8e1c0c9f0",
-          "name": "Get details of asset",
-          "request": {
-            "name": "Get details of asset",
-            "description": {
-              "content": "Get details of the asset for deposit or withdrawal. For example, several exchanges support same tokens over multiple\r\nblockchains, and thus require the name of chain to be supplied for transfers. This endpoint allows getting such details.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v1",
-                "transfers",
-                "symbol",
-                "details"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"authToken\": \"<string>\",\n  \"type\": \"<string>\",\n  \"symbol\": \"<string>\",\n  \"addressType\": \"<string>\",\n  \"chain\": \"<string>\",\n  \"mfaCode\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "36acb033-35c0-45e9-8f4b-0960c9dfa76e",
-              "name": "Address successfully obtained or generation initiated.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "symbol",
-                    "details"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"symbol\": \"DOGE\",\n  \"chain\": \"DOGE\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"content\": {\n    \"symbol\": \"ETH\",\n    \"addressTypes\": [\n      \"ethAddress\"\n    ],\n    \"chains\": [\n      {\n        \"chain\": \"Ethereum\",\n        \"fee\": 0.00001\n      }\n    ]\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorType\": \"\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e5923514-0308-435d-99a4-3a6d6ba7bc9b",
-              "name": "Request details are not correct.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "symbol",
-                    "details"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"symbol\": \"DOGE\",\n  \"chain\": \"DOGE\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"badRequest\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorType\": \"missingField\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "238b75eb-92c3-419e-892e-343a203e4cba",
-              "name": "Unauthorized: Client Id or Client Secret are not correct or missing.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "symbol",
-                    "details"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"symbol\": \"DOGE\",\n  \"chain\": \"DOGE\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3a369332-9262-426c-969d-5bbd6f0c7acb",
-              "name": "Asset details for provided symbol are not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "transfers",
-                    "symbol",
-                    "details"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"symbol\": \"DOGE\",\n  \"chain\": \"DOGE\",\n  \"authToken\": \"Secret authentication token\",\n  \"type\": \"robinhood\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"notFound\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorType\": \"missingField\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "c64f8e36-642b-45ab-8087-4ade61679ab3",
+          "createdAt": "2026-10-22T01:23:51.000Z",
+          "updatedAt": "2026-10-22T01:23:51.000Z",
+          "uid": "35240-c64f8e36-642b-45ab-8087-4ade61679ab3"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://admin-api.meshconnect.com",
-      "key": "baseUrl"
+      "id": "55f51bb8-a9b2-477c-8c25-e2e603b02cd9",
+      "createdAt": "2026-10-22T01:23:51.000Z",
+      "updatedAt": "2026-10-22T01:23:51.000Z",
+      "uid": "35240-55f51bb8-a9b2-477c-8c25-e2e603b02cd9"
     }
   ],
   "auth": {
-    "type": "bearer",
-    "bearer": [
+    "type": "apikey",
+    "apikey": [
       {
-        "key": "token",
-        "value": "{{bearerToken}}"
+        "key": "key",
+        "value": "X-Client-Secret",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "415675da-a051-4fcc-a24c-660318882121",
-    "name": "Admin Assets Transfers API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "\n\n### Supported integrations:\n```Robinhood```\n```Coinbase```\n```Kraken```\n```CoinbasePro```\n```CryptoCom```\n```Binance```\n```Gemini```\n```OkCoin```\n```KuCoin```\n```BinanceInternational```\n```Bitstamp```\n```GateIo```\n```Okx```\n```Huobi```\n```Bitfinex```\n```KrakenDirect```\n```BinanceInternationalDirect```\n```Bybit```\n```Paxos```\n```CoinbasePrime```\n```DeFiWallet```\n\n\n### Integration-specific notes:\n\n\n#### Robinhood:\n\n\nCryptocurrency transfers should be enabled in Robinhood settings. Transfers are disabled by default, enabling them for end users requires a review from Robinhood.\n\nPlease note:\n * `MfaCode` parameter is required to initiate a transaction in Robinhood.\n * The user's security settings should be configured to use an authenticator application.\n * Robinhood doesn't allow initiation of transactions if the authenticator application is not configured.\n\n\n#### Coinbase:\n\n\n`MfaCode` parameter should be used to initiate transactions in Coinbase.\n * If the end user's Coinbase account is configured to use text messages (SMS) for two factor authentication, the API will return `MfaRequired` status, and a text code will then be sent by Coinbase. The code is expected to be provided in the subsequent call using the `MfaCode` request field\n * If the account is configured to use an authenticator application, the API is expecting to get the code in the `MfaCode` request field.\n\n\n#### Kraken:\n\n\nKraken requires the explicit chain name to be provided (e.g. `Dogecoin` or `Ethereum (ERC20)`). The list of possible chains can be obtained by calling `symbol/details` endpoint.\n\nTo initiate a transaction, a Kraken Address Key name should be provided in `TargetAddress` field. Target address should be added using Kraken UI, then its name should be used.\n\n\n#### CoinbasePro:\n * CoinbasePro does not provide multiple chains per a symbol, so default chains are used for getting Deposit addresses.\n\n\n#### Binance:\n\n\n`Enable Withdrawals` permission should be given to the user's API key to initiate transfers with Binance Us.\n\nBinance requires adding the IP address to the list of trusted IPs to be able to create API keys with transfer permission.\n * Please reach out to Front to get the static IP address. This address should be provided to the end user, and the user should be instructed to add it to the list of trusted IP addresses.\n * By default, the permission to enable withdrawals is turned off. If the end user's API key does not have the permission, asset transfers will not be available.\n\n\n#### KuCoin:\n\n\nKuCoin requires adding the IP address to the list of trusted IPs to be able to create API keys with transfer permission.\n\n`Fee` parameter should be used to initiate a transaction in KuCoin.\n\nPlease note:\n * Please reach out to Front to get the static IP address. This address should be provided to the end user, and the user should be instructed to add it to the list of trusted IP addresses.\n * All currencies have their minimum `fee` and `amount` requirements. Please use `symbol/details` endpoint to get this data for a particular symbol.\n * KuCoin requires chain name to be provided for getting deposit address or initiating a cryptocurrency transfer. Some cryptocurrencies are supported over multiple chains. It's recommended to use `symbol/details` endpoint to get the list of supported chains and show it to the end user to select a target one.\n\n\n#### BinanceInternational:\n\n\n`Enable Withdrawals` permission should be given to the user's API key to initiate transfers with Binance International.\n\nBinance requires adding the IP address to the list of trusted IPs to be able to create API keys with transfer permission.\n * Please reach out to Front to get the static IP address. This address should be provided to the end user, and the user should be instructed to add it to the list of trusted IP addresses.\n * By default, the permission to enable withdrawals is turned off. If the end user's API key does not have the permission, asset transfers will not be available.\n\n\n#### GateIo:\n\n\nGate.io requires adding IP address to the list of trusted IP addresses to be able to initiate a cryptocurrency transfers.\n\nWithdrawal address should be already verified or added on the Gate.io UI (in mobile application or on the web site).\n * Please reach out to Front to get the static IP address for withdrawals. This address should be provided to the end user, and the user should be instructed to add it to the list of trusted IP addresses.\n * Only verified withdrawal blockchain addresses are allowed for withdrawal with Gate.io API.\n * Gate.io requires chain name to be provided for getting deposit address or initiating a cryptocurrency transfer. Some cryptocurrencies are supported over multiple chains. It's recommended to use `symbol/details` endpoint to get the list of supported chains and show it to the end user to select a target one.\n\n\n#### Huobi:\n\n\nWarning: Huobi does not refund executed deposits that are below the `Minimum Deposit Amount`\n * Please check the MinimumDepositAmount in Get Deposit Address response in order to avoid making a deposit below the minimum amount\n * Huobi does not allow withdrawals to addresses that are not white-listed, please add the address that you would like to withdraw to the white list of addresses through the UI so that a withrawal can be processed\n\n\n#### Bitfinex:\n * The hash of transfer is not available when making a transfer in Bitfinex. To get the hash please re-query the transfer using the transaction id.\n * Bitfinex does not separate sub-accounts when returning the list of transfers.Therefore the same list of transfers is returned for all Bitfinex sub-accounts.\n\n\n#### KrakenDirect:\n\n\nKraken requires the explicit chain name to be provided (e.g. `Dogecoin` or `Ethereum (ERC20)`). The list of possible chains can be obtained by calling `symbol/details` endpoint.\n\nTo initiate a transaction, a Kraken Address Key name should be provided in `TargetAddress` field. Target address should be added using Kraken UI, then its name should be used.\n",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://integration-api.meshconnect.com"
     }
-  }
+  ]
 }

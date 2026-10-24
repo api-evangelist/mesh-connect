@@ -1,514 +1,549 @@
 {
+  "info": {
+    "_postman_id": "075b6964-a9cf-418f-a887-e97d29e2ece2",
+    "name": "Mesh Connect Integration Assets API",
+    "description": "Mesh allows users to connect accounts of financial institutions,\ncrypto exchanges, and self-custody wallets. Mesh handles credential\nvalidation, MFA, and error handling for each integration. After\nan account is connected, Mesh allows client applications to read holdings,\ntransaction history and balances and execute crypto transfers (with user approval).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:22:28.000Z",
+    "updatedAt": "2026-10-22T01:22:28.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-075b6964-a9cf-418f-a887-e97d29e2ece2"
+  },
   "item": [
     {
-      "id": "6893203b-d2ca-43ec-951b-501b82d4c5e7",
-      "name": "Assets",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "api",
       "item": [
         {
-          "id": "3268a170-9ceb-4d67-afe4-5e7a90db27f0",
-          "name": "Get available assets",
-          "request": {
-            "name": "Get available assets",
-            "description": {},
-            "url": {
-              "path": [
-                "api",
-                "v1",
-                "assets",
-                ":assetType"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "Search",
-                  "value": "<string>"
-                },
-                {
-                  "disabled": false,
-                  "key": "Count",
-                  "value": "<integer>"
-                },
-                {
-                  "disabled": false,
-                  "key": "Offset",
-                  "value": "<integer>"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "assetType",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "v1",
+          "item": [
             {
-              "id": "8e7811b2-fb90-4738-a043-2bdf40a6b53b",
-              "name": "Success",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "assets",
-                    ":assetType"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "Search",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "Count",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "Offset",
-                      "value": "<integer>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "assetType",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "assets",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "{assetType}",
+                  "item": [
+                    {
+                      "name": "Get available assets",
+                      "id": "7ada34d9-4d45-41a4-b67b-b10f290be815",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/assets/:assetType?Search=<string>&Count=<integer>&Offset=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "assets",
+                            ":assetType"
+                          ],
+                          "query": [
+                            {
+                              "key": "Search",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "Count",
+                              "value": "<integer>"
+                            },
+                            {
+                              "key": "Offset",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "1467ae61-a81d-4780-8459-f1248322d988",
+                              "key": "assetType",
+                              "value": "cryptocurrency",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "56dbbc4a-9e60-4b96-812d-87f36cf02f4c",
+                          "name": "Success",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Client-Secret",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/assets/:assetType?Search=<string>&Count=<integer>&Offset=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "assets",
+                                ":assetType"
+                              ],
+                              "query": [
+                                {
+                                  "key": "Search",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "key": "Count",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "key": "Offset",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "assetType"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"status\": \"serverFailure\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  },\n  \"content\": {\n    \"items\": \"<array,null>\",\n    \"total\": \"<integer>\"\n  }\n}",
+                          "createdAt": "2026-10-22T01:22:28.000Z",
+                          "updatedAt": "2026-10-22T01:22:28.000Z",
+                          "uid": "35240-56dbbc4a-9e60-4b96-812d-87f36cf02f4c"
+                        },
+                        {
+                          "id": "3cc32b5a-2815-4802-a8ec-39c3ee1e2213",
+                          "name": "Bad Request",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Client-Secret",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/assets/:assetType?Search=<string>&Count=<integer>&Offset=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "assets",
+                                ":assetType"
+                              ],
+                              "query": [
+                                {
+                                  "key": "Search",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "key": "Count",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "key": "Offset",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "assetType"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"status\": \"tooManyRequest\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  }\n}",
+                          "createdAt": "2026-10-22T01:22:28.000Z",
+                          "updatedAt": "2026-10-22T01:22:28.000Z",
+                          "uid": "35240-3cc32b5a-2815-4802-a8ec-39c3ee1e2213"
+                        },
+                        {
+                          "id": "36f05e84-c98d-40da-a003-314075ef0473",
+                          "name": "Unauthorized",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Client-Secret",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/assets/:assetType?Search=<string>&Count=<integer>&Offset=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "assets",
+                                ":assetType"
+                              ],
+                              "query": [
+                                {
+                                  "key": "Search",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "key": "Count",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "key": "Offset",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "assetType"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{}",
+                          "createdAt": "2026-10-22T01:22:28.000Z",
+                          "updatedAt": "2026-10-22T01:22:28.000Z",
+                          "uid": "35240-36f05e84-c98d-40da-a003-314075ef0473"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T01:22:28.000Z",
+                      "updatedAt": "2026-10-22T01:22:28.000Z",
+                      "uid": "35240-7ada34d9-4d45-41a4-b67b-b10f290be815"
+                    }
+                  ],
+                  "id": "95fecf15-3743-4407-bc24-b483437349d2",
+                  "createdAt": "2026-10-22T01:22:28.000Z",
+                  "updatedAt": "2026-10-22T01:22:28.000Z",
+                  "uid": "35240-95fecf15-3743-4407-bc24-b483437349d2"
+                },
+                {
+                  "name": "equity",
+                  "item": [
+                    {
+                      "name": "{symbol}",
+                      "item": [
+                        {
+                          "name": "price",
+                          "item": [
+                            {
+                              "name": "Get symbol price",
+                              "id": "171f190a-9648-49e2-8ae8-c42eaded9e79",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/assets/equity/:symbol/price",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "assets",
+                                    "equity",
+                                    ":symbol",
+                                    "price"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "30856d7f-f7df-4049-90cc-1ce1e71aab59",
+                                      "key": "symbol",
+                                      "value": "<string>",
+                                      "description": "(Required) "
+                                    }
+                                  ]
+                                }
+                              },
+                              "response": [
+                                {
+                                  "id": "5d0e1643-35fd-4dda-a2c7-850fdeadb5a4",
+                                  "name": "Success",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: apikey",
+                                        "key": "X-Client-Secret",
+                                        "value": "<API Key>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v1/assets/equity/:symbol/price",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v1",
+                                        "assets",
+                                        "equity",
+                                        ":symbol",
+                                        "price"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "symbol"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"status\": \"conflict\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  },\n  \"content\": {\n    \"price\": \"<double>\",\n    \"timestamp\": \"<long>\"\n  }\n}",
+                                  "createdAt": "2026-10-22T01:22:28.000Z",
+                                  "updatedAt": "2026-10-22T01:22:28.000Z",
+                                  "uid": "35240-5d0e1643-35fd-4dda-a2c7-850fdeadb5a4"
+                                },
+                                {
+                                  "id": "08ddedf4-a6f7-49a2-90d2-18703a73b56a",
+                                  "name": "Bad Request",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: apikey",
+                                        "key": "X-Client-Secret",
+                                        "value": "<API Key>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v1/assets/equity/:symbol/price",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v1",
+                                        "assets",
+                                        "equity",
+                                        ":symbol",
+                                        "price"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "symbol"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"status\": \"tooManyRequest\",\n  \"message\": \"<string,null>\",\n  \"displayMessage\": \"<string,null>\",\n  \"errorType\": \"<string,null>\",\n  \"errorData\": {\n    \"readOnly\": true\n  }\n}",
+                                  "createdAt": "2026-10-22T01:22:28.000Z",
+                                  "updatedAt": "2026-10-22T01:22:28.000Z",
+                                  "uid": "35240-08ddedf4-a6f7-49a2-90d2-18703a73b56a"
+                                },
+                                {
+                                  "id": "0ebee155-ecc1-4b3c-994b-27733258d71a",
+                                  "name": "Unauthorized",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: apikey",
+                                        "key": "X-Client-Secret",
+                                        "value": "<API Key>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v1/assets/equity/:symbol/price",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v1",
+                                        "assets",
+                                        "equity",
+                                        ":symbol",
+                                        "price"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "symbol"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{}",
+                                  "createdAt": "2026-10-22T01:22:28.000Z",
+                                  "updatedAt": "2026-10-22T01:22:28.000Z",
+                                  "uid": "35240-0ebee155-ecc1-4b3c-994b-27733258d71a"
+                                }
+                              ],
+                              "createdAt": "2026-10-22T01:22:28.000Z",
+                              "updatedAt": "2026-10-22T01:22:28.000Z",
+                              "uid": "35240-171f190a-9648-49e2-8ae8-c42eaded9e79"
+                            }
+                          ],
+                          "id": "fa190245-a0af-4598-8018-1837b1d1eacf",
+                          "createdAt": "2026-10-22T01:22:28.000Z",
+                          "updatedAt": "2026-10-22T01:22:28.000Z",
+                          "uid": "35240-fa190245-a0af-4598-8018-1837b1d1eacf"
+                        }
+                      ],
+                      "id": "d67f6210-dc30-4711-b6c3-b1b72c2a85d9",
+                      "createdAt": "2026-10-22T01:22:28.000Z",
+                      "updatedAt": "2026-10-22T01:22:28.000Z",
+                      "uid": "35240-d67f6210-dc30-4711-b6c3-b1b72c2a85d9"
+                    }
+                  ],
+                  "id": "eba1a804-0b2c-4432-899f-cd5dc435530b",
+                  "createdAt": "2026-10-22T01:22:28.000Z",
+                  "updatedAt": "2026-10-22T01:22:28.000Z",
+                  "uid": "35240-eba1a804-0b2c-4432-899f-cd5dc435530b"
                 }
               ],
-              "body": "{\n  \"content\": {\n    \"items\": [\n      {\n        \"symbol\": \"AAPL\",\n        \"name\": \"Apple Inc\",\n        \"type\": \"equity\"\n      },\n      {\n        \"symbol\": \"MSFT\",\n        \"name\": \"Microsoft Inc\",\n        \"type\": \"equity\"\n      }\n    ],\n    \"total\": 5\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorType\": \"\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a9f12024-631a-47c0-8661-88af2dde3def",
-              "name": "Bad Request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "assets",
-                    ":assetType"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "Search",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "Count",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "Offset",
-                      "value": "<integer>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "assetType",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"badRequest\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorType\": \"missingField\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a4665d65-aad1-4633-af43-e840635979fc",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "assets",
-                    ":assetType"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "Search",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "Count",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "Offset",
-                      "value": "<integer>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "assetType",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "7a642365-3a33-475e-9f3e-9b3351dded53",
+              "createdAt": "2026-10-22T01:22:28.000Z",
+              "updatedAt": "2026-10-22T01:22:28.000Z",
+              "uid": "35240-7a642365-3a33-475e-9f3e-9b3351dded53"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "2ea3e9d3-f70a-46ef-a028-f4899e74a7da",
-          "name": "Get symbol price",
-          "request": {
-            "name": "Get symbol price",
-            "description": {},
-            "url": {
-              "path": [
-                "api",
-                "v1",
-                "assets",
-                "equity",
-                ":symbol",
-                "price"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "symbol",
-                  "description": "(Required) "
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "243f9de0-5394-4a0e-83fc-2ffd7531c60f",
-              "name": "Success",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "assets",
-                    "equity",
-                    ":symbol",
-                    "price"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "symbol",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"content\": {\n    \"items\": [\n      {\n        \"symbol\": \"AAPL\",\n        \"name\": \"Apple Inc\",\n        \"type\": \"equity\"\n      },\n      {\n        \"symbol\": \"MSFT\",\n        \"name\": \"Microsoft Inc\",\n        \"type\": \"equity\"\n      }\n    ],\n    \"total\": 5\n  },\n  \"status\": \"ok\",\n  \"message\": \"\",\n  \"errorType\": \"\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "fa370fcd-169a-4d0f-997d-f8d13defb036",
-              "name": "Bad Request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "assets",
-                    "equity",
-                    ":symbol",
-                    "price"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "symbol",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"badRequest\",\n  \"message\": \"Error message\",\n  \"displayMessage\": \"Optional display message\",\n  \"errorType\": \"missingField\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a47aac04-ae76-4979-8d94-223fd28d9ad5",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v1",
-                    "assets",
-                    "equity",
-                    ":symbol",
-                    "price"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "symbol",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "3aa517ec-6a2e-4fda-9878-51dfecc0c20e",
+          "createdAt": "2026-10-22T01:22:28.000Z",
+          "updatedAt": "2026-10-22T01:22:28.000Z",
+          "uid": "35240-3aa517ec-6a2e-4fda-9878-51dfecc0c20e"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://admin-api.meshconnect.com",
-      "key": "baseUrl"
+      "id": "700e21bf-70d2-46a4-979a-da7d154333ac",
+      "createdAt": "2026-10-22T01:22:28.000Z",
+      "updatedAt": "2026-10-22T01:22:28.000Z",
+      "uid": "35240-700e21bf-70d2-46a4-979a-da7d154333ac"
     }
   ],
   "auth": {
-    "type": "bearer",
-    "bearer": [
+    "type": "apikey",
+    "apikey": [
       {
-        "key": "token",
-        "value": "{{bearerToken}}"
+        "key": "key",
+        "value": "X-Client-Secret",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "0c9500e0-196f-4ca8-a23c-d6b018c52932",
-    "name": "Admin Assets API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://integration-api.meshconnect.com"
     }
-  }
+  ]
 }
